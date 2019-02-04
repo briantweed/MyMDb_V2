@@ -1,3 +1,3 @@
 <?php
 
-Route::get('/', '#omeController@index');    
+Route::get('/', 'HomeController@index');    
