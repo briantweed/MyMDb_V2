@@ -29,7 +29,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 2,
                 'movie_id' => 9,
-                'text' => 'Sooner or later you&#039;re going to realize that there&#039;s a difference between knowing the page and finding the page.',
+                'text' => 'Sooner or later you\'re going to realize that there\'s a difference between knowing the page and finding the page.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),
@@ -37,7 +37,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 3,
                 'movie_id' => 10,
-                'text' => 'This is not the page you&#039;re looking for',
+                'text' => 'This is not the page you\'re looking for',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),
@@ -45,7 +45,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 4,
                 'movie_id' => 22,
-                'text' => 'What&#039;s wrong? Have some trouble?',
+                'text' => 'What\'s wrong? Have some trouble?',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),
@@ -61,7 +61,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 6,
                 'movie_id' => 33,
-                'text' => 'We are tonight&#039;s entertainment! I only have one question. Where is the page?',
+                'text' => 'We are tonight\'s entertainment! I only have one question. Where is the page?',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),
@@ -77,7 +77,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 8,
                 'movie_id' => 55,
-                'text' => 'You don&#039;t think people are going to drive down and not see the page?',
+                'text' => 'You don\'t think people are going to drive down and not see the page?',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),
@@ -85,7 +85,7 @@ class QuotesTableSeeder extends Seeder
             array (
                 'id' => 9,
                 'movie_id' => 96,
-                'text' => 'Boy, it sure would be nice if we had some results, don&#039;t you think?',
+                'text' => 'Boy, it sure would be nice if we had some results, don\'t you think?',
                 'created_at' => now(),
                 'updated_at' => now(),
             ),

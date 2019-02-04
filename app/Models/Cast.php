@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Cast extends Model 
 {
 
-   protected $table = 'cast';
+    protected $table = 'cast';
 
-   protected $primaryKey = 'cast_id';
+    protected $fillable = [
+        'movie_id',
+        'character',
+        'star'
+    ];
 
-   protected $fillable = array(
-      'movie_id',
-      'character',
-      'star'
-   );
+    protected $casts = [
+        'star' => 'boolean'
+    ];
 
 }

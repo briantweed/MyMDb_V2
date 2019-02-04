@@ -8,11 +8,11 @@ class Crew extends Model
 {
 
    protected $table = 'crew';
-
-   protected $primaryKey = 'crew_id';
    
    protected $fillable = array(
-      'movie_id'
+      'movie_id',
+      'person_id',
+      'position'
    );
 
 }
