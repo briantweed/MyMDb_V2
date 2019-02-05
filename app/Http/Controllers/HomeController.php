@@ -16,11 +16,9 @@ class HomeController extends Controller
    
     public function index()
     {
-        $movie = Movie::find(1);
-        $person = Person::find(1);
+        $movies = Movie::bySortName()->paginate(20);
         return view('welcome', [
-            'movie' => $movie,
-            'person' => $person
+            'movies' => $movies
         ]);
 
     }

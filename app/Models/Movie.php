@@ -95,6 +95,12 @@ class Movie extends Model implements PositionInterface
 	}
 
 
+	public function scopeBySortName($query, $direction = 'asc')
+	{
+		return $query->orderBy('sort_name', $direction);
+	}
+
+
 
 
 }

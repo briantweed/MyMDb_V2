@@ -1,64 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        <title>Laravel</title>
-        <style>body{background:#000000; color: #888</style>
+        <title>TTL | Schedule</title>
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div>
-            <h3>{{ $movie->name }}</h3>
-            @foreach($movie->cast as $cast)
-
-                {{ $cast->fullname }} <br>
-
-            @endforeach
-        </div>
-
-        <div>
-            <h3>{{ $person->fullname }}</h3>
-            <p>{{ $person->age }}</p>
-            @foreach($person->roles as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}})  <br>
-
-            @endforeach           
-
-            <h4>Overview</h4>
-            @foreach($person->positions as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
-
-            @endforeach
-            <h4>Directed</h4>
-            @foreach($person->directed as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
-
-            @endforeach            
-            <h4>Produced</h4>
-            @if(!$person->produced->count()) --- @endif
-            @foreach($person->produced as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
-
-            @endforeach
-            <h4>Screenplay</h4>
-            @foreach($person->scripted as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
-
-            @endforeach
-            <h4>Composer</h4>
-            @if(!$person->produced->count()) --- @endif
-            @foreach($person->scored as $movie)
-
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
-
-            @endforeach
+        <div class='container'>
+            <div class="row">
+                <div class="col-12">
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Released</th>
+                                <th>Format</th>
+                                <th>Certificate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($movies as $movie)
+                                <tr>
+                                    <td>{!! $movie->name !!}</td>
+                                    <td>{{ $movie->released }}</td>
+                                    <td>{{ $movie->format->type }}</td>
+                                    <td>{{ $movie->certificate->title }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ $movies->links() }}
+                </div>
+            </div>
         </div>
     </body>
 </html>
