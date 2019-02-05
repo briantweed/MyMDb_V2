@@ -5,18 +5,18 @@ namespace App\Contracts;
 interface PositionInterface
 {
 
-    public const director = 'Director';
+    public const DIRECTOR = 'Director';
 
-    public const producer = 'Producer';
+    public const PRODUCER = 'Producer';
     
-    public const writer = 'Writer';
+    public const WRITER = 'Writer';
 
-    public const composer = 'Composer';
+    public const COMPOSER = 'Composer';
 
     public const CREW_POSITIONS = [
-        self::director,
-        self::producer,
-        self::writer,
-        self::composer
+        self::DIRECTOR,
+        self::PRODUCER,
+        self::WRITER,
+        self::COMPOSER
     ];
 }

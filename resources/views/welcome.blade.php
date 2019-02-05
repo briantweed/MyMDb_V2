@@ -20,9 +20,10 @@
 
         <div>
             <h3>{{ $person->fullname }}</h3>
+            <p>{{ $person->age }}</p>
             @foreach($person->roles as $movie)
 
-                {{ $movie->name }} ({{ $movie->released}}) : {{ $movie->pivot->position}}   <br>
+                {{ $movie->name }} ({{ $movie->released}})  <br>
 
             @endforeach           
 

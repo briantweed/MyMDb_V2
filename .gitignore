@@ -9,9 +9,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-after.sh
-aliases
-artisan
-server.php
 VagrantFile
 .vagrant
