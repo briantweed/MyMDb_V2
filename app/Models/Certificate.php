@@ -10,7 +10,7 @@ class Certificate extends Model
     
    public function movies()
    {
-      return $this->hasMany('App\Models\Movie');
+      return $this->hasMany(Movie::class);
    }
 
 }

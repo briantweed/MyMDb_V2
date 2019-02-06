@@ -14,7 +14,7 @@ trait PositionTrait
 
     public function getPosition(string $position)
     {
-        return $this->belongsToMany('App\Models\Movie', 'crew', 'person_id', 'movie_id')
+        return $this->belongsToMany(Movie::class, 'crew', 'person_id', 'movie_id')
             ->withPivot('id', 'position')
             ->where('position', $position)
             ->orderBy('released', 'desc')

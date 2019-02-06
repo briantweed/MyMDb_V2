@@ -42,7 +42,7 @@ class Movie extends Model implements PositionInterface
 
     public function cast()
     {
-        return $this->belongsToMany('App\Models\Person', 'cast')
+        return $this->belongsToMany(Person::class, 'cast')
             ->withPivot('id', 'character', 'star')
             ->byStar()
             ->byForename();
@@ -51,7 +51,7 @@ class Movie extends Model implements PositionInterface
 
     public function crew()
     {
-        return $this->belongsToMany('App\Models\Person', 'crew')
+        return $this->belongsToMany(Person::class, 'crew')
             ->withPivot('id', 'position')
             ->byPosition()
             ->byForename();
@@ -60,31 +60,31 @@ class Movie extends Model implements PositionInterface
 
 	public function studio()
 	{
-		return $this->belongsTo('App\Models\Studio');
+		return $this->belongsTo(Studio::class);
 	}
 
 
 	public function format()
 	{
-		return $this->belongsTo('App\Models\Format');
+		return $this->belongsTo(Format::class);
 	}
 
 
 	public function certificate()
 	{
-		return $this->belongsTo('App\Models\Certificate');
+		return $this->belongsTo(Certificate::class);
 	}
 
 
 	public function genres()
 	{
-		return $this->belongsToMany('App\Models\Genre');
+		return $this->belongsToMany(Genre::class);
 	}
 
 
 	public function tags()
 	{
-		return $this->belongsToMany('App\Models\Tag');
+		return $this->belongsToMany(Tag::class);
 	}
 
 

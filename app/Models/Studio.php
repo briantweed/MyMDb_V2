@@ -15,7 +15,7 @@ class Studio extends Model
 
    public function movies()
    {
-      return $this->hasMany('App\Models\Movies');
+      return $this->hasMany(Movies::class);
    }
 
 }
