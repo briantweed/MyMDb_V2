@@ -20,7 +20,9 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Released</th>
+                                <th>Length</th>
                                 <th>Format</th>
+                                <th>Studio</th>
                                 <th>Certificate</th>
                             </tr>
                         </thead>
@@ -29,7 +31,9 @@
                                 <tr>
                                     <td>{!! $movie->name !!}</td>
                                     <td>{{ $movie->released }}</td>
+                                    <td>{{ $movie->running_time }}</td>
                                     <td>{{ $movie->format->type }}</td>
+                                    <td>{{ $movie->studio->name }}</td>
                                     <td>{{ $movie->certificate->title }}</td>
                                 </tr>
                             @endforeach
