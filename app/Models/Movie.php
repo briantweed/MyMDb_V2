@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
@@ -41,6 +40,24 @@ class Movie extends Model implements PositionInterface
     ];
 
 
+    public function cast()
+    {
+        return $this->belongsToMany('App\Models\Person', 'cast')
+            ->withPivot('id', 'character', 'star')
+            ->byStar()
+            ->byForename();
+    }
+
+
+    public function crew()
+    {
+        return $this->belongsToMany('App\Models\Person', 'crew')
+            ->withPivot('id', 'position')
+            ->byPosition()
+            ->byForename();
+    }
+
+
 	public function studio()
 	{
 		return $this->belongsTo('App\Models\Studio');
@@ -59,24 +76,6 @@ class Movie extends Model implements PositionInterface
 	}
 
 
-	public function cast()
-	{
-		return $this->belongsToMany('App\Models\Person', 'cast')
-			->withPivot('id', 'character', 'star')
-			->byStar()
-			->byForename();
-	}
-
-
-	public function crew()
-	{
-		return $this->belongsToMany('App\Models\Person', 'crew')
-			->withPivot('id', 'position')
-			->byPosition()
-			->byForename();
-	}
-
-
 	public function genres()
 	{
 		return $this->belongsToMany('App\Models\Genre');
@@ -89,18 +88,21 @@ class Movie extends Model implements PositionInterface
 	}
 
 
-	public function scopeByReleaseDate($query, $direction = 'desc')
+	public function scopeByReleaseDate($query, string $direction = 'desc')
 	{
 		return $query->orderBy('released', $direction);
 	}
 
 
-	public function scopeBySortName($query, $direction = 'asc')
+	public function scopeBySortName($query, string $direction = 'asc')
 	{
 		return $query->orderBy('sort_name', $direction);
 	}
 
 
-
+	public function scopeByRating($query, string $direction = 'desc')
+	{
+		return $query->orderBy('rating', $direction);
+	}
 
 }

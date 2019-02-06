@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
 
 class Person extends Model implements PositionInterface
 {
+
 	use PositionTrait;
 
 	protected $fillable = array(
@@ -23,13 +23,13 @@ class Person extends Model implements PositionInterface
 		'imdb_id'
 	);
 
-
 	protected $dates = [
 		'birthday',
 		'deceased',
 		'created_at',
 		'updated_at'
 	];
+
 
 	public function roles()
 	{

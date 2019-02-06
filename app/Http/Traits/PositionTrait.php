@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+
 trait PositionTrait
 {
 
@@ -11,7 +12,7 @@ trait PositionTrait
     }
 
 
-    public function getPosition($position)
+    public function getPosition(string $position)
     {
         return $this->belongsToMany('App\Models\Movie', 'crew', 'person_id', 'movie_id')
             ->withPivot('id', 'position')
