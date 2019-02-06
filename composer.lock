@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7df0ae1a13f44388710aae91547c6e04",
+    "content-hash": "1ad51bfe2a2e76cf31c7bf557d9b05b3",
     "packages": [
+        {
+            "name": "briantweed/laravel-view-folder",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briantweed/laravel-view-folder.git",
+                "reference": "9d8e235b5c93346e0ce7de176e0a71f514e99670"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briantweed/laravel-view-folder/zipball/9d8e235b5c93346e0ce7de176e0a71f514e99670",
+                "reference": "9d8e235b5c93346e0ce7de176e0a71f514e99670",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "briantweed\\LaravelViewFolder\\LaravelViewFolderServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelViewFolder": "briantweed\\LaravelViewFolder\\Facades\\LaravelViewFolder"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "briantweed\\LaravelViewFolder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Tweed",
+                    "email": "brtweed@outlook.com"
+                }
+            ],
+            "description": "Create view folder structure with sub folders for partials, components and modals as ell as basic CRUD files ",
+            "homepage": "https://github.com/briantweed/laravelviewfolder",
+            "keywords": [
+                "LaravelViewFolder",
+                "laravel"
+            ],
+            "time": "2018-10-17T10:25:12+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -1998,6 +2049,63 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "spatie/laravel-query-builder",
+            "version": "1.13.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-query-builder.git",
+                "reference": "58275f09e97c3fc612f07d74c1797c7948c3ee75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/58275f09e97c3fc612f07d74c1797c7948c3ee75",
+                "reference": "58275f09e97c3fc612f07d74c1797c7948c3ee75",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/http": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.1|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\QueryBuilder\\QueryBuilderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\QueryBuilder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Vanderbist",
+                    "email": "alex@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily build Eloquent queries from API requests",
+            "homepage": "https://github.com/spatie/laravel-query-builder",
+            "keywords": [
+                "laravel-query-builder",
+                "spatie"
+            ],
+            "time": "2019-01-18T16:45:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
