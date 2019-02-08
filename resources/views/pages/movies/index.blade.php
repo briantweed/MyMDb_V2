@@ -29,7 +29,7 @@
                     <tbody>
                     @foreach($movies as $movie)
                         <tr>
-                            <td>{!! $movie->name !!}</td>
+                            <td><a href="{{ route('movies.show', [$movie->id]) }}">{!! $movie->name !!}</a></td>
                             <td>{{ $movie->released }}</td>
                             <td>{{ $movie->running_time }}</td>
                             <td>{{ $movie->format->type }}</td>
