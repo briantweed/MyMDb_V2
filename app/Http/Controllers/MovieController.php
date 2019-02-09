@@ -25,9 +25,8 @@ class MovieController extends Controller
     }
 
 
-    public function show(int $id)
+    public function show(Movie $movie)
     {
-        $movie = Movie::findOrFail($id)->get();
         return view('pages.movies.show', [
             'movie' => $movie
         ]);

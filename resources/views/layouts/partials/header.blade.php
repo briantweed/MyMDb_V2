@@ -14,6 +14,8 @@
 <meta name="msapplication-TileColor" content="#00aba9">
 <meta name="theme-color" content="#ffffff">
 
+@yield('header')
+
 <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 @yield('css')

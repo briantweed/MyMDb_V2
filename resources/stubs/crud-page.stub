@@ -1,4 +1,11 @@
-@extends('')
+@extends('layouts.general')
+
+
+@section('header')
+
+
+@endsection
+
 
 
 @section('css')
@@ -12,6 +19,14 @@
 @section('content')
 
     <section>
+
+        <div class="row">
+
+            <div class="col-12">
+
+            </div>
+
+        </div>
 
     </section>
 

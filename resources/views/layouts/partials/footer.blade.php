@@ -1,14 +1,17 @@
-<footer>
+<footer style="height: 35px; background: #222; color: #bbb">
 
     <div class="container-fluid">
 
-        <div class="row align-items-center">
+        <div class="row">
+
             <div class="col-12 col-md-6 pt-2">
 
             </div>
+
             <div class="col-12 col-md-6 pb-2 text-md-right mt-3">
-                &copy <?php echo date('Y'); ?> BRTWEED
+
             </div>
+
         </div>
 
     </div>

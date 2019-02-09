@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    @include('layouts.partials.header')
-</head>
+    <head>
 
-<body>
+        @include('layouts.partials.header')
 
-@include('layouts.partials.navigation')
+    </head>
 
-@include('layouts.partials.content')
+    <body>
 
-@include('layouts.partials.footer')
+        @include('layouts.partials.navigation')
 
-@include('layouts.partials.modal-container')
+        <div class="container-fluid pt-4" style="min-height: calc(100vh - 90px);">
 
-</body>
+            <div class="row">
+
+                <div class="col-12 offset-lg-1 col-lg-10">
+
+                    @yield('content')
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @include('layouts.partials.footer')
+
+        @include('layouts.partials.modal-container')
+
+    </body>
 
 </html>

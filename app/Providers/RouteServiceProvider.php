@@ -34,9 +34,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes(Router $router)
     {
         $router->group($this->getDefaultGroup(), function () {
-            $this->requireAuthRoutes();
+            // $this->requireAuthRoutes();
             $this->requireWebRoutes();
-            $this->requireDefaultRoutes();
+            // $this->requireDefaultRoutes();
         });
     }
 
@@ -81,7 +81,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function requireDefaultRoutes()
     {
-        //Route::any('{query}', function() { return redirect('/');})->where('query', '.*');
+        Route::any('{query}', function() { return redirect('/');})->where('query', '.*');
     }
 
 

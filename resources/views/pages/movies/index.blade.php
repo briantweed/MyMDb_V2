@@ -13,39 +13,41 @@
 
     <section>
 
-        <div class="row">
-            <div class="col-12">
-                <table class='table'>
-                    <thead>
+        <div class="table-responsive">
+            <table class='table'>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Released</th>
+                    <th>Length</th>
+                    <th>Format</th>
+                    <th>Studio</th>
+                    <th>Certificate</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($movies as $movie)
                     <tr>
-                        <th>Title</th>
-                        <th>Released</th>
-                        <th>Length</th>
-                        <th>Format</th>
-                        <th>Studio</th>
-                        <th>Certificate</th>
+                        <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
+                        <td>{{ $movie->released }}</td>
+                        <td>{{ $movie->running_time }}</td>
+                        <td>{{ $movie->format->type }}</td>
+                        <td>{{ $movie->studio->name }}</td>
+                        <td>{{ $movie->certificate->title }}</td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($movies as $movie)
-                        <tr>
-                            <td><a href="{{ route('movies.show', [$movie->id]) }}">{!! $movie->name !!}</a></td>
-                            <td>{{ $movie->released }}</td>
-                            <td>{{ $movie->running_time }}</td>
-                            <td>{{ $movie->format->type }}</td>
-                            <td>{{ $movie->studio->name }}</td>
-                            <td>{{ $movie->certificate->title }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                @endforeach
+                </tbody>
+            </table>
         </div>
-        <div class="row">
-            <div class="col-12">
-                {{ $movies->links() }}
+
+        @if($movies instanceof \Illuminate\Pagination\LengthAwarePaginator )
+            <div class="row">
+                <div class="col-12">
+                    {{ $movies->links() }}
+                </div>
             </div>
-        </div>
+        @endif
+        
     </section>
 
 @endsection

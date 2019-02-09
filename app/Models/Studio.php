@@ -9,7 +9,7 @@ class Studio extends Model
 {
 
    protected $fillable =[
-      'studio_name'
+      'name'
    ];
 
 

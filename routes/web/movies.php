@@ -1,14 +1,15 @@
 <?php
 
-Route::get('/', 'MovieController@index');
-
+/**
+ * Routes for Movies
+ */
 Route::group(['middleware' => []], function () {
 
     Route::group(['prefix' => 'movies'], function() {
 
         Route::get('/', 'MovieController@index')->name('movies.index');
 
-        Route::get('/{id}', 'MovieController@show')->name('movies.show');
+        Route::get('/{movie}', 'MovieController@show')->name('movies.show');
 
         Route::get('/create', 'MovieController@create')->name('movies.create');
 

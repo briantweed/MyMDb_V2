@@ -69,6 +69,22 @@ return [
 
     'timezone' => 'UTC',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Date Formats
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default date formats for your application, which
+    | will be used by the PHP date and date-time functions. We have gone
+    | ahead and set this to a sensible default for you out of the box.
+    |
+    */
+
+    'date_store' => env('DATE_STORE', 'Y-m-d H:i:s'),
+    'date_display' => env('DATE_DISPLAY', 'l jS F Y'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -172,6 +188,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ComponentServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
