@@ -73,7 +73,7 @@
 
         @h2 Cast @endh2
 
-        @foreach($movie->starringRoles as $cast)
+        @foreach($movie->mainCast as $cast)
             @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 
@@ -81,7 +81,7 @@
             <br>
         @endif
 
-        @foreach($movie->otherRoles as $cast)
+        @foreach($movie->supportingCast as $cast)
             @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 

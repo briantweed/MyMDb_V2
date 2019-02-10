@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Model;
+
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
@@ -11,7 +13,21 @@ use App\Contracts\PositionInterface;
 class Person extends Model implements PositionInterface
 {
 
+    /**
+     * --------------------
+     *  TRAITS
+     * --------------------
+     */
+
 	use PositionTrait;
+
+
+
+    /**
+     * --------------------
+     *  VARIABLES
+     * --------------------
+     */
 
 	protected $fillable = array(
 		'forename',
@@ -30,6 +46,13 @@ class Person extends Model implements PositionInterface
 		'updated_at'
 	];
 
+
+
+    /**
+     * --------------------
+     *  RELATIONS
+     * --------------------
+     */
 
 	public function roles()
 	{
@@ -72,6 +95,13 @@ class Person extends Model implements PositionInterface
 	}
 
 
+
+    /**
+     * --------------------
+     *  ACCESSORS
+     * --------------------
+     */
+
 	public function getFullnameAttribute()
 	{
 		return $this->forename . ' ' . $this->surname;
@@ -84,6 +114,13 @@ class Person extends Model implements PositionInterface
 		return $date->diffInYears($this->birthday);
 	}
 
+
+
+    /**
+     * --------------------
+     *  SCOPES
+     * --------------------
+     */
 
 	public function scopeAreStars($query, bool $bool = true)
     {

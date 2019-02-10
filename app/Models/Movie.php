@@ -14,7 +14,21 @@ use App\Contracts\PositionInterface;
 class Movie extends Model implements PositionInterface
 {
 
+    /**
+     * --------------------
+     *  TRAITS
+     * --------------------
+     */
+
 	use PositionTrait;
+
+
+
+    /**
+     * --------------------
+     *  VARIABLES
+     * --------------------
+     */
 
 	protected $fillable = [
 		'name',
@@ -41,6 +55,13 @@ class Movie extends Model implements PositionInterface
     ];
 
 
+
+    /**
+     * --------------------
+     *  RELATIONS
+     * --------------------
+     */
+
     public function cast()
     {
         return $this->belongsToMany(Person::class, 'cast')
@@ -49,8 +70,7 @@ class Movie extends Model implements PositionInterface
     }
 
 
-
-    public function starringRoles()
+    public function mainCast()
     {
         return $this->belongsToMany(Person::class, 'cast')
             ->withPivot('id', 'character', 'star')
@@ -59,8 +79,7 @@ class Movie extends Model implements PositionInterface
     }
 
 
-
-    public function otherRoles()
+    public function supportingCast()
     {
         return $this->belongsToMany(Person::class, 'cast')
             ->withPivot('id', 'character', 'star')
@@ -115,11 +134,16 @@ class Movie extends Model implements PositionInterface
 
 
 
+    /**
+     * --------------------
+     *  ACCESSORS
+     * --------------------
+     */
+
     public function getRunningTimeAttribute($value)
     {
         return $value . ' mins';
     }
-
 
 
     public function getImagePathAttribute()
@@ -136,11 +160,25 @@ class Movie extends Model implements PositionInterface
     }
 
 
+
+    /**
+     * --------------------
+     *  MUTATORS
+     * --------------------
+     */
+
     public function setPurchasedAttribute($date)
     {
         return $date->format(config('app.date_store'));
     }
 
+
+
+    /**
+     * --------------------
+     *  SCOPES
+     * --------------------
+     */
 
 	public function scopeByReleaseDate($query, string $direction = 'desc')
 	{
