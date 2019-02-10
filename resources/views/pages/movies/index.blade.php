@@ -30,7 +30,7 @@
                     <tr>
                         <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
                         <td>{{ $movie->released }}</td>
-                        <td>{{ $movie->running_time }}</td>
+                        <td>{{ $movie->runningTimeInMinutes }}</td>
                         <td>{{ $movie->format->type }}</td>
                         <td>{{ $movie->studio->name }}</td>
                         <td>{{ $movie->certificate->title }}</td>

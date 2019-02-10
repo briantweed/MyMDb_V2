@@ -144,7 +144,7 @@ class Movie extends Model implements PositionInterface
 
     public function getRunningTimeInMinutesAttribute()
     {
-        return $this->running_time . ' mins';
+        return $this->running_time . 'mins';
     }
 
 
@@ -152,7 +152,7 @@ class Movie extends Model implements PositionInterface
     {
         if($this->running_time < 60)
         {
-            return $this->running_time . ' mins';
+            return $this->running_time . 'mins';
         }
         else {
             $hours = floor($this->running_time / 60);
