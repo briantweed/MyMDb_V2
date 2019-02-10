@@ -77,7 +77,7 @@
             @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 
-        @if($movie->otherRoles->count())
+        @if($movie->supportingCast->count())
             <br>
         @endif
 

@@ -1,4 +1,4 @@
-$white:    #fff !default;
+$white:    #ccc !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -32,7 +32,7 @@ $dark:          $gray-900 !default;
 
 // Body
 
-$body-bg:                   $gray-900 !default;
+$body-bg:                   #202028 !default;
 $body-color:                #aaa !default;
 
 // Links
@@ -80,7 +80,7 @@ $nav-tabs-link-active-border-color: $nav-tabs-border-color !default;
 
 // Navbar
 
-$navbar-padding-y:                  0 !default;
+$navbar-padding-y:                  .7rem !default;
 
 $navbar-dark-hover-color:           $white !default;
 
