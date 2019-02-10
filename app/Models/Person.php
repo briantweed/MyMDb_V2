@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Http\Traits\PositionTrait;
@@ -29,6 +30,8 @@ class Person extends Model implements PositionInterface
      * --------------------
      */
 
+    protected $perPage = 20;
+
 	protected $fillable = array(
 		'forename',
 		'surname',
@@ -41,9 +44,7 @@ class Person extends Model implements PositionInterface
 
 	protected $dates = [
 		'birthday',
-		'deceased',
-		'created_at',
-		'updated_at'
+		'deceased'
 	];
 
 
@@ -110,9 +111,59 @@ class Person extends Model implements PositionInterface
 
 	public function getAgeAttribute()
 	{
-		$date = $this->deceased ?? Carbon::now();
-		return $date->diffInYears($this->birthday);
+	    if($this->birthday !== NULL)
+        {
+		    $date = $this->deceased ?? Carbon::now();
+		    return $date->diffInYears($this->birthday);
+        }
+	    return '---';
 	}
+
+
+    public function getImagePathAttribute()
+    {
+        return URL::asset('/images/people/' . $this->image);
+    }
+
+
+
+    public function getBannerImagePathAttribute()
+    {
+        $movie = $this->roles->random();
+        return URL::asset('/images/covers/' . $movie->image);
+    }
+
+
+    public function getBioWithLinksAttribute()
+    {
+        return nl2br( preg_replace_callback('/\{{(.*?)}}/', function($m)
+        {
+            $crumbs = explode("(", $m[1]);
+            $movieName = trim($crumbs[0]);
+
+            $query = Movie::whereName($movieName);
+
+            if (isset($crumbs[1]))
+            {
+                $releaseYear = rtrim($crumbs[1], ")");
+                if (is_integer($releaseYear))
+                {
+                    $query->whereReleased($releaseYear);
+                }
+            }
+
+            $movie = $query->first();
+
+            if ($movie)
+            {
+                return "<a href='/movies/".$movie->id."'><b>".$movie->name." (".$movie->released.")</b></a>";
+            }
+            else
+            {
+                return $m[1];
+            }
+        }, $this->bio));
+    }
 
 
 

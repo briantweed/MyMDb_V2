@@ -6,6 +6,13 @@
 @endsection
 
 
+@section('banner')
+
+    <section id="movie-banner" class="banner" style="background-image:url({{ $movie->imagePath }});"></section>
+
+@endsection
+
+
 @section('content')
 
     <section id="movie-title" class="pb-4">
@@ -27,7 +34,8 @@
             </div>
             <div class="col-12 col-sm-8 col-md-9">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
-                <p class="pt-3 mb-0">{{ $movie->bio }}</p>
+                <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}</p>
+                <p class="pt-3 mb-0">{{ nl2br($movie->bio) }}</p>
             </div>
         </div>
 
@@ -41,7 +49,7 @@
 
         @row @slot('label') Released @endslot {{ $movie->released }} @endrow
 
-        @row @slot('label') Running Time @endslot {{ $movie->running_time }} @endrow
+        @row @slot('label') Running Time @endslot {{ $movie->runningTimeInMinutes }} @endrow
 
         @row @slot('label') Format @endslot {{ $movie->format->type }} @endrow
 
@@ -55,13 +63,17 @@
 
         @row @slot('label') Genres @endslot
             @if( $movie->genres->count() )
-                @foreach( $movie->genres as $genre ) {{ $genre->type }}; @endforeach
+                @foreach( $movie->genres as $genre )
+                    {{ $genre->type }}@if(!$loop->last),@endif
+                @endforeach
             @else --- @endif
         @endrow
 
         @row @slot('label') Tags @endslot
             @if( $movie->tags->count() )
-                @foreach( $movie->tags as $tag ) {{ $tag->word }}; @endforeach
+                @foreach( $movie->tags as $tag )
+                    {{ $tag->word }}@if(!$loop->last),@endif
+            @endforeach
             @else --- @endif
         @endrow
 
@@ -74,7 +86,7 @@
         @h2 Cast @endh2
 
         @foreach($movie->mainCast as $cast)
-            @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
+            @row @slot('label')<a href="{{ route('people.show', [$cast->id]) }}">{{ $cast->fullname }}</a>@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 
         @if($movie->supportingCast->count())
@@ -82,7 +94,7 @@
         @endif
 
         @foreach($movie->supportingCast as $cast)
-            @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
+            @row @slot('label')<a href="{{ route('people.show', [$cast->id]) }}">{{ $cast->fullname }}</a>@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 
     </section>

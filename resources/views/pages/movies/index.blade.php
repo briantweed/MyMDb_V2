@@ -16,14 +16,14 @@
         <div class="table-responsive">
             <table class='table'>
                 <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Released</th>
-                    <th>Length</th>
-                    <th>Format</th>
-                    <th>Studio</th>
-                    <th>Certificate</th>
-                </tr>
+                    <tr>
+                        <th>Title</th>
+                        <th>Released</th>
+                        <th>Length</th>
+                        <th>Format</th>
+                        <th>Studio</th>
+                        <th>Certificate</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach($movies as $movie)

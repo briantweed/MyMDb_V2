@@ -30,6 +30,8 @@ class Movie extends Model implements PositionInterface
      * --------------------
      */
 
+    protected $perPage = 20;
+
 	protected $fillable = [
 		'name',
 		'sort_name',
@@ -140,9 +142,22 @@ class Movie extends Model implements PositionInterface
      * --------------------
      */
 
-    public function getRunningTimeAttribute($value)
+    public function getRunningTimeInMinutesAttribute()
     {
-        return $value . ' mins';
+        return $this->running_time . ' mins';
+    }
+
+
+    public function getRunningTimeInHoursAttribute()
+    {
+        if($this->running_time < 60)
+        {
+            return $this->running_time . ' mins';
+        }
+        else {
+            $hours = floor($this->running_time / 60);
+            return $hours . 'hr' . ($hours == 1 ? ' ' : 's ') . str_pad(($this->running_time % 60), 2, "0", STR_PAD_LEFT) . 'mins';
+        }
     }
 
 

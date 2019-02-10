@@ -12,7 +12,10 @@
 
         @include('layouts.partials.navigation')
 
+        @yield('banner')
+
         <div class="container-fluid pt-4" style="min-height: calc(100vh - 90px);">
+
 
             <div class="row">
 

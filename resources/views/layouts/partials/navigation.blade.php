@@ -13,7 +13,13 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item">
-                <a class='nav-link mr-4' href="/"><i class="fas fa-fw fa-home mr-2"></i>Home</a>
+                <a class='nav-link mr-4' href="/"><i class="mr-2"></i>Home</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link mr-4' href="/movies"><i class="mr-2"></i>Movies</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link mr-4' href="/people"><i class="mr-2"></i>People</a>
             </li>
 
         </ul>
