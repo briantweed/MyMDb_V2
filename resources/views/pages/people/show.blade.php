@@ -44,6 +44,12 @@
 
     <section id="person-cast" class="pt-3 pb-3">
 
+        @h2 Roles @endh2
+
+        @foreach($person->roles as $role)
+            @row @slot('label') {{ $role->pivot->character }} @endslot <a href="{{ route('movies.show', [$role->id]) }}">{{ $role->name }}</a> @endrow
+        @endforeach
+
     </section>
 
 
