@@ -105,3 +105,4 @@
 @section('jquery')
     {{-- <script src="{{ mix('') }}"></script> --}}
 @endsection
+
