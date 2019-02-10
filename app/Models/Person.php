@@ -85,6 +85,12 @@ class Person extends Model implements PositionInterface
 	}
 
 
+	public function scopeAreStars($query, bool $bool = true)
+    {
+        return $query->where('star', $bool);
+    }
+
+
     public function scopeByStar($query, $direction = 'desc')
     {
         return $query->orderBy('star', 'desc');

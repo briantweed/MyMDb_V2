@@ -45,7 +45,26 @@ class Movie extends Model implements PositionInterface
     {
         return $this->belongsToMany(Person::class, 'cast')
             ->withPivot('id', 'character', 'star')
-            ->byStar()
+            ->byForename();
+    }
+
+
+
+    public function starringRoles()
+    {
+        return $this->belongsToMany(Person::class, 'cast')
+            ->withPivot('id', 'character', 'star')
+            ->areStars()
+            ->byForename();
+    }
+
+
+
+    public function otherRoles()
+    {
+        return $this->belongsToMany(Person::class, 'cast')
+            ->withPivot('id', 'character', 'star')
+            ->areStars(false)
             ->byForename();
     }
 

@@ -73,16 +73,16 @@
 
         @h2 Cast @endh2
 
-        @php $break=false @endphp
-        @foreach($movie->cast as $cast)
+        @foreach($movie->starringRoles as $cast)
             @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
-            @if($cast->pivot->star ==1)
-                @php $break=true @endphp
-            @endif
-            @if($cast->pivot->star==0 && $break==true)
-                <br/>
-                @php $break=false @endphp
-            @endif
+        @endforeach
+
+        @if($movie->otherRoles->count())
+            <br>
+        @endif
+        
+        @foreach($movie->otherRoles as $cast)
+            @row @slot('label'){{ $cast->fullname }}@endslot {{ $cast->pivot->character }} @endrow
         @endforeach
 
     </section>
