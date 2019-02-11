@@ -58,7 +58,8 @@ class Person extends Model implements PositionInterface
 	public function roles()
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
-			->withPivot('id', 'character');
+			->withPivot('id', 'character')
+            ->byReleaseDate();
 	}
 
 

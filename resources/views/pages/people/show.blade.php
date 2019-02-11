@@ -47,7 +47,7 @@
         @h2 Roles @endh2
 
         @foreach($person->roles as $role)
-            @row @slot('label') {{ $role->pivot->character }} @endslot <a href="{{ route('movies.show', [$role->id]) }}">{{ $role->name }}</a> @endrow
+            @row @slot('label') {{ $role->pivot->character }} @endslot <a href="{{ route('movies.show', [$role->id]) }}">{{ $role->name }} ({{ $role->released }})</a> @endrow
         @endforeach
 
     </section>
