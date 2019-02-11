@@ -46,9 +46,17 @@
 
         @h2 Roles @endh2
 
-        @foreach($person->roles as $role)
-            @row @slot('label') {{ $role->pivot->character }} @endslot <a href="{{ route('movies.show', [$role->id]) }}">{{ $role->name }} ({{ $role->released }})</a> @endrow
-        @endforeach
+        <div class="row">
+
+            @foreach($person->roles as $movie)
+                <div class="col-lg-2 col-md-3 col-sm-4 pb-2 text-center ">
+                    <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->fullname }} poster"><br>
+                    <small>
+                    {{ $movie->name }} ({{ $movie->released }}) <br>
+                    </small>
+                </div>
+            @endforeach
+        </div>
 
     </section>
 
