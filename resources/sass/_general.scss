@@ -1,8 +1,14 @@
+
 body {
+    background: #101010;
+    background: linear-gradient(to bottom, #101040, #060606);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Noto Sans', sans-serif;
 }
 
-h1, h2 {
+h1, h2, h3, h4, h5 {
     font-family: 'Noto Serif', sans-serif;
 }
 
