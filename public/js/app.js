@@ -36473,8 +36473,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\MyMDb_v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\MyMDb_v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/btweed/Projects/MyMDb_V2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/btweed/Projects/MyMDb_V2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
