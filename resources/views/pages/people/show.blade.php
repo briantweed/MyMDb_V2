@@ -29,10 +29,10 @@
     <section id="person-description" class="pb-3">
 
         <div class="row">
-            <div class="col-12 col-sm-4 col-md-3">
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2">
                 <img class="img-fluid pb-3" src="{{ $person->imagePath }}" alt="{{ $person->fullname }} poster">
             </div>
-            <div class="col-12 col-sm-8 col-md-9">
+            <div class="col-12 col-sm-8 col-md-9 col-lg-8 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $person->fullname }}</h1>
                 <p class="pt-3 mb-0">{!! nl2br($person->bioWithLinks) !!}</p>
             </div>
