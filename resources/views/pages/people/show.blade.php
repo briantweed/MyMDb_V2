@@ -49,7 +49,7 @@
         <div class="row">
 
             @foreach($person->roles as $movie)
-                <div class="col-lg-2 col-md-3 col-sm-4 pb-2 text-center ">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center ">
                     <a href="{{ route('movies.show', [$movie->id]) }}">
                         <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}">
                     </a>

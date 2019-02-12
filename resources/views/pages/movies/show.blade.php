@@ -29,10 +29,10 @@
     <section id="movie-description" class="pb-3">
 
         <div class="row">
-            <div class="col-12 col-sm-4 col-md-3">
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2">
                 <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }} poster">
             </div>
-            <div class="col-12 col-sm-8 col-md-9">
+            <div class="col-12 col-sm-8 col-md-9 col-lg-6 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
                 <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}</p>
                 <p class="pt-3 mb-0">{{ nl2br($movie->bio) }}</p>
