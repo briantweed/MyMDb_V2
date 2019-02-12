@@ -41,7 +41,6 @@
 
     </section>
 
-    <hr>
 
     <section id="movie-details" class="pt-3 pb-3">
 
@@ -79,34 +78,44 @@
 
     </section>
 
-    <hr>
 
     <section id="cast-details" class="pt-3 pb-3">
 
         @h2 Cast @endh2
 
-        @foreach($movie->mainCast as $cast)
-            @row @slot('label')<a href="{{ route('people.show', [$cast->id]) }}">{{ $cast->fullname }}</a>@endslot {{ $cast->pivot->character }} @endrow
-        @endforeach
+        <div class="row">
 
-        @if($movie->supportingCast->count())
-            <br>
-        @endif
+            @foreach($movie->mainCast as $cast)
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                    <a href="{{ route('people.show', [$cast->id]) }}">
+                        <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }}">
+                    </a>
+                </div>
+            @endforeach
 
-        @foreach($movie->supportingCast as $cast)
-            @row @slot('label')<a href="{{ route('people.show', [$cast->id]) }}">{{ $cast->fullname }}</a>@endslot {{ $cast->pivot->character }} @endrow
-        @endforeach
+            @foreach($movie->supportingCast as $cast)
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                    <a href="{{ route('people.show', [$cast->id]) }}">
+                        <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }}">
+                    </a>
+                </div>
+            @endforeach
+
+        </div>
 
     </section>
 
-    <hr>
 
     <section id="crew-details" class="pt-3 pb-5">
 
         @h2 Crew @endh2
 
-        @foreach($movie->crew as $crew)
-            @row @slot('label'){{ $crew->fullname }}@endslot {{ $crew->pivot->position }} @endrow
+        @foreach($movie->crew as $cast)
+            <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                <a href="{{ route('people.show', [$cast->id]) }}">
+                    <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }}">
+                </a>
+            </div>
         @endforeach
 
     </section>

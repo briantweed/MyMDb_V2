@@ -50,10 +50,9 @@
 
             @foreach($person->roles as $movie)
                 <div class="col-lg-2 col-md-3 col-sm-4 pb-2 text-center ">
-                    <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->fullname }} poster"><br>
-                    <small>
-                    {{ $movie->name }} ({{ $movie->released }}) <br>
-                    </small>
+                    <a href="{{ route('movies.show', [$movie->id]) }}">
+                        <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}">
+                    </a>
                 </div>
             @endforeach
         </div>
