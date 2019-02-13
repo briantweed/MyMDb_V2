@@ -85,7 +85,7 @@ class Person extends Model implements PositionInterface
 	}
 
 
-	public function scripted()
+	public function wrote()
 	{
 		return $this->getPosition(self::WRITER);
 	}
@@ -130,7 +130,7 @@ class Person extends Model implements PositionInterface
 
     public function getBannerImagePathAttribute()
     {
-        $movie = $this->roles->random();
+        $movie = count($this->roles) ? $this->roles->random() : $this->positions->random();
         return URL::asset('/images/covers/' . $movie->image);
     }
 
@@ -189,6 +189,12 @@ class Person extends Model implements PositionInterface
     public function scopeByForename($query, $direction = 'asc')
 	{
 		return $query->orderBy('forename', 'asc');
+	}
+
+
+    public function scopeBySurname($query, $direction = 'asc')
+	{
+		return $query->orderBy('surname', 'asc');
 	}
 
 }

@@ -40,32 +40,53 @@
 
     </section>
 
-    <hr>
+    @if($person->roles->count())
+        <section id="person-cast" class="pt-3 pb-3">
 
-    <section id="person-cast" class="pt-3 pb-3">
+            @h2 Roles @endh2
 
-        @h2 Roles @endh2
+            <div class="row">
 
-        <div class="row">
+                @foreach($person->roles as $movie)
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center ">
+                        <a href="{{ route('movies.show', [$movie->id]) }}">
+                            <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}" title="{{ $movie->name }}">
+                        </a>
+                    </div>
+                @endforeach
 
-            @foreach($person->roles as $movie)
-                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center ">
-                    <a href="{{ route('movies.show', [$movie->id]) }}">
-                        <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}">
-                    </a>
-                </div>
-            @endforeach
-        </div>
+            </div>
 
-    </section>
+        </section>
+    @endif
 
+    @if($person->directed->count())
+        @include('pages.partials.movie-poster', [
+            'heading' => 'Director',
+            'movies' => $person->directed
+        ])
+    @endif
 
-    <hr>
+    @if($person->produced->count())
+        @include('pages.partials.movie-poster', [
+            'heading' => 'Writer',
+            'movies' => $person->produced
+        ])
+    @endif
 
-    <section id="person-crew" class="pt-3 pb-3">
+    @if($person->wrote->count())
+        @include('pages.partials.movie-poster', [
+            'heading' => 'Writer',
+            'movies' => $person->wrote
+        ])
+    @endif
 
-    </section>
-
+    @if($person->scored->count())
+        @include('pages.partials.movie-poster', [
+            'heading' => 'Composer',
+            'movies' => $person->scored
+        ])
+    @endif
 
 @endsection
 

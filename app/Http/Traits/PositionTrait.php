@@ -2,13 +2,17 @@
 
 namespace App\Http\Traits;
 
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Movie;
+
 
 trait PositionTrait
 {
 
     public function scopeByPosition($query)
     {
-        return $query->orderByRaw(\DB::raw("FIELD(position,". sprintf("'%s'", implode("','", self::CREW_POSITIONS ) ) ." )"));
+        return $query->orderByRaw(DB::raw("FIELD(position,". sprintf("'%s'", implode("','", self::CREW_POSITIONS ) ) ." )"));
     }
 
 

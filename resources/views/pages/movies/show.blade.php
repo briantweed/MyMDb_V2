@@ -92,7 +92,9 @@
                     </a>
                 </div>
             @endforeach
+        </div>
 
+        <div class="row">
             @foreach($movie->supportingCast as $cast)
                 <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
                     <a href="{{ route('people.show', [$cast->id]) }}">
@@ -110,13 +112,16 @@
 
         @h2 Crew @endh2
 
-        @foreach($movie->crew as $cast)
-            <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
-                <a href="{{ route('people.show', [$cast->id]) }}">
-                    <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }}">
-                </a>
-            </div>
-        @endforeach
+        <div class="row">
+            @foreach($movie->crew as $cast)
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                    <a href="{{ route('people.show', [$cast->id]) }}">
+                        <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }}">
+                    </a>
+                </div>
+            @endforeach
+
+        </div>
 
     </section>
 
