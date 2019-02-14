@@ -1,4 +1,4 @@
-<section id="person-crew" class="pt-3 pb-3">
+<section class="pt-3 pb-3">
 
     @h2 {{ $heading }} @endh2
 

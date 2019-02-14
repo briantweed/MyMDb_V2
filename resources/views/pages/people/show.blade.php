@@ -34,6 +34,15 @@
             </div>
             <div class="col-12 col-sm-8 col-md-9 col-lg-8 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $person->fullname }}</h1>
+                <p>
+                    @if($person->birthday)
+                        {{ $person->born }}
+                        @if($person->deceased)
+                             - {{ $person->died }}
+                        @endif
+                        ({{ $person->age }})
+                    @endif
+                </p>
                 <p class="pt-3 mb-0">{!! nl2br($person->bioWithLinks) !!}</p>
             </div>
         </div>
@@ -50,7 +59,7 @@
                 @foreach($person->roles as $movie)
                     <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center ">
                         <a href="{{ route('movies.show', [$movie->id]) }}">
-                            <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}" title="{{ $movie->name }}">
+                            <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}" title="{{ $movie->name }} - {{ $movie->pivot->character }}">
                         </a>
                     </div>
                 @endforeach
