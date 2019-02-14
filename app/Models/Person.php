@@ -59,7 +59,7 @@ class Person extends Model implements PositionInterface
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
 			->withPivot('id', 'character')
-            ->byReleaseDate();
+            ->bySortName();
 	}
 
 
@@ -67,7 +67,7 @@ class Person extends Model implements PositionInterface
 	{
 		return $this->belongsToMany(Movie::class, 'crew', 'person_id', 'movie_id')
 			->withPivot('id', 'position')
-			->byReleaseDate()
+			->bySortname()
 			->byPosition()
 			->orderBy('name', 'asc');
 	}
@@ -85,7 +85,7 @@ class Person extends Model implements PositionInterface
 	}
 
 
-	public function scripted()
+	public function wrote()
 	{
 		return $this->getPosition(self::WRITER);
 	}
@@ -121,6 +121,26 @@ class Person extends Model implements PositionInterface
 	}
 
 
+	public function getBornAttribute()
+	{
+	    if($this->birthday !== NULL)
+        {
+		    return $this->birthday->format('jS F Y');
+        }
+	    return null;
+	}
+
+
+	public function getDiedAttribute()
+	{
+	    if($this->deceased !== NULL)
+        {
+		    return $this->deceased->format('jS F Y');
+        }
+	    return null;
+	}
+
+
     public function getImagePathAttribute()
     {
         return URL::asset('/images/people/' . $this->image);
@@ -130,7 +150,7 @@ class Person extends Model implements PositionInterface
 
     public function getBannerImagePathAttribute()
     {
-        $movie = $this->roles->random();
+        $movie = count($this->roles) ? $this->roles->random() : $this->positions->random();
         return URL::asset('/images/covers/' . $movie->image);
     }
 
@@ -189,6 +209,12 @@ class Person extends Model implements PositionInterface
     public function scopeByForename($query, $direction = 'asc')
 	{
 		return $query->orderBy('forename', 'asc');
+	}
+
+
+    public function scopeBySurname($query, $direction = 'asc')
+	{
+		return $query->orderBy('surname', 'asc');
 	}
 
 }

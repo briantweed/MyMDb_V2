@@ -12,7 +12,7 @@ class PersonController extends Controller
 
     public function index()
     {
-        $people = Person::byForename()->paginate();
+        $people = Person::byForename()->bySurname()->paginate();
         return view('pages.people.index', [
             'people' => $people
         ]);
