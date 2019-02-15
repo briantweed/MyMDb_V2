@@ -3,32 +3,17 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Model;
-
 use App\Http\Traits\{FilterTrait, PositionTrait};
 use App\Contracts\PositionInterface;
 
-/**
- * Class Movie
- *
- * - Traits
- * - Variables
- * - Boot
- * - Relationships
- * - Accessors
- * - Mutators
- * - Scopes
- * - Methods
- */
+
 class Movie extends Model implements PositionInterface
 {
 
 	use FilterTrait;
 	use PositionTrait;
-
-    protected $perPage = 20;
 
 	protected $fillable = [
 		'name',

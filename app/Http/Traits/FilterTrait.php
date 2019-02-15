@@ -11,7 +11,15 @@ trait FilterTrait
         $model = new $class();
         $query = $model->newQuery();
 
-        foreach($request->all() as $filter => $value)
+        $filters = $request->all();
+
+        $orderBy = array_key_exists('order', $filters) ? $filters['order'] : false;
+        unset($filters['order']);
+
+        $sortBy = array_key_exists('sort', $filters) ? $filters['sort'] : '';
+        unset($filters['sort']);
+
+        foreach($filters as $filter => $value)
         {
             if(isset($value))
             {
@@ -21,6 +29,16 @@ trait FilterTrait
                     $scopeName = 'where'.$filter;
                     $query->$scopeName($value);
                 }
+            }
+        }
+
+        if($orderBy)
+        {
+            $scopeMethod = 'scopeBy'.$orderBy;
+            if(method_exists($model, $scopeMethod))
+            {
+                $scopeName = 'by'.$orderBy;
+                $query->$scopeName($sortBy);
             }
         }
         return $query;

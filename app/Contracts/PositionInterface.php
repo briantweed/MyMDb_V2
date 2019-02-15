@@ -20,4 +20,8 @@ interface PositionInterface
         self::COMPOSER
     ];
 
+    public function scopeByPosition($query);
+
+    public function getPosition(string $position);
+
 }
