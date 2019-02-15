@@ -7,28 +7,26 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Http\Traits\PositionTrait;
+use App\Http\Traits\{FilterTrait, PositionTrait};
 use App\Contracts\PositionInterface;
 
-
+/**
+ * Class Movie
+ *
+ * - Traits
+ * - Variables
+ * - Boot
+ * - Relationships
+ * - Accessors
+ * - Mutators
+ * - Scopes
+ * - Methods
+ */
 class Movie extends Model implements PositionInterface
 {
 
-    /**
-     * --------------------
-     *  TRAITS
-     * --------------------
-     */
-
+	use FilterTrait;
 	use PositionTrait;
-
-
-
-    /**
-     * --------------------
-     *  VARIABLES
-     * --------------------
-     */
 
     protected $perPage = 20;
 
@@ -56,13 +54,6 @@ class Movie extends Model implements PositionInterface
         'duplicate' => 'boolean'
     ];
 
-
-
-    /**
-     * --------------------
-     *  RELATIONS
-     * --------------------
-     */
 
     public function cast()
     {
@@ -135,13 +126,6 @@ class Movie extends Model implements PositionInterface
 	}
 
 
-
-    /**
-     * --------------------
-     *  ACCESSORS
-     * --------------------
-     */
-
     public function getRunningTimeInMinutesAttribute()
     {
         return $this->running_time . 'mins';
@@ -175,25 +159,29 @@ class Movie extends Model implements PositionInterface
     }
 
 
-
-    /**
-     * --------------------
-     *  MUTATORS
-     * --------------------
-     */
-
     public function setPurchasedAttribute($date)
     {
         return $date->format(config('app.date_store'));
     }
 
 
+    public function scopeWhereName($query, string $name)
+    {
+        return $query->where('name', 'like', '%'.$name.'%');
+    }
 
-    /**
-     * --------------------
-     *  SCOPES
-     * --------------------
-     */
+
+    public function scopeWhereReleased($query, int $year)
+    {
+        return $query->where('released', $year);
+    }
+
+
+    public function scopeWhereRating($query, int $rating)
+    {
+        return $query->where('rating', $rating);
+    }
+
 
 	public function scopeByReleaseDate($query, string $direction = 'desc')
 	{

@@ -13,7 +13,9 @@
 
 
     <form action="{{ route('movies.filter') }}">
-        <input type="text" name="title" id="title">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="released" placeholder="released">
+        <input type="text" name="rating" placeholder="rating">
         <input type="submit" value="submit" class="btn btn-success">
     </form>
 

@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Movie;
-use App\Searches\MovieSearch;
 
 
 class MovieController extends Controller
 {
-
-    use MovieSearch;
-
 
     public function __construct()
     {
@@ -31,7 +26,7 @@ class MovieController extends Controller
 
     public function filter(Request $request)
     {
-        $movies = $this->applyFilters($request);
+        $movies = Movie::applyFilters($request)->paginate();
         return view('pages.movies.index', [
             'movies' => $movies
         ]);
