@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Filters;
+namespace App\Searches\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
 use App\Contracts\Filter;
 
 
-class Format implements Filter
+class Length implements Filter
 {
 
     public static function apply(Builder $builder, $value)
     {
-        return $builder->where('released', $value);
+        return $builder->where('running_time', $value);
     }
 
 }

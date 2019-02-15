@@ -2,10 +2,9 @@
 
 namespace App\Searches;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
-
 use App\Models\Movie;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 
 trait MovieSearch
@@ -14,6 +13,7 @@ trait MovieSearch
     public function applyFilters(Request $filters)
     {
         $query = $this->buildQueryFromFilters($filters, (new Movie)->newQuery());
+        echo $query->toSql();
         return $this->getResults($query);
     }
 
@@ -23,6 +23,7 @@ trait MovieSearch
         foreach($filters->all() as $filter => $value)
         {
             $filterPath = $this->getFilterPath($filter);
+            echo $filterPath;
             if($this->isExistingFilter($filterPath))
             {
                 $query = $filterPath::apply($query, $value);

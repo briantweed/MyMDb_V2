@@ -11,6 +11,12 @@
 
 @section('content')
 
+
+    <form action="{{ route('movies.filter') }}">
+        <input type="text" name="title" id="title">
+        <input type="submit" value="submit" class="btn btn-success">
+    </form>
+
     <section>
 
         <div class="table-responsive">
