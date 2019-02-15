@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Movie;
+use App\Searches\MovieSearch;
 
 
 class MovieController extends Controller
 {
+
+    use MovieSearch;
+
 
     public function __construct()
     {
@@ -19,6 +23,15 @@ class MovieController extends Controller
     public function index()
     {
         $movies = Movie::bySortName()->paginate();
+        return view('pages.movies.index', [
+            'movies' => $movies
+        ]);
+    }
+
+
+    public function filter(Request $request)
+    {
+        $movies = $this->applyFilters($request);
         return view('pages.movies.index', [
             'movies' => $movies
         ]);
