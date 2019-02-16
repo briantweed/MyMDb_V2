@@ -3,16 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
-use App\Http\Traits\{FilterTrait, PositionTrait};
-use App\Contracts\{FilterInterface, PositionInterface, MovieInterface};
+use App\Http\Traits\PositionTrait;
+use App\Contracts\{MovieInterface, PositionInterface};
 
 
-class Movie extends Model implements FilterInterface, PositionInterface, MovieInterface
+class Movie extends BaseModel implements PositionInterface, MovieInterface
 {
-
-	use FilterTrait;
 
 	use PositionTrait;
 
@@ -236,7 +233,7 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
 
 
     /**
-     * Scope - return movies whose title is like the given string
+     * Scope - return movies whose title is like the given name
      * @param $query
      * @param string $name
      * @return mixed
@@ -248,7 +245,7 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
 
 
     /**
-     * Scope - return movies released in the given year
+     * Scope - return movies released in the selected year
      * @param $query
      * @param int $year
      * @return mixed
@@ -260,7 +257,7 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
 
 
     /**
-     * Scope - return movies with match the given rating
+     * Scope - return movies that match the selected rating
      * @param $query
      * @param int $rating
      * @return mixed
@@ -268,6 +265,30 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
     public function scopeWhereRating($query, int $rating)
     {
         return $query->where('rating', $rating);
+    }
+
+
+    /**
+     * Scope - return movies that match the selected certificate
+     * @param $query
+     * @param int $certificate
+     * @return mixed
+     */
+    public function scopeWhereCertificate($query, int $certificate)
+    {
+        return $query->where('certificate_id', $certificate);
+    }
+
+
+    /**
+     * Scope - return movies that match the selected studio
+     * @param $query
+     * @param int $studio
+     * @return mixed
+     */
+    public function scopeWhereStudio($query, int $studio)
+    {
+        return $query->where('studio_id', $studio);
     }
 
 
@@ -333,9 +354,15 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
                 ],
                 [
                     "label"   => "Certificate",
-                    "field"   => "certificate_id",
+                    "field"   => "certificate",
                     "type"    => "select",
                     "options" => (new Certificate)->getCertificates()
+                ],
+                [
+                    "label"   => "Studio",
+                    "field"   => "studio",
+                    "type"    => "select",
+                    "options" => (new Studio)->getStudios()
                 ]
             ]
         ];

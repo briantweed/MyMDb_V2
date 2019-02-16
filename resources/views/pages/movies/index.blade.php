@@ -18,7 +18,7 @@
                 <select name="field_{{ $filter['field'] }}" id="field_{{ $filter['field'] }}">
                     <option value="">- select -</option>
                     @foreach($filter['options'] as $key => $option)
-                        <option @if(request('field_'.$filter['field']) == $key) selected @endif value="{{ $option }}">{{ $option }}</option>
+                        <option @if(request('field_'.$filter['field']) == $key) selected @endif value="{{ $key }}">{{ $option }}</option>
                     @endforeach
                 </select>
             @else

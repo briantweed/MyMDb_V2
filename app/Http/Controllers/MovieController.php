@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Searches\SearchFilter;
 use App\Models\Movie;
 
 
@@ -30,7 +31,10 @@ class MovieController extends Controller
 
     public function filter(Request $request)
     {
-        $movies = Movie::applyFilters($request)->paginate();
+        $movies = (new SearchFilter($this->model, $request))->apply()
+            ->bySortName()
+            ->paginate();
+
         return view('pages.movies.index', [
             'movies' => $movies,
             'filters' => $this->model->filters

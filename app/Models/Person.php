@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Model;
-
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
