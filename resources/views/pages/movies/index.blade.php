@@ -13,8 +13,17 @@
 
 
     <form class="mb-3" action="{{ route('movies.filter') }}">
-        @foreach($filters as $field => $label)
-            <input type="text" name="field_{{ $field }}" placeholder="{{ $label }}" value="{{ request('field_'.$field) }}">
+        @foreach($filters['fields'] as $filter)
+            @if( $filter['type'] == 'select')
+                <select name="field_{{ $filter['field'] }}" id="field_{{ $filter['field'] }}">
+                    <option value="">- select -</option>
+                    @foreach($filter['options'] as $key => $option)
+                        <option @if(request('field_'.$filter['field']) == $key) selected @endif value="{{ $option }}">{{ $option }}</option>
+                    @endforeach
+                </select>
+            @else
+                <input type="{{ $filter['type'] }}" name="field_{{ $filter['field'] }}" placeholder="{{ $filter['label'] }}" value="{{ request('field_'.$filter['field']) }}">
+            @endif
         @endforeach
         <input type="submit" value="submit" class="btn btn-sm btn-secondary">
     </form>
@@ -39,9 +48,9 @@
                         <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
                         <td>{{ $movie->released }}</td>
                         <td>{{ $movie->runningTimeInMinutes }}</td>
-                        <td>{{ $movie->format->type }}</td>
-                        <td>{{ $movie->studio->name }}</td>
-                        <td>{{ $movie->certificate->title }}</td>
+                        <td>{{ optional($movie->format)->type }}</td>
+                        <td>{{ optional($movie->studio)->name }}</td>
+                        <td>{{ optional($movie->certificate)->title ?? '---'}}</td>
                     </tr>
                 @endforeach
                 </tbody>

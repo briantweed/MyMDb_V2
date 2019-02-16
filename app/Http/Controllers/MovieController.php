@@ -11,6 +11,7 @@ class MovieController extends Controller
 
     private $model;
 
+
     public function __construct()
     {
         $this->model = new Movie;
@@ -22,7 +23,7 @@ class MovieController extends Controller
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => $this->model->getSearchables()
+            'filters' => $this->model->filters
         ]);
     }
 
@@ -32,7 +33,7 @@ class MovieController extends Controller
         $movies = Movie::applyFilters($request)->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => $this->model->getSearchables()
+            'filters' => $this->model->filters
         ]);
     }
 
