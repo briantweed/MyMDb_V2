@@ -48,9 +48,9 @@
                         <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
                         <td>{{ $movie->released }}</td>
                         <td>{{ $movie->runningTimeInMinutes }}</td>
-                        <td>{{ optional($movie->format)->type }}</td>
-                        <td>{{ optional($movie->studio)->name }}</td>
-                        <td>{{ optional($movie->certificate)->title ?? '---'}}</td>
+                        <td>{{ $movie->format->type }}</td>
+                        <td>{{ $movie->studio->name }}</td>
+                        <td>{{ $movie->certificate->title }}</td>
                     </tr>
                 @endforeach
                 </tbody>

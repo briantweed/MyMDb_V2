@@ -113,7 +113,9 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
      */
 	public function studio()
 	{
-		return $this->belongsTo(Studio::class);
+		return $this->belongsTo(Studio::class)->withDefault([
+            'name' => 'Unknown'
+        ]);
 	}
 
 
@@ -123,8 +125,10 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
      */
 	public function format()
 	{
-		return $this->belongsTo(Format::class);
-	}
+		return $this->belongsTo(Format::class)->withDefault([
+            'type' => 'Unknown'
+        ]);
+    }
 
 
     /**
@@ -133,8 +137,10 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
      */
 	public function certificate()
 	{
-		return $this->belongsTo(Certificate::class);
-	}
+		return $this->belongsTo(Certificate::class)->withDefault([
+            'name' => 'Unknown'
+        ]);
+    }
 
 
     /**
@@ -169,7 +175,7 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
     /**
      * Accessor - get the model filers
      * @see $this->filters()
-     * @return string
+     * @return array
      */
     public function getFiltersAttribute()
     {
