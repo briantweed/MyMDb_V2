@@ -10,4 +10,6 @@ interface FilterInterface
 
     public static function applyFilters($request);
 
+    public function filters();
+
 }

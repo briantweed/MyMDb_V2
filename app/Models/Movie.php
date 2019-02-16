@@ -152,6 +152,7 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
 		return $this->belongsToMany(Genre::class);
 	}
 
+
     /**
      * Relationship - a movie can have many types of tags
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -307,10 +308,10 @@ class Movie extends Model implements FilterInterface, PositionInterface, MovieIn
 
 
     /**
-     * Array of filters that can be applied to movie
+     * Array of filters that can be applied to movie searches
      * @return array
      */
-    private function filters()
+    public function filters()
     {
         return [
             "fields" => [
