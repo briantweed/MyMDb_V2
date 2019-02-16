@@ -3,8 +3,7 @@
 namespace App\Searches;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Query\Builder;
-
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class SearchFilter
