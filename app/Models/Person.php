@@ -14,23 +14,7 @@ use App\Contracts\PositionInterface;
 class Person extends Model implements PositionInterface
 {
 
-    /**
-     * --------------------
-     *  TRAITS
-     * --------------------
-     */
-
 	use PositionTrait;
-
-
-
-    /**
-     * --------------------
-     *  VARIABLES
-     * --------------------
-     */
-
-    protected $perPage = 20;
 
 	protected $fillable = array(
 		'forename',
@@ -47,13 +31,6 @@ class Person extends Model implements PositionInterface
 		'deceased'
 	];
 
-
-
-    /**
-     * --------------------
-     *  RELATIONS
-     * --------------------
-     */
 
 	public function roles()
 	{
@@ -96,13 +73,6 @@ class Person extends Model implements PositionInterface
 		return $this->getPosition(self::COMPOSER);
 	}
 
-
-
-    /**
-     * --------------------
-     *  ACCESSORS
-     * --------------------
-     */
 
 	public function getFullnameAttribute()
 	{
@@ -186,13 +156,6 @@ class Person extends Model implements PositionInterface
         }, $this->bio));
     }
 
-
-
-    /**
-     * --------------------
-     *  SCOPES
-     * --------------------
-     */
 
 	public function scopeAreStars($query, bool $bool = true)
     {

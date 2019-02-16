@@ -3,7 +3,6 @@
 namespace App\Http\Traits;
 
 use Illuminate\Support\Facades\DB;
-
 use App\Models\Movie;
 
 

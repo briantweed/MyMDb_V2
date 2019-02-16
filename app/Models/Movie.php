@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\{FilterTrait, PositionTrait};
-use App\Contracts\PositionInterface;
+use App\Contracts\{FilterInterface, PositionInterface};
 
 
-class Movie extends Model implements PositionInterface
+class Movie extends BaseModel implements FilterInterface, PositionInterface
 {
 
 	use FilterTrait;
+
 	use PositionTrait;
 
 	protected $fillable = [
@@ -37,6 +37,13 @@ class Movie extends Model implements PositionInterface
 
     protected $casts = [
         'duplicate' => 'boolean'
+    ];
+
+    protected $searchable = [
+        'name' => 'Title',
+        'released' => 'Release Date',
+        'rating' => 'Rating',
+        'certificate_id' => 'Certificate'
     ];
 
 

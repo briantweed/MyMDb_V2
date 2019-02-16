@@ -9,9 +9,11 @@ use App\Models\Movie;
 class MovieController extends Controller
 {
 
+    private $model;
+
     public function __construct()
     {
-        //
+        $this->model = new Movie;
     }
 
 
@@ -19,7 +21,8 @@ class MovieController extends Controller
     {
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
-            'movies' => $movies
+            'movies' => $movies,
+            'filters' => $this->model->getSearchables()
         ]);
     }
 
@@ -28,7 +31,8 @@ class MovieController extends Controller
     {
         $movies = Movie::applyFilters($request)->paginate();
         return view('pages.movies.index', [
-            'movies' => $movies
+            'movies' => $movies,
+            'filters' => $this->model->getSearchables()
         ]);
     }
 
