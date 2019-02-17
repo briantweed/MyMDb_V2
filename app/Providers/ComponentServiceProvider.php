@@ -14,6 +14,8 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('layouts.components.h2', 'h2');
 
         Blade::component('layouts.components.row', 'row');
+
+        Blade::component('forms.components.form-group', 'formgroup');
     }
 
 }

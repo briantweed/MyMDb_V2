@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Searches;
+namespace App\Builders;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class SearchFilter
+ * Class SearchBuilder
  *
  * Take the submitted request fields and check each one to see
  * if it relates to a query scope defined within the model.
@@ -14,16 +14,13 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @author Brian Tweed | brtweed@outlook.com
  * @version 1.0
- * @package App\Searches
- */
-class SearchFilter
-{
+ * @package App\Builders
+ * @see config/building.php
+ *
 
-    private const FIELD_PREFIX = 'field';
-    private const WHERE_SCOPE = 'scopeWhere';
-    private const SORT_SCOPE = 'scopeBy';
-    private const WHERE = 'where';
-    private const SORT = 'by';
+ */
+class SearchBuilder
+{
 
     private $model;
     private $query;
@@ -75,10 +72,8 @@ class SearchFilter
      */
     private function setFields()
     {
-        $fields = $this->findInputByType(self::FIELD_PREFIX);
-
-        $fields = $this->removeTypeFromKey(self::FIELD_PREFIX, $fields);
-
+        $fields = $this->findInputByType(config('building.field_prefix'));
+        $fields = $this->removeTypeFromKey(config('building.field_prefix'), $fields);
         $this->fields = $fields;
     }
 
@@ -89,7 +84,7 @@ class SearchFilter
      */
     private function setOrderBy()
     {
-        $this->orderBy = array_key_exists('order', $this->filters) ? $this->filters['order'] : false;
+        $this->orderBy = array_key_exists(config('building.field_order'), $this->filters) ? $this->filters[config('building.field_order')] : false;
     }
 
 
@@ -99,7 +94,7 @@ class SearchFilter
      */
     private function setSort()
     {
-        $this->sort = array_key_exists('sort', $this->filters) ? $this->filters['sort'] : '';
+        $this->sort = array_key_exists(config('building.field_sort'), $this->filters) ? $this->filters[config('building.field_sort')] : '';
     }
 
 
@@ -127,13 +122,13 @@ class SearchFilter
     private function removeTypeFromKey(string $type, array $fields): array
     {
         return array_combine(array_map(function($field) use ($type) {
-            return preg_replace('/^'.$type.'_/', '', $field);
+            return preg_replace('/^' . $type . '_/', '', $field);
         }, array_keys($fields)), $fields);
     }
 
 
     /**
-     * Check if each field has a corresponding Scope in the Model
+     * Check if each field has a corresponding scope in the model
      * If so, add the Scope to the query
      * @since 1.0
      */
@@ -143,10 +138,10 @@ class SearchFilter
         {
             if(isset($value))
             {
-                $scopeMethod = self::WHERE_SCOPE.$field;
+                $scopeMethod = 'scope' . ucwords(config('building.where_scope')) . $field;
                 if(method_exists($this->model, $scopeMethod))
                 {
-                    $scopeName = self::WHERE.$field;
+                    $scopeName = config('building.where_scope') . $field;
                     $this->query->$scopeName($value);
                 }
             }
@@ -164,10 +159,10 @@ class SearchFilter
     {
         if($this->orderBy)
         {
-            $scopeMethod = self::SORT_SCOPE.$this->orderBy;
+            $scopeMethod = 'scope' . ucwords(config('building.sort_scope')) . $this->orderBy;
             if(method_exists($this->model, $scopeMethod))
             {
-                $scopeName = self::SORT.$this->orderBy;
+                $scopeName = config('building.sort_scope') . $this->orderBy;
                 $this->query->$scopeName($this->sort);
             }
         }

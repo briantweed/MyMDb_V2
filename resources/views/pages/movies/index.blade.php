@@ -11,61 +11,27 @@
 
 @section('content')
 
+    <main>
 
-    <form class="mb-3" action="{{ route('movies.filter') }}">
-        @foreach($filters['fields'] as $filter)
-            @if( $filter['type'] == 'select')
-                <select name="field_{{ $filter['field'] }}" id="field_{{ $filter['field'] }}">
-                    <option value="">- select -</option>
-                    @foreach($filter['options'] as $key => $option)
-                        <option @if(request('field_'.$filter['field']) == $key) selected @endif value="{{ $key }}">{{ $option }}</option>
-                    @endforeach
-                </select>
-            @else
-                <input type="{{ $filter['type'] }}" name="field_{{ $filter['field'] }}" placeholder="{{ $filter['label'] }}" value="{{ request('field_'.$filter['field']) }}">
-            @endif
-        @endforeach
-        <input type="submit" value="submit" class="btn btn-sm btn-secondary">
-    </form>
+        <div class="row">
 
-    <section>
+            <div class="col-12 col-sm-3">
 
-        <div class="table-responsive">
-            <table class='table'>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Released</th>
-                        <th>Length</th>
-                        <th>Format</th>
-                        <th>Studio</th>
-                        <th>Certificate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($movies as $movie)
-                    <tr>
-                        <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
-                        <td>{{ $movie->released }}</td>
-                        <td>{{ $movie->runningTimeInMinutes }}</td>
-                        <td>{{ $movie->format->type }}</td>
-                        <td>{{ $movie->studio->name }}</td>
-                        <td>{{ $movie->certificate->title }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+                @include('forms.filter-form', ['route' => 'movies.filter'])
+
+            </div>
+
+            <div class="col-12 col-sm-9">
+
+                @include('pages.movies.partials.movies-table')
+
+                @include('pages.partials.pagination', ['collection' => $movies])
+
+            </div>
+
         </div>
 
-        @if($movies instanceof \Illuminate\Pagination\LengthAwarePaginator )
-            <div class="row">
-                <div class="col-12">
-                    {{ $movies->appends($_GET)->links() }}
-                </div>
-            </div>
-        @endif
-        
-    </section>
+    </main>
 
 @endsection
 

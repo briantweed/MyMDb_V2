@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tag;
 
-use App\Models\Tags;
 
-
-class TagController extends Controller
+class TagController extends BaseController
 {
 
     public function __construct()

@@ -3,41 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Searches\SearchFilter;
+use Illuminate\View\View;
+use App\Builders\{FormBuilder, SearchBuilder};
 use App\Models\Movie;
 
-
-class MovieController extends Controller
+class MovieController extends BaseController
 {
 
-    private $model;
+    private $movie;
 
 
     public function __construct()
     {
-        $this->model = new Movie;
+        $this->movie = new Movie;
     }
 
 
-    public function index()
+    /**
+     * Display all movies
+     * @see FilterFormBuilder::build()
+     * @return \Illuminate\View\View
+     */
+    public function index(): View
     {
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => $this->model->filters
+            'filters' => (new FormBuilder($this->movie->filters))->build()
         ]);
     }
 
 
+    /**
+     * Display filtered movie results
+     * @see SearchBuilder::apply()
+     * @see FilterFormBuilder::build()
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
     public function filter(Request $request)
     {
-        $movies = (new SearchFilter($this->model, $request))->apply()
+        $movies = (new SearchBuilder($this->movie, $request))->apply()
             ->bySortName()
             ->paginate();
 
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => $this->model->filters
+            'filters' => (new FormBuilder($this->movie->filters))->build()
         ]);
     }
 

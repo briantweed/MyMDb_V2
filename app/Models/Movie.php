@@ -54,7 +54,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can have many cast members
+     * Relation - a movie can have many cast members
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function cast()
@@ -66,7 +66,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can have many main cast member, where star equals true
+     * Relation - a movie can have many main cast member, where star equals true
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function mainCast()
@@ -79,7 +79,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can have many other cast members, where star equals false
+     * Relation - a movie can have many other cast members, where star equals false
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function supportingCast()
@@ -92,7 +92,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can have many main crew members
+     * Relation - a movie can have many main crew members
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function crew()
@@ -105,7 +105,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie belongs to a studio
+     * Relation - a movie belongs to a studio
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 	public function studio()
@@ -117,7 +117,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie exists on a certain format e.g. DVD, Blu-ray etc.
+     * Relation - a movie exists on a certain format e.g. DVD, Blu-ray etc.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 	public function format()
@@ -129,7 +129,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie is given a certificate e.g. U, PG etc.
+     * Relation - a movie is given a certificate e.g. U, PG etc.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 	public function certificate()
@@ -141,7 +141,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can belong to many types of genres
+     * Relation - a movie can belong to many types of genres
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
 	public function genres()
@@ -151,7 +151,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relationship - a movie can have many types of tags
+     * Relation - a movie can have many types of tags
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
@@ -161,23 +161,34 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Accessor - display running time in minutes
-     * @return string
-     */
-    public function getRunningTimeInMinutesAttribute()
-    {
-        return $this->running_time . 'mins';
-    }
-
-
-    /**
-     * Accessor - get the model filers
+     * Accessor - get the model filters
      * @see $this->filters()
      * @return array
      */
     public function getFiltersAttribute()
     {
         return $this->filters();
+    }
+
+
+    /**
+     * Accessor - get the movie ratings
+     * @see $this->filters()
+     * @return array
+     */
+    public function getRatingsAttribute()
+    {
+        return self::RATINGS;
+    }
+
+
+    /**
+     * Accessor - display running time in minutes
+     * @return string
+     */
+    public function getRunningTimeInMinutesAttribute()
+    {
+        return $this->running_time . 'mins';
     }
 
 
@@ -330,39 +341,55 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Array of filters that can be applied to movie searches
+     * @see config/building.php
      * @return array
      */
     public function filters()
     {
         return [
-            "fields" => [
+            config('building.field_group') =>
+            [
                 [
-                    "label"   => "Title",
-                    "field"   => "name",
-                    "type"    => "text",
+                    config('building.field_type')    => "text",
+                    config('building.field_name')    => "name",
+                    config('building.field_label')   => "Title",
                 ],
                 [
-                    "label"   => "Release Date",
-                    "field"   => "released",
-                    "type"    => "text"
+                    config('building.field_type')    => "text",
+                    config('building.field_name')    => "released",
+                    config('building.field_label')   => "Release Date",
                 ],
                 [
-                    "label"   => "Rating",
-                    "field"   => "rating",
-                    "type"    => "select",
-                    "options" => self::RATINGS
+                    config('building.field_type')    => "select",
+                    config('building.field_name')    => "rating",
+                    config('building.field_label')   => "Rating",
+                    config('building.field_options') => $this->ratings,
                 ],
                 [
-                    "label"   => "Certificate",
-                    "field"   => "certificate",
-                    "type"    => "select",
-                    "options" => (new Certificate)->getCertificates()
+                    config('building.field_type')    => "select",
+                    config('building.field_name')    => "certificate",
+                    config('building.field_label')   => "Certificate",
+                    config('building.field_options') => (new Certificate)->getCertificates(),
                 ],
                 [
-                    "label"   => "Studio",
-                    "field"   => "studio",
-                    "type"    => "select",
-                    "options" => (new Studio)->getStudios()
+                    config('building.field_type')    => "select",
+                    config('building.field_name')    => "studio",
+                    config('building.field_label')   => "Studio",
+                    config('building.field_options') => (new Studio)->getStudios(),
+                ]
+            ],
+            config('building.button_group') =>
+            [
+                [
+                    config('building.button_type')   => "clear",
+                    config('building.button_text')   => "clear",
+                    config('building.button_class')  => "btn-secondary mr-2",
+                    config('building.button_route')  => "movies.index"
+                ],
+                [
+                    config('building.button_type')   => "submit",
+                    config('building.button_text')   => "submit",
+                    config('building.button_class')  => "btn-success",
                 ]
             ]
         ];
