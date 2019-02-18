@@ -3,22 +3,22 @@
         <thead>
         <tr>
             <th>Title</th>
-            <th>Released</th>
-            <th>Length</th>
+            <th class="text-center">Released</th>
+            <th class="text-center">Rating</th>
             <th>Format</th>
             <th>Studio</th>
-            <th>Certificate</th>
+            <th class="text-center">Certificate</th>
         </tr>
         </thead>
         <tbody>
         @foreach($movies as $movie)
             <tr>
                 <td><a href="{{ route('movies.show', [$movie->id]) }}">{{ $movie->name }}</a></td>
-                <td>{{ $movie->released }}</td>
-                <td>{{ $movie->runningTimeInMinutes }}</td>
+                <td class="text-center">{{ $movie->released }}</td>
+                <td class="text-center">{{ $movie->rating }}</td>
                 <td>{{ $movie->format->type }}</td>
                 <td>{{ $movie->studio->name }}</td>
-                <td>{{ $movie->certificate->title }}</td>
+                <td class="text-center">{{ $movie->certificate->title }}</td>
             </tr>
         @endforeach
         </tbody>

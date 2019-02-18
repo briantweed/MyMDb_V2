@@ -304,6 +304,18 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * Scope - return movies that match the selected format
+     * @param $query
+     * @param int $format
+     * @return mixed
+     */
+    public function scopeWhereFormat($query, int $format)
+    {
+        return $query->where('format_id', $format);
+    }
+
+
+    /**
      * Scope - sort movies by release date
      * @param $query
      * @param string $direction
@@ -376,6 +388,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
                     config('building.field_name')    => "studio",
                     config('building.field_label')   => "Studio",
                     config('building.field_options') => (new Studio)->getStudios(),
+                ],
+                [
+                    config('building.field_type')    => "select",
+                    config('building.field_name')    => "format",
+                    config('building.field_label')   => "Format",
+                    config('building.field_options') => (new Format)->getFormats(),
                 ]
             ],
             config('building.button_group') =>
