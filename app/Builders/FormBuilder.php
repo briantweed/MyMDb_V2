@@ -2,6 +2,7 @@
 
 namespace App\Builders;
 
+use App\Contracts\FormArray;
 
 /**
  * Class FormBuilder
@@ -19,9 +20,9 @@ class FormBuilder
     private $view;
 
 
-    public function __construct(?array $filters = [])
+    public function __construct(FormArray $formArray)
     {
-        $this->setFilters($filters);
+        $this->setFilters($formArray);
     }
 
 
@@ -39,11 +40,11 @@ class FormBuilder
 
     /**
      * Set the filters variable
-     * @param array|null $filters
+     * @param FormArray $formArray
      */
-    private function setFilters(?array $filters = [])
+    private function setFilters(FormArray $formArray)
     {
-        $this->filters = $filters ?? [];
+        $this->filters = $formArray->data;
     }
 
 
