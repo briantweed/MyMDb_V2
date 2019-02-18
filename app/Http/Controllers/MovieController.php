@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\MovieFilterForm;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Builders\{FormBuilder, SearchBuilder};
@@ -29,7 +30,7 @@ class MovieController extends BaseController
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => (new FormBuilder($this->movie->filters))->build()
+            'filters' => (new FormBuilder(new MovieFilterForm()))->build()
         ]);
     }
 
