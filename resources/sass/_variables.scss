@@ -61,7 +61,9 @@ $input-btn-padding-x:         .75rem !default;
 // Forms
 
 $input-disabled-bg:                     #ccc !default;
-
+$input-bg: rgba(0,0,0,0);
+$input-color: $gray-300;
+$input-border: $gray-300;
 // Dropdowns
 
 $dropdown-bg:                       $gray-800 !default;
