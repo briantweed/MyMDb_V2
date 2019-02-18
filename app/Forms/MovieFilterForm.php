@@ -2,11 +2,9 @@
 
 namespace App\Forms;
 
-use App\Models\Movie;
-use App\Models\Studio;
-use App\Models\Format;
-use App\Models\Certificate;
+use App\Models\{Certificate, Format, Movie, Studio};
 use App\Contracts\FormInterface;
+
 
 class MovieFilterForm implements FormInterface
 {
@@ -51,6 +49,12 @@ class MovieFilterForm implements FormInterface
                     config('building.field_name')    => "studio",
                     config('building.field_label')   => "Studio",
                     config('building.field_options') => (new Studio)->getStudios(),
+                ],
+                [
+                    config('building.field_type')    => "select",
+                    config('building.field_name')    => "format",
+                    config('building.field_label')   => "Format",
+                    config('building.field_options') => (new Format)->getFormats(),
                 ]
             ],
             config('building.button_group') => [

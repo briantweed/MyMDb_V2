@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use App\Builders\{FormBuilder, SearchBuilder};
 use App\Models\Movie;
 
+
 class MovieController extends BaseController
 {
 
@@ -42,7 +43,7 @@ class MovieController extends BaseController
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|View
      */
-    public function filter(Request $request)
+    public function filter(Request $request): View
     {
         $movies = (new SearchBuilder($this->movie, $request))->apply()
             ->bySortName()
@@ -50,12 +51,12 @@ class MovieController extends BaseController
 
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => (new FormBuilder($this->movie->filters))->build()
+            'filters' => (new FormBuilder(new MovieFilterForm()))->build()
         ]);
     }
 
 
-    public function show(Movie $movie)
+    public function show(Movie $movie): View
     {
         return view('pages.movies.show', [
             'movie' => $movie
