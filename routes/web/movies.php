@@ -11,11 +11,11 @@ Route::group(['middleware' => []], function () {
 
         Route::get('/filter', 'MovieController@filter')->name('movies.filter');
 
-        Route::get('/{movie}', 'MovieController@show')->name('movies.show');
-
         Route::get('/create', 'MovieController@create')->name('movies.create');
 
         Route::post('/store', 'MovieController@store')->name('movies.store');
+
+        Route::get('/{movie}', 'MovieController@show')->name('movies.show');
 
         Route::get('/{id}/edit', 'MovieController@edit')->name('movies.edit');
 

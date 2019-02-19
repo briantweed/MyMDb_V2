@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Forms\MovieFilterForm;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Builders\{FormBuilder, SearchBuilder};
+use App\Forms\{MovieForm, MovieFilterForm};
 use App\Models\Movie;
 
 
@@ -57,7 +57,7 @@ class MovieController extends BaseController
 
 
     /**
-     * Show selected movie.
+     * Show the selected movie.
      * @param Movie $movie
      * @return View
      */
@@ -69,9 +69,15 @@ class MovieController extends BaseController
     }
 
 
+    /**
+     * Display the form to create a new movie.
+     * @return View
+     */
     public function create()
     {
-        //
+        return view('pages.movies.create', [
+            'filters' => (new FormBuilder(new MovieForm()))->build()
+        ]);
     }
 
 
