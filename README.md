@@ -2,7 +2,10 @@
 
 MyMDb rewrite - Laravel 5.7
 
-### Recently added
+The original MyMDb was my first Laravel project and it shows. Instead of trying to upgrade from version 5.1 to 5.7 I've decided to rewrite the majority of it from scratch (pretty much everything except for the database structure wich I'm happy enough with)
+
+
+### Recently Added
 
 #### Form Builder
 
