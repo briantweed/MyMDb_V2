@@ -1,13 +1,13 @@
 @formgroup(['filter' => $filter])
     <select
         class="form-control"
-        name="{{ config('building.field_prefix') .'_'. $filter[config('building.field_name')] }}"
-        id="{{ config('building.field_prefix') .'_'. $filter[config('building.field_name')] }}"
+        name="{{ config('builder.field_prefix') .'_'. $filter[config('builder.field_name')] }}"
+        id="{{ config('builder.field_prefix') .'_'. $filter[config('builder.field_name')] }}"
     >
         <option value="">- select -</option>
-        @foreach($filter[config('building.field_options')] as $key => $option)
+        @foreach($filter[config('builder.field_options')] as $key => $option)
             <option value="{{ $key }}"
-                @if(request(config('building.field_prefix').'_'.$filter[config('building.field_name')]) == $key)
+                @if(request(config('builder.field_prefix').'_'.$filter[config('builder.field_name')]) == $key)
                     selected
                 @endif
             >

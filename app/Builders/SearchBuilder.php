@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @author Brian Tweed | brtweed@outlook.com
  * @version 1.0
  * @package App\Builders
- * @see config/building.php
+ * @see config/builder.php
  *
 
  */
@@ -72,8 +72,8 @@ class SearchBuilder
      */
     private function setFields()
     {
-        $fields = $this->findInputByType(config('building.field_prefix'));
-        $fields = $this->removeTypeFromKey(config('building.field_prefix'), $fields);
+        $fields = $this->findInputByType(config('builder.field_prefix'));
+        $fields = $this->removeTypeFromKey(config('builder.field_prefix'), $fields);
         $this->fields = $fields;
     }
 
@@ -84,7 +84,7 @@ class SearchBuilder
      */
     private function setOrderBy()
     {
-        $this->orderBy = array_key_exists(config('building.field_order'), $this->filters) ? $this->filters[config('building.field_order')] : false;
+        $this->orderBy = array_key_exists(config('builder.field_order'), $this->filters) ? $this->filters[config('builder.field_order')] : false;
     }
 
 
@@ -94,7 +94,7 @@ class SearchBuilder
      */
     private function setSort()
     {
-        $this->sort = array_key_exists(config('building.field_sort'), $this->filters) ? $this->filters[config('building.field_sort')] : '';
+        $this->sort = array_key_exists(config('builder.field_sort'), $this->filters) ? $this->filters[config('builder.field_sort')] : '';
     }
 
 
@@ -138,10 +138,10 @@ class SearchBuilder
         {
             if(isset($value))
             {
-                $scopeMethod = 'scope' . ucwords(config('building.where_scope')) . $field;
+                $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . $field;
                 if(method_exists($this->model, $scopeMethod))
                 {
-                    $scopeName = config('building.where_scope') . $field;
+                    $scopeName = config('builder.where_scope') . $field;
                     $this->query->$scopeName($value);
                 }
             }
@@ -159,10 +159,10 @@ class SearchBuilder
     {
         if($this->orderBy)
         {
-            $scopeMethod = 'scope' . ucwords(config('building.sort_scope')) . $this->orderBy;
+            $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . $this->orderBy;
             if(method_exists($this->model, $scopeMethod))
             {
-                $scopeName = config('building.sort_scope') . $this->orderBy;
+                $scopeName = config('builder.sort_scope') . $this->orderBy;
                 $this->query->$scopeName($this->sort);
             }
         }

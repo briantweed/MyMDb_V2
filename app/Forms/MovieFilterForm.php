@@ -6,68 +6,80 @@ use App\Models\{Certificate, Format, Movie, Studio};
 use App\Contracts\FormInterface;
 
 
+/**
+ * Class MovieFilterForm
+ * @see config/builder.php
+ * @package App\Forms
+ */
 class MovieFilterForm implements FormInterface
 {
 
     public $data;
 
 
+    /**
+     * MovieFilterForm constructor.
+     */
     public function __construct()
     {
         $this->data = $this->getArray();
     }
 
 
+    /**
+     * Return the data array used to build the form.
+     * @return array
+     */
     public function getArray()
     {
         return [
-            config('building.field_group') => [
+            config('builder.field_group') => [
                 [
-                    config('building.field_type')    => "text",
-                    config('building.field_name')    => "name",
-                    config('building.field_label')   => "Title",
+                    config('builder.field_type')    => "text",
+                    config('builder.field_name')    => "name",
+                    config('builder.field_label')   => "Title",
                 ],
                 [
-                    config('building.field_type')    => "text",
-                    config('building.field_name')    => "released",
-                    config('building.field_label')   => "Release Date",
+                    config('builder.field_type')    => "text",
+                    config('builder.field_name')    => "released",
+                    config('builder.field_label')   => "Release Date",
                 ],
                 [
-                    config('building.field_type')    => "select",
-                    config('building.field_name')    => "rating",
-                    config('building.field_label')   => "Rating",
-                    config('building.field_options') => (new Movie)->ratings
+                    config('builder.field_type')    => "select",
+                    config('builder.field_name')    => "rating",
+                    config('builder.field_label')   => "Rating",
+                    config('builder.field_options') => (new Movie)->ratings
                 ],
                 [
-                    config('building.field_type')    => "select",
-                    config('building.field_name')    => "certificate",
-                    config('building.field_label')   => "Certificate",
-                    config('building.field_options') => (new Certificate)->getCertificates(),
+                    config('builder.field_type')    => "select",
+                    config('builder.field_name')    => "certificate",
+                    config('builder.field_label')   => "Certificate",
+                    config('builder.field_options') => (new Certificate)->getCertificates(),
                 ],
                 [
-                    config('building.field_type')    => "select",
-                    config('building.field_name')    => "studio",
-                    config('building.field_label')   => "Studio",
-                    config('building.field_options') => (new Studio)->getStudios(),
+                    config('builder.field_type')    => "select",
+                    config('builder.field_name')    => "studio",
+                    config('builder.field_label')   => "Studio",
+                    config('builder.field_options') => (new Studio)->getStudios(),
                 ],
                 [
-                    config('building.field_type')    => "select",
-                    config('building.field_name')    => "format",
-                    config('building.field_label')   => "Format",
-                    config('building.field_options') => (new Format)->getFormats(),
+                    config('builder.field_type')    => "select",
+                    config('builder.field_name')    => "format",
+                    config('builder.field_label')   => "Format",
+                    config('builder.field_options') => (new Format)->getFormats(),
                 ]
             ],
-            config('building.button_group') => [
+            config('builder.button_group') => [
                 [
-                    config('building.button_type')   => "clear",
-                    config('building.button_text')   => "clear",
-                    config('building.button_class')  => "btn-secondary mr-2",
-                    config('building.button_route')  => "movies.index"
+                    config('builder.button_type')   => "clear",
+                    config('builder.button_text')   => "clear",
+                    config('builder.button_class')  => "btn-secondary mr-2",
+                    config('builder.button_route')  => "movies.index"
                 ],
                 [
-                    config('building.button_type')   => "submit",
-                    config('building.button_text')   => "submit",
-                    config('building.button_class')  => "btn-success",
+                    config('builder.button_type')   => "submit",
+                    config('builder.button_text')   => "submit",
+                    config('builder.button_class')  => "btn-success",
                 ]
             ]
         ];

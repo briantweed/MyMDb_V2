@@ -12,7 +12,7 @@ use App\Contracts\FormInterface;
  * @author Brian Tweed | brtweed@outlook.com
  * @version 1.0
  * @package App\Builders
- * @see config/building.php
+ * @see config/builder.php
  */
 class FormBuilder
 {
@@ -54,11 +54,11 @@ class FormBuilder
      */
     private function addFieldsToView()
     {
-        if($this->contains(config('building.field_group')))
+        if($this->contains(config('builder.field_group')))
         {
-            foreach($this->filters[config('building.field_group')] as $filter)
+            foreach($this->filters[config('builder.field_group')] as $filter)
             {
-                $this->view .= view('forms.fields.'.$filter[config('building.field_type')], [
+                $this->view .= view('forms.fields.'.$filter[config('builder.field_type')], [
                     'filter' => $filter
                 ]);
             }
@@ -71,11 +71,11 @@ class FormBuilder
      */
     private function addButtonsToView()
     {
-        if($this->contains(config('building.button_group')))
+        if($this->contains(config('builder.button_group')))
         {
-            foreach($this->filters[config('building.button_group')] as $filter)
+            foreach($this->filters[config('builder.button_group')] as $filter)
             {
-                $this->view .= view('forms.buttons.'.$filter[config('building.button_type')], [
+                $this->view .= view('forms.buttons.'.$filter[config('builder.button_type')], [
                     'filter' => $filter
                 ]);
             }

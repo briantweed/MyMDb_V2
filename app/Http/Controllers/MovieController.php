@@ -15,6 +15,9 @@ class MovieController extends BaseController
     private $movie;
 
 
+    /**
+     * MovieController constructor.
+     */
     public function __construct()
     {
         $this->movie = new Movie;
@@ -22,8 +25,7 @@ class MovieController extends BaseController
 
 
     /**
-     * Display all movies
-     * @see FilterFormBuilder::build()
+     * Display all movies.
      * @return \Illuminate\View\View
      */
     public function index(): View
@@ -37,9 +39,7 @@ class MovieController extends BaseController
 
 
     /**
-     * Display filtered movie results
-     * @see SearchBuilder::apply()
-     * @see FilterFormBuilder::build()
+     * Apply the search filters and return the results.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -56,6 +56,11 @@ class MovieController extends BaseController
     }
 
 
+    /**
+     * Show selected movie.
+     * @param Movie $movie
+     * @return View
+     */
     public function show(Movie $movie): View
     {
         return view('pages.movies.show', [

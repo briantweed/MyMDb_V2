@@ -8,6 +8,10 @@ use App\Http\Traits\PositionTrait;
 use App\Contracts\{MovieInterface, PositionInterface};
 
 
+/**
+ * Class Movie
+ * @package App\Models
+ */
 class Movie extends BaseModel implements PositionInterface, MovieInterface
 {
 

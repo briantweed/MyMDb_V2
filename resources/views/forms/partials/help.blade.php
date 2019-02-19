@@ -1,8 +1,8 @@
-@isset($filter[config('building.field_help')])
+@isset($filter[config('builder.field_help')])
     <small
-        id="{{ config('building.field_prefix') .'_'. $filter[config('building.field_name')] .'_'. config('building.field_help') }}"
+        id="{{ config('builder.field_prefix') .'_'. $filter[config('builder.field_name')] .'_'. config('builder.field_help') }}"
         class="form-text text-muted"
     >
-        {{ $filter[config('building.field_help')] }}
+        {{ $filter[config('builder.field_help')] }}
     </small>
 @endisset
