@@ -18,7 +18,7 @@
             <div class="col-12 col-sm-3">
 
                 <form class="mb-3" action="{{ route('movies.filter') }}">
-                    {!! $filters !!}
+                    {!! $form !!}
                 </form>
 
             </div>

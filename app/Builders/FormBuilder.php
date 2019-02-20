@@ -17,13 +17,13 @@ use App\Contracts\FormInterface;
 class FormBuilder
 {
 
-    private $filters;
+    private $form;
     private $view;
 
 
     public function __construct(FormInterface $formArray)
     {
-        $this->setFilters($formArray);
+        $this->setForm($formArray);
     }
 
 
@@ -43,9 +43,9 @@ class FormBuilder
      * Set the filters variable
      * @param FormInterface $formArray
      */
-    private function setFilters(FormInterface $formArray)
+    private function setForm(FormInterface $formArray)
     {
-        $this->filters = $formArray->data;
+        $this->form = $formArray->data;
     }
 
 
@@ -56,10 +56,10 @@ class FormBuilder
     {
         if($this->contains(config('builder.field_group')))
         {
-            foreach($this->filters[config('builder.field_group')] as $filter)
+            foreach($this->form[config('builder.field_group')] as $field)
             {
-                $this->view .= view('forms.fields.'.$filter[config('builder.field_type')], [
-                    'filter' => $filter
+                $this->view .= view('forms.fields.'.$field[config('builder.field_type')], [
+                    'field' => $field
                 ]);
             }
         }
@@ -73,10 +73,10 @@ class FormBuilder
     {
         if($this->contains(config('builder.button_group')))
         {
-            foreach($this->filters[config('builder.button_group')] as $filter)
+            foreach($this->form[config('builder.button_group')] as $field)
             {
-                $this->view .= view('forms.buttons.'.$filter[config('builder.button_type')], [
-                    'filter' => $filter
+                $this->view .= view('forms.buttons.'.$field[config('builder.button_type')], [
+                    'field' => $field
                 ]);
             }
         }
@@ -90,7 +90,7 @@ class FormBuilder
      */
     private function contains(string $key): bool
     {
-        return array_key_exists($key, $this->filters);
+        return array_key_exists($key, $this->form);
     }
 
 }

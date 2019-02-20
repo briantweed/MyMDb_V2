@@ -20,7 +20,7 @@
             <div class="col-12 col-sm-8">
 
                 <form class="mb-3" action="{{ route('movies.store') }}">
-                    {!! $filters !!}
+                    {!! $form !!}
                     {{ csrf_field() }}
                 </form>
 

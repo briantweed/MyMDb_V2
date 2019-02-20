@@ -33,7 +33,7 @@ class MovieController extends BaseController
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => (new FormBuilder(new MovieFilterForm()))->build()
+            'form' => (new FormBuilder(new MovieFilterForm()))->build()
         ]);
     }
 
@@ -51,7 +51,7 @@ class MovieController extends BaseController
 
         return view('pages.movies.index', [
             'movies' => $movies,
-            'filters' => (new FormBuilder(new MovieFilterForm()))->build()
+            'form' => (new FormBuilder(new MovieFilterForm()))->build()
         ]);
     }
 
@@ -76,7 +76,7 @@ class MovieController extends BaseController
     public function create()
     {
         return view('pages.movies.create', [
-            'filters' => (new FormBuilder(new MovieForm()))->build()
+            'form' => (new FormBuilder(new MovieForm()))->build()
         ]);
     }
 
