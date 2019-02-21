@@ -20,6 +20,7 @@
         <div class="row d-block d-md-none">
             <div class="col-12">
                 <h1 class="font-weight-bold">{{ $movie->name }}</h1>
+                <p class="text-warning">{!! $movie->starRating !!}</p>
             </div>
         </div>
 
@@ -31,11 +32,10 @@
         <div class="row">
             <div class="col-12 col-sm-4 col-md-3 col-lg-2">
                 <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }} poster">
-                <br>
-                {{ $movie->rating }}<br>
             </div>
             <div class="col-12 col-sm-8 col-md-9 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
+                <p class="text-warning  d-none d-md-block">{!! $movie->starRating !!}</p>
                 <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}
                     @if( $movie->genres->count() )
                         <br>
@@ -50,7 +50,8 @@
                         @endforeach
                     @endif
                 </p>
-                <p class="pt-3 mb-0">{{ nl2br($movie->bio) }}</p>
+                <p class="pt-3">{{ nl2br($movie->bio) }}</p>
+                <a class="btn btn-info" href="{{ route('movies.edit', ['id' => $movie->id]) }}">edit movie</a>
             </div>
         </div>
 
@@ -83,7 +84,7 @@
 
     </section>
 
-
+@empty($movie->crew)
     <section id="crew-details" class="pt-3 pb-5">
 
         @h2 Crew @endh2
@@ -100,7 +101,7 @@
         </div>
 
     </section>
-
+@endempty
 @endsection
 
 

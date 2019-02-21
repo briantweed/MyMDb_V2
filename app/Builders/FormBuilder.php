@@ -2,6 +2,7 @@
 
 namespace App\Builders;
 
+use Illuminate\Http\Request;
 use App\Contracts\FormInterface;
 
 
@@ -21,7 +22,7 @@ class FormBuilder
     private $view;
 
 
-    public function __construct(FormInterface $formArray)
+    public function __construct(FormInterface $formArray, ?Request $request = null)
     {
         $this->setForm($formArray);
     }

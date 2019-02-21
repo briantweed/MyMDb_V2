@@ -18,10 +18,8 @@
             </div>
 
             <div class="col-12 col-sm-8">
-
-                <h2>Add New Movie</h2>
-
-                <form class="mb-3" action="{{ route('movies.store') }}">
+                <h2>Edit {{ $movie->name }}</h2>
+                <form class="mb-3" action="{{ route('movies.update', ['id' => $movie->id]) }}">
                     {!! $form !!}
                     {{ csrf_field() }}
                 </form>

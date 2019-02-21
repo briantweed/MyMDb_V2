@@ -87,9 +87,12 @@ class MovieController extends BaseController
     }
 
 
-    public function edit($id)
+    public function edit(Movie $movie)
     {
-        //
+        return view('pages.movies.edit', [
+            'movie' => $movie,
+            'form' => (new FormBuilder(new MovieForm()))->build()
+        ]);
     }
 
 

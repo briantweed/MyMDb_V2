@@ -19,6 +19,8 @@ interface MovieInterface
         10 => 10,
     ];
 
+    public const STAR_ICON = '<i class="fas fa-star"></i>';
+
 
     /**
      * Relationship - a movie can have many cast members

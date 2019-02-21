@@ -187,6 +187,21 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * Accessor - display rating as stars
+     * @return string
+     */
+    public function getStarRatingAttribute()
+    {
+        $starRating = '';
+        for($i = 0; $i < $this->rating; $i++)
+        {
+            $starRating .= self::STAR_ICON;
+        }
+        return $starRating;
+    }
+
+
+    /**
      * Accessor - display running time in minutes
      * @return string
      */
