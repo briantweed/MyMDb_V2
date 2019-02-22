@@ -15,4 +15,4 @@
             </option>
         @endforeach
     </select>
-@endformgroup
+{{$field['value']}}@endformgroup

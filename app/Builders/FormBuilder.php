@@ -19,12 +19,14 @@ class FormBuilder
 {
 
     private $form;
+    private $model;
     private $view;
 
 
-    public function __construct(FormInterface $formArray, ?Request $request = null)
+    public function __construct(FormInterface $formArray, $model = null)
     {
         $this->setForm($formArray);
+        $this->model = $model;
     }
 
 
@@ -59,8 +61,9 @@ class FormBuilder
         {
             foreach($this->form[config('builder.field_group')] as $field)
             {
+                $field['value'] = $this->model ? $this->model->{ $field[config('builder.field_name')] } : '';
                 $this->view .= view('forms.fields.'.$field[config('builder.field_type')], [
-                    'field' => $field
+                    'field' => $field,
                 ]);
             }
         }

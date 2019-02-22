@@ -20,7 +20,7 @@
         <div class="row d-block d-md-none">
             <div class="col-12">
                 <h1 class="font-weight-bold">{{ $movie->name }}</h1>
-                <p class="text-warning">{!! $movie->starRating !!}</p>
+                <p class="text-warning" title="{{ $movie->rating }}">{!! $movie->starRating !!}</p>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
             </div>
             <div class="col-12 col-sm-8 col-md-9 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
-                <p class="text-warning  d-none d-md-block">{!! $movie->starRating !!}</p>
+                <p class="text-warning  d-none d-md-block" title="{{ $movie->rating }}">{!! $movie->starRating !!}</p>
                 <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}
                     @if( $movie->genres->count() )
                         <br>
