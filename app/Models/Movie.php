@@ -169,7 +169,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @see $this->filters()
      * @return array
      */
-    public function getFiltersAttribute()
+    public function getFiltersAttribute(): array
     {
         return $this->filters();
     }
@@ -180,20 +180,20 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @see $this->filters()
      * @return array
      */
-    public function getRatingsAttribute()
+    public function getRatingsAttribute(): array
     {
         return self::RATINGS;
     }
 
 
     /**
-     * Accessor - display rating as stars
+     * Accessor - display rating as star icons
      * @return string
      */
-    public function getStarRatingAttribute()
+    public function getStarRatingAttribute(): string
     {
         $starRating = '';
-        for($i = 0; $i < $this->rating; $i++)
+        for($i = 0; $i < $this->isThisSpinalTap(); $i++)
         {
             $starRating .= self::STAR_ICON;
         }
@@ -368,5 +368,16 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 	{
 		return $query->orderBy('rating', $direction);
 	}
+
+
+    /**
+     * Check to see if this movie is Spinal Tap
+     * If so, turn it up to eleven!
+     * @return int|mixed
+     */
+	private function isThisSpinalTap(): int
+    {
+        return $this->name === 'This is Spinal Tap' ? 11 : $this->rating;
+    }
 
 }

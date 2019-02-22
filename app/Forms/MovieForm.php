@@ -67,19 +67,19 @@ class MovieForm implements FormInterface
                 ],
                 [
                     config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "certificate",
+                    config('builder.field_name')    => "certificate_id",
                     config('builder.field_label')   => "Certificate",
                     config('builder.field_options') => (new Certificate)->getCertificates(),
                 ],
                 [
                     config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "studio",
+                    config('builder.field_name')    => "studio_id",
                     config('builder.field_label')   => "Studio",
                     config('builder.field_options') => (new Studio)->getStudios(),
                 ],
                 [
                     config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "format",
+                    config('builder.field_name')    => "format_id",
                     config('builder.field_label')   => "Format",
                     config('builder.field_options') => (new Format)->getFormats(),
                 ],

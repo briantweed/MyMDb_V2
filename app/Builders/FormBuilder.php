@@ -19,7 +19,7 @@ class FormBuilder
 {
 
     private $form;
-    private $model;
+    private $parameters;
     private $view;
 
 
@@ -61,7 +61,7 @@ class FormBuilder
         {
             foreach($this->form[config('builder.field_group')] as $field)
             {
-                $field['value'] = $this->model ? $this->model->{ $field[config('builder.field_name')] } : '';
+                $field['value'] = $this->parameters ? $this->parameters[$field[config('builder.field_name')]] : '';
                 $this->view .= view('forms.fields.'.$field[config('builder.field_type')], [
                     'field' => $field,
                 ]);

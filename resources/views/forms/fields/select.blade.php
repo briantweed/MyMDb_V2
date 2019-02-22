@@ -9,10 +9,12 @@
             <option value="{{ $key }}"
                 @if(request(config('builder.field_prefix').'_'.$field[config('builder.field_name')]) == $key)
                     selected
+                @elseif($field[config('builder.field_value')] == $key)
+                    selected
                 @endif
             >
                 {{ $option }}
             </option>
         @endforeach
     </select>
-{{$field['value']}}@endformgroup
+@endformgroup
