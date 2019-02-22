@@ -51,7 +51,7 @@ class MovieController extends BaseController
 
         return view('pages.movies.index', [
             'movies' => $movies,
-            'form' => (new FormBuilder(new MovieFilterForm()))->build()
+            'form' => (new FormBuilder(new MovieFilterForm(), $request->all()))->build()
         ]);
     }
 
@@ -91,7 +91,7 @@ class MovieController extends BaseController
     {
         return view('pages.movies.edit', [
             'movie' => $movie,
-            'form' => (new FormBuilder(new MovieForm(), $movie))->build()
+            'form' => (new FormBuilder(new MovieForm(), $movie->getAttributes()))->build()
         ]);
     }
 

@@ -23,10 +23,11 @@ class FormBuilder
     private $view;
 
 
-    public function __construct(FormInterface $formArray, $model = null)
+    public function __construct(FormInterface $formArray, $parameters = null)
     {
+        dd($parameters);
         $this->setForm($formArray);
-        $this->model = $model;
+        $this->parameters = $parameters;
     }
 
 
