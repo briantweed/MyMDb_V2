@@ -58,6 +58,16 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * Set the route lookup field key
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+
+    /**
      * Relation - a movie can have many cast members
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

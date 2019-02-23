@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 use App\Models\Movie;
@@ -22,7 +23,12 @@ class MovieController extends BaseController
      */
     public function __construct()
     {
-       //
+        $movies = Movie::all();
+        foreach($movies as $movie)
+        {
+            $movie->slug = Str::slug($movie->name);
+            $movie->update();
+        }
     }
 
 
@@ -83,9 +89,12 @@ class MovieController extends BaseController
     }
 
 
-    public function store(Request $request)
+    public function store(MovieRequest $request)
     {
-        //
+        $movie = new Movie;
+        $movie->fill($request->all());
+        $movie->save();
+        return $this->show($movie);
     }
 
 
@@ -100,6 +109,7 @@ class MovieController extends BaseController
 
     public function update(MovieRequest $request, Movie $movie)
     {
+        $request;
         return view('pages.movies.edit', [
             'movie' => $movie,
             'form' => (new FormBuilder(new MovieForm(), $movie->getAttributes()))->build()

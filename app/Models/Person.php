@@ -145,7 +145,7 @@ class Person extends Model implements PositionInterface
 
             if ($movie)
             {
-                return "<a href='/movies/".$movie->id."'><b>".$movie->name." (".$movie->released.")</b></a>";
+                return "<a href='/movies/".$movie->slug."'><b>".$movie->name." (".$movie->released.")</b></a>";
             }
             else
             {

@@ -18,11 +18,12 @@
             </div>
 
             <div class="col-12 col-sm-8">
+
                 <h2>Edit {{ $movie->name }}</h2>
 
                 @include('pages.partials.errors')
 
-                <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->id]) }}">
+                <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->slug]) }}">
                     @csrf
                     @method('PATCH')
                     {!! $form !!}

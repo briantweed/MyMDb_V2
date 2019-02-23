@@ -21,7 +21,9 @@
 
                 <h2>Add New Movie</h2>
 
-                <form class="mb-3" action="{{ route('movies.store') }}">
+                @include('pages.partials.errors')
+
+                <form class="mb-3" method="post" action="{{ route('movies.store') }}">
                     {!! $form !!}
                     {{ csrf_field() }}
                 </form>
