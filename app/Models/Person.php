@@ -30,7 +30,17 @@ class Person extends Model implements PositionInterface
 	];
 
 
-	public function roles()
+    /**
+     * Set the route lookup field key
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+
+    public function roles()
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
 			->withPivot('id', 'character')

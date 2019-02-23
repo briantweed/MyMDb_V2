@@ -9,6 +9,12 @@ use App\Models\Person;
 class PersonController extends BaseController
 {
 
+    public function __construct()
+    {
+        //
+    }
+
+
     public function index()
     {
         $people = Person::byForename()->bySurname()->paginate();
