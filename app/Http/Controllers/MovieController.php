@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Builders\{FormBuilder, SearchBuilder};
-use App\Forms\{MovieForm, MovieFilterForm};
+use Illuminate\Http\Request;
+
 use App\Models\Movie;
+use App\Http\Requests\MovieRequest;
+use App\Forms\{MovieForm, MovieFilterForm};
+use App\Builders\{FormBuilder, SearchBuilder};
 
 
 class MovieController extends BaseController
@@ -20,7 +22,7 @@ class MovieController extends BaseController
      */
     public function __construct()
     {
-        $this->movie = new Movie;
+       //
     }
 
 
@@ -45,7 +47,7 @@ class MovieController extends BaseController
      */
     public function filter(Request $request): View
     {
-        $movies = (new SearchBuilder($this->movie, $request))->apply()
+        $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
 
@@ -96,9 +98,12 @@ class MovieController extends BaseController
     }
 
 
-    public function update(Request $request, $id)
+    public function update(MovieRequest $request, Movie $movie)
     {
-        //
+        return view('pages.movies.edit', [
+            'movie' => $movie,
+            'form' => (new FormBuilder(new MovieForm(), $movie->getAttributes()))->build()
+        ]);
     }
 
 

@@ -19,7 +19,7 @@ Route::group(['middleware' => []], function () {
 
         Route::get('/{movie}/edit', 'MovieController@edit')->name('movies.edit');
 
-        Route::patch('/{id}/edit', 'MovieController@update')->name('movies.update');
+        Route::patch('/{movie}/edit', 'MovieController@update')->name('movies.update');
 
         Route::get('/{id}/delete', 'MovieController@delete')->name('movies.delete');
 

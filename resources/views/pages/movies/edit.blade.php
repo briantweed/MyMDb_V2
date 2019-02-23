@@ -19,9 +19,13 @@
 
             <div class="col-12 col-sm-8">
                 <h2>Edit {{ $movie->name }}</h2>
-                <form class="mb-3" action="{{ route('movies.update', ['id' => $movie->id]) }}">
+
+                @include('pages.partials.errors')
+
+                <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->id]) }}">
+                    @csrf
+                    @method('PATCH')
                     {!! $form !!}
-                    {{ csrf_field() }}
                 </form>
 
             </div>

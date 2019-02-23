@@ -304,7 +304,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $certificate
      * @return mixed
      */
-    public function scopeWhereCertificate($query, int $certificate)
+    public function scopeWhereCertificateId($query, int $certificate)
     {
         return $query->where('certificate_id', $certificate);
     }
@@ -316,7 +316,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $studio
      * @return mixed
      */
-    public function scopeWhereStudio($query, int $studio)
+    public function scopeWhereStudioId($query, int $studio)
     {
         return $query->where('studio_id', $studio);
     }
@@ -328,7 +328,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $format
      * @return mixed
      */
-    public function scopeWhereFormat($query, int $format)
+    public function scopeWhereFormatId($query, int $format)
     {
         return $query->where('format_id', $format);
     }

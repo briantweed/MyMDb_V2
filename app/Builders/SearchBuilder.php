@@ -2,8 +2,10 @@
 
 namespace App\Builders;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+
 
 /**
  * Class SearchBuilder
@@ -17,7 +19,6 @@ use Illuminate\Database\Eloquent\Builder;
  * @package App\Builders
  * @see config/builder.php
  *
-
  */
 class SearchBuilder
 {
@@ -138,7 +139,7 @@ class SearchBuilder
         {
             if(isset($value))
             {
-                $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . $field;
+                $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . Str::camel($field);
                 if(method_exists($this->model, $scopeMethod))
                 {
                     $scopeName = config('builder.where_scope') . $field;
