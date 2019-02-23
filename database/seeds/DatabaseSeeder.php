@@ -1,7 +1,8 @@
-h<?php
+<?php
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder {
 
@@ -20,7 +21,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('TagsTableSeeder');
 		$this->call('PeopleTableSeeder');
 		$this->call('StudiosTableSeeder');
-
 		$this->call('MoviesTableSeeder');
 
 		$this->call('CastTableSeeder');
@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('QuotesTableSeeder');
 
 		Model::reguard();
+
+        Artisan::call('slug:movies');
+        Artisan::call('slug:people');
 	}
 
 }

@@ -17,8 +17,8 @@ class CreateCastTable extends Migration
             $table->increments('id');
             $table->integer('movie_id')->unsigned();
             $table->integer('person_id')->unsigned();
-            $table->string('character');
-            $table->boolean('star');
+            $table->string('character')->nullable()->default(NULL);
+            $table->boolean('star')->default(0);
             $table->timestamps();
         });
     }

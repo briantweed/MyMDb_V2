@@ -16,12 +16,12 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->increments('id');
             $table->string('forename');
-            $table->string('surname');
+            $table->string('surname')->nullable()->default(NULL);
             $table->date('birthday')->nullable()->default(NULL);
             $table->date('deceased')->nullable()->default(NULL);
             $table->string('imdb_id')->nullable()->default(NULL);
-            $table->string('image')->nullable();
-            $table->text('bio')->nullable();
+            $table->string('image')->nullable()->default(NULL);
+            $table->text('bio')->nullable()->default(NULL);
             $table->timestamps();
         });
     }

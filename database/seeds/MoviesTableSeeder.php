@@ -12,8 +12,6 @@ class MoviesTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('movies')->delete();
         
         \DB::table('movies')->insert(array (
