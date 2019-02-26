@@ -21,7 +21,7 @@ class MovieRequest extends BaseRequest
      */
     public function prepareForValidation()
     {
-        $this->removeInputPrefix();
+        //
     }
 
 

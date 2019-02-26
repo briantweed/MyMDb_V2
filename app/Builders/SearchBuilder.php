@@ -27,7 +27,6 @@ class SearchBuilder
     private $query;
     private $orderBy;
     private $sort;
-    private $filters;
     private $fields;
 
 
@@ -36,8 +35,7 @@ class SearchBuilder
         $this->model = $model;
         $this->query = $this->model->newQuery();
 
-        $this->setFilters($request->all());
-        $this->setFields();
+        $this->setFields($request->all());
         $this->setOrderBy();
         $this->setSort();
     }
@@ -61,20 +59,8 @@ class SearchBuilder
      * @since 1.0
      * @param array $filters
      */
-    private function setFilters(array $filters)
+    private function setFields(array $fields)
     {
-        $this->filters = $filters;
-    }
-
-
-    /**
-     * Find the relevant fields then format the key values
-     * @since 1.0
-     */
-    private function setFields()
-    {
-        $fields = $this->findInputByType(config('builder.field_prefix'));
-        $fields = $this->removeTypeFromKey(config('builder.field_prefix'), $fields);
         $this->fields = $fields;
     }
 
@@ -85,7 +71,7 @@ class SearchBuilder
      */
     private function setOrderBy()
     {
-        $this->orderBy = array_key_exists(config('builder.field_order'), $this->filters) ? $this->filters[config('builder.field_order')] : false;
+        $this->orderBy = array_key_exists(config('builder.field_order'), $this->fields) ? $this->fields[config('builder.field_order')] : false;
     }
 
 
@@ -95,36 +81,7 @@ class SearchBuilder
      */
     private function setSort()
     {
-        $this->sort = array_key_exists(config('builder.field_sort'), $this->filters) ? $this->filters[config('builder.field_sort')] : '';
-    }
-
-
-    /**
-     * Find the fields whose name has the relevant prefix and return the array
-     * @since 1.0
-     * @param string $type
-     * @return array
-     */
-    private function findInputByType(string $type): array
-    {
-        return array_filter($this->filters, function($key) use ($type) {
-            return strpos($key, $type.'_') === 0;
-        }, ARRAY_FILTER_USE_KEY);
-    }
-
-
-    /**
-     * Remove the prefix from all the keys and return the formatted array
-     * @since 1.0
-     * @param string $type
-     * @param array $fields
-     * @return array|false
-     */
-    private function removeTypeFromKey(string $type, array $fields): array
-    {
-        return array_combine(array_map(function($field) use ($type) {
-            return preg_replace('/^' . $type . '_/', '', $field);
-        }, array_keys($fields)), $fields);
+        $this->sort = array_key_exists(config('builder.field_sort'), $this->fields) ? $this->fields[config('builder.field_sort')] : '';
     }
 
 
