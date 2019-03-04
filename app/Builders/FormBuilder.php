@@ -79,7 +79,7 @@ class FormBuilder
         {
             foreach($this->form[config('builder.button_group')] as $field)
             {
-                $this->view .= view('forms.buttons.'.$field[config('builder.button_type')], [
+                $this->view .= view('forms.buttons.' . ($field[config('builder.button_type')] ?: 'submit'), [
                     'field' => $field
                 ]);
             }
