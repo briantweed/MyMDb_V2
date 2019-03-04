@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Database\Eloquent\Model;
+
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
 
-class Person extends Model implements PositionInterface
+class Person  extends BaseModel implements PositionInterface
 {
 
 	use PositionTrait;
@@ -187,5 +187,13 @@ class Person extends Model implements PositionInterface
 	{
 		return $query->orderBy('surname', 'asc');
 	}
+
+
+    public function getPeople()
+    {
+        return $this->byId()
+            ->pluck('forename', 'id')
+            ->toArray();
+    }
 
 }
