@@ -1,1 +1,2 @@
-require('./bootstrap');
+
+autosize(document.querySelectorAll('textarea'));
