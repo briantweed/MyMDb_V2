@@ -50,7 +50,6 @@ class MovieController extends BaseController
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
-
         return view('pages.movies.index', [
             'movies' => $movies,
             'form' => (new FormBuilder(new MovieFilterForm(), $request->all()))->build()

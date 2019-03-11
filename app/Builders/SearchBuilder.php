@@ -96,11 +96,13 @@ class SearchBuilder
         {
             if(isset($value))
             {
-                $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . Str::camel($field);
-                if(method_exists($this->model, $scopeMethod))
+                if(strpos($field, '__') !== false)
                 {
-                    $scopeName = config('builder.where_scope') . $field;
-                    $this->query->$scopeName($value);
+                    $this->addRelatedScope($field, $value);
+                }
+                else
+                {
+                    $this->addModelScope($field, $value);
                 }
             }
         }
@@ -125,5 +127,37 @@ class SearchBuilder
             }
         }
     }
+
+
+    /**
+     * Add scope from a related model to the query
+     * @param $field
+     * @param $value
+     */
+    private function addRelatedScope($field, $value)
+    {
+        list($model, $scope) = explode('__', $field);
+        $this->query->whereHas($model, function ($query) use($scope, $value) {
+            $scopeName = ucwords(config('builder.where_scope')) . ucwords(Str::camel($scope));
+            $query->$scopeName($value);
+        });
+    }
+
+
+    /**
+     * Add scope from this model to the query
+     * @param $field
+     * @param $value
+     */
+    private function addModelScope($field, $value)
+    {
+        $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . ucwords(Str::camel($field));
+        if(method_exists($this->model, $scopeMethod))
+        {
+            $scopeName = config('builder.where_scope') . $field;
+            $this->query->$scopeName($value);
+        }
+    }
+
 
 }

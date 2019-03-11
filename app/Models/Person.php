@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\{DB, URL};
 
 use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
@@ -162,6 +162,12 @@ class Person  extends BaseModel implements PositionInterface
                 return $m[1];
             }
         }, $this->bio));
+    }
+
+
+	public function scopeWhereFullname($query, $name)
+    {
+        return $query->where(DB::raw("CONCAT(`forename`, ' ', `surname`)"), 'LIKE', '%' . $name . '%');
     }
 
 

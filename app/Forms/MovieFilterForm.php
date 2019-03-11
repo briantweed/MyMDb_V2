@@ -67,6 +67,16 @@ class MovieFilterForm implements FormInterface
                     config('builder.field_name')    => "format_id",
                     config('builder.field_label')   => "Format",
                     config('builder.field_options') => (new Format)->getFormats(),
+                ],
+                [
+                    config('builder.field_type')    => "text",
+                    config('builder.field_name')    => "cast__fullname",
+                    config('builder.field_label')   => "Cast",
+                ],
+                [
+                    config('builder.field_type')    => "text",
+                    config('builder.field_name')    => "crew__fullname",
+                    config('builder.field_label')   => "Crew",
                 ]
             ],
             config('builder.button_group') => [
