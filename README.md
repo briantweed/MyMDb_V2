@@ -37,5 +37,3 @@ $movies = (new SearchBuilder($this->movie, $request))->apply();
 
  --- 
  
- 
-@TODO - related tables
