@@ -32,9 +32,14 @@ class MovieController extends BaseController
      */
     public function index(): View
     {
+        $results = Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
+            return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
+        });
+
         $movies = Movie::bySortName()->paginate();
         return view('pages.movies.index', [
             'movies' => $movies,
+            'results' => $results,
             'form' => (new FormBuilder(new MovieFilterForm()))->build()
         ]);
     }
@@ -50,8 +55,12 @@ class MovieController extends BaseController
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
+        $results = Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
+            return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
+        });
         return view('pages.movies.index', [
             'movies' => $movies,
+            'results' => $results,
             'form' => (new FormBuilder(new MovieFilterForm(), $request->all()))->build()
         ]);
     }

@@ -25,7 +25,16 @@
 
             <div class="col-12 col-sm-9">
 
-                <a href="{{ route('movies.create') }}" class="btn btn-primary">Add New Movie</a>
+                <ul style="list-style-type: none">
+                    @foreach($results as $key => $array)
+                        <li style="display:inline-block">
+                            <a class="d-block p-2" href="{{ route('movies.filter') }}?starts={{ $key }}">{{ $key }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <a href="{{ route('movies.create') }}" class="btn btn-primary mb-3">Add New Movie</a>
+
                 @include('pages.movies.partials.movies-table')
 
                 @include('pages.partials.pagination', ['collection' => $movies])

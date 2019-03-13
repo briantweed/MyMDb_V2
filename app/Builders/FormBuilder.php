@@ -61,7 +61,8 @@ class FormBuilder
         {
             foreach($this->form[config('builder.field_group')] as $field)
             {
-                $field['value'] = $this->parameters ? $this->parameters[$field[config('builder.field_name')]] : '';
+
+                $field['value'] = $this->checkForFieldValue($field);
                 $this->view .= view('forms.fields.'.$field[config('builder.field_type')], [
                     'field' => $field,
                 ]);
@@ -97,4 +98,15 @@ class FormBuilder
         return array_key_exists($key, $this->form);
     }
 
+
+    private function checkForFieldValue($field)
+    {
+        if($this->parameters) {
+            if(array_key_exists($field[config('builder.field_name')], $this->parameters))
+            {
+                return $this->parameters[$field[config('builder.field_name')]];
+            }
+        }
+        return '';
+    }
 }

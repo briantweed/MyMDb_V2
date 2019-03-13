@@ -284,6 +284,19 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     }
 
 
+
+    /**
+     * Scope - return movies whose title is like the given name
+     * @param $query
+     * @param string $name
+     * @return mixed
+     */
+    public function scopeWhereStarts($query, string $name)
+    {
+        return $query->where('name', 'like', $name.'%');
+    }
+
+
     /**
      * Scope - return movies released in the selected year
      * @param $query

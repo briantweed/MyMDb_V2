@@ -57,7 +57,7 @@ class SearchBuilder
     /**
      * Set the filters
      * @since 1.0
-     * @param array $filters
+     * @param array $fields
      */
     private function setFields(array $fields)
     {
@@ -69,7 +69,7 @@ class SearchBuilder
      * Set the order by field
      * @since 1.0
      */
-    private function setOrderBy()
+    private function setOrderBy(): void
     {
         $this->orderBy = array_key_exists(config('builder.field_order'), $this->fields) ? $this->fields[config('builder.field_order')] : false;
     }
@@ -79,7 +79,7 @@ class SearchBuilder
      * Set the sort direction
      * @since 1.0
      */
-    private function setSort()
+    private function setSort(): void
     {
         $this->sort = array_key_exists(config('builder.field_sort'), $this->fields) ? $this->fields[config('builder.field_sort')] : '';
     }
@@ -90,7 +90,7 @@ class SearchBuilder
      * If so, add the Scope to the query
      * @since 1.0
      */
-    private function addFieldsToQuery()
+    private function addFieldsToQuery(): void
     {
         foreach($this->fields as $field => $value)
         {
@@ -115,7 +115,7 @@ class SearchBuilder
      * Add the Scope to the query
      * @since 1.0
      */
-    private function addOrderByToQuery()
+    private function addOrderByToQuery(): void
     {
         if($this->orderBy)
         {
