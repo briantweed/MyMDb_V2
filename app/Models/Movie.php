@@ -293,7 +293,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      */
     public function scopeWhereStarts($query, string $name)
     {
-        return $query->where('name', 'like', $name.'%');
+        return $query->where('name', 'regexp', '^[' . $name .']+');
     }
 
 
