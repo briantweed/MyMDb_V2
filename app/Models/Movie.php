@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\{DB, URL};
 use App\Http\Traits\PositionTrait;
 use App\Contracts\{MovieInterface, PositionInterface};
 
@@ -283,6 +283,23 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
         return $query->where('name', 'like', '%'.$name.'%');
     }
 
+
+   /**
+     * Scope - return movies where the search string matches one of the fields listed
+     * @param $query
+     * @param string $name
+     * @return mixed
+     */
+    public function scopeWhereSearch($query, string $name)
+    {
+        return $query->where('name', 'like', '%'.$name.'%')
+            ->orWhereHas('cast', function($q) use ($name) {
+                $q->where(DB::raw("CONCAT(`forename`, ' ', `surname`)"), 'LIKE', '%' . $name . '%');
+            })
+            ->orWhereHas('crew', function($q) use ($name) {
+                $q->where(DB::raw("CONCAT(`forename`, ' ', `surname`)"), 'LIKE', '%' . $name . '%');
+            });
+    }
 
 
     /**
