@@ -8,29 +8,19 @@ use App\Contracts\FormInterface;
 
 /**
  * Class MovieCastForm
- * @see config/builder.php
+ *
  * @package App\Forms
+ * @link config/builder.php
  */
 class MovieCastForm implements FormInterface
 {
 
-    public $data;
-
-
-    /**
-     * MovieCastForm constructor.
-     */
-    public function __construct()
-    {
-        $this->data = $this->getArray();
-    }
-
-
     /**
      * Return the data array used to build the form.
+     *
      * @return array
      */
-    public function getArray()
+    public function getData()
     {
         return [
             config('builder.field_group') => [

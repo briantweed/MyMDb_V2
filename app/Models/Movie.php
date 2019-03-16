@@ -411,6 +411,18 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * Group movies by the first letter of their title
+     * @return mixed
+     */
+	public static function groupByFirstLetter()
+    {
+        return Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
+            return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
+        });
+    }
+
+
+    /**
      * Check to see if this movie is Spinal Tap
      * If so, turn it up to eleven!
      * @return int|mixed

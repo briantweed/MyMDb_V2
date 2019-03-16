@@ -2,35 +2,25 @@
 
 namespace App\Forms;
 
-use App\Models\{Certificate, Format, Movie, Studio};
 use App\Contracts\FormInterface;
+use App\Models\{Certificate, Format, Movie, Studio};
 
 
 /**
  * Class MovieFilterForm
- * @see config/builder.php
- * @package App\Forms
+ *
+ * @package App/Forms
+ * @link config/builder.php
  */
 class MovieForm implements FormInterface
 {
 
-    public $data;
-
-
-    /**
-     * MovieFilterForm constructor.
-     */
-    public function __construct()
-    {
-        $this->data = $this->getArray();
-    }
-
-
     /**
      * Return the data array used to build the form.
+     *
      * @return array
      */
-    public function getArray()
+    public function getData()
     {
         return [
             config('builder.field_group') => [

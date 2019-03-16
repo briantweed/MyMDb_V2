@@ -190,6 +190,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\ComponentServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\MovieServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 

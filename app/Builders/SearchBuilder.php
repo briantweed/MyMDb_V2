@@ -8,17 +8,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 
 /**
- * Class SearchBuilder
+ * Class SearchBuilder.
  *
  * Take the submitted request fields and check each one to see
  * if it relates to a query scope defined within the model.
  * If a scope if found it is added the the query builder.
  *
- * @author Brian Tweed | brtweed@outlook.com
- * @version 1.0
  * @package App\Builders
- * @see config/builder.php
- *
+ * @author briantweed
+ * @version 1.0.0
+ * @link config/builder.php
  */
 class SearchBuilder
 {
@@ -30,6 +29,12 @@ class SearchBuilder
     private $fields;
 
 
+    /**
+     * SearchBuilder constructor.
+     *
+     * @param $model
+     * @param Request $request
+     */
     public function __construct($model, Request $request)
     {
         $this->model = $model;
@@ -42,8 +47,9 @@ class SearchBuilder
 
 
     /**
-     * Apply fields, order by and sort direction to the query
-     * @since 1.0
+     * Apply fields, order by and sort direction to the query.
+     *
+     * @since 1.0.0
      * @return mixed
      */
     public function apply(): Builder
@@ -55,19 +61,23 @@ class SearchBuilder
 
 
     /**
-     * Set the filters
-     * @since 1.0
+     * Set the filters.
+     *
+     * @since 1.0.0
      * @param array $fields
+     * @return void
      */
-    private function setFields(array $fields)
+    private function setFields(array $fields): void
     {
         $this->fields = $fields;
     }
 
 
     /**
-     * Set the order by field
-     * @since 1.0
+     * Set the order by field.
+     *
+     * @since 1.0.0
+     * @return void
      */
     private function setOrderBy(): void
     {
@@ -76,8 +86,10 @@ class SearchBuilder
 
 
     /**
-     * Set the sort direction
-     * @since 1.0
+     * Set the sort direction.
+     *
+     * @since 1.0.0
+     * @return void
      */
     private function setSort(): void
     {
@@ -86,9 +98,11 @@ class SearchBuilder
 
 
     /**
-     * Check if each field has a corresponding scope in the model
-     * If so, add the Scope to the query
-     * @since 1.0
+     * Check if each field has a corresponding scope in the model.
+     * If so, add the Scope to the query.
+     *
+     * @since 1.0.0
+     * @return void
      */
     private function addFieldsToQuery(): void
     {
@@ -110,10 +124,12 @@ class SearchBuilder
 
 
     /**
-     * Check if the orderBy has a corresponding Scope in the Model
-     * Pass the sort direction if it has been set
-     * Add the Scope to the query
-     * @since 1.0
+     * Check if the orderBy has a corresponding Scope in the Model.
+     * Pass the sort direction if it has been set.
+     * Add the Scope to the query.
+     *
+     * @since 1.0.0
+     * @return void
      */
     private function addOrderByToQuery(): void
     {
@@ -130,11 +146,13 @@ class SearchBuilder
 
 
     /**
-     * Add scope from a related model to the query
-     * @param $field
-     * @param $value
+     * Add scope from a related model to the query.
+     *
+     * @param string $field
+     * @param string $value
+     * @return void
      */
-    private function addRelatedScope($field, $value)
+    private function addRelatedScope(string $field, string $value): void
     {
         list($model, $scope) = explode('__', $field);
         $this->query->whereHas($model, function ($query) use($scope, $value) {
@@ -145,11 +163,13 @@ class SearchBuilder
 
 
     /**
-     * Add scope from this model to the query
+     * Add scope from this model to the query.
+     *
      * @param $field
      * @param $value
+     * @return void
      */
-    private function addModelScope($field, $value)
+    private function addModelScope(string $field, string $value): void
     {
         $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . ucwords(Str::camel($field));
         if(method_exists($this->model, $scopeMethod))

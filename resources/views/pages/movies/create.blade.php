@@ -24,8 +24,9 @@
                 @include('pages.partials.errors')
 
                 <form class="mb-3" method="post" action="{{ route('movies.store') }}">
-                    {!! $form !!}
-                    {{ csrf_field() }}
+
+                    @include('pages.movies.partials.movie_form')
+
                 </form>
 
             </div>

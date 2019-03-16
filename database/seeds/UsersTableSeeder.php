@@ -20,8 +20,8 @@ class UsersTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'Brian Tweed',
-                'email' => 'brtweed@outlook.com',
+                'name' => 'admin',
+                'email' => 'admin@mymdb.com',
                 'password' => '$2y$10$9AKzOHxWzlL3qWWVGibbG.OKeM3oLajo3RLMiFBys2THABAxJfQQK',
                 'level' => 1,
                 'remember_token' => 'nlMsB5d9SFz07GAFpHoZ9G8Cm4PU6esoZImvWu1TRo2NABt75O5qNjOLzwUL',

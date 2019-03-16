@@ -17,25 +17,17 @@
 
             <div class="col-12 col-sm-3">
 
-                <form class="mb-3" action="{{ route('movies.filter') }}">
-                    {!! $form !!}
-                </form>
+                @include('pages.movies.partials.movie_filter')
 
             </div>
 
             <div class="col-12 col-sm-9">
 
-                <ul style="list-style-type: none">
-                    @foreach($results as $key => $array)
-                        <li style="display:inline-block">
-                            <a class="d-block p-2" href="{{ route('movies.filter') }}?starts={{ $key }}">{{ $key }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+                @include('pages.movies.partials.movie_letters')
 
                 <a href="{{ route('movies.create') }}" class="btn btn-primary mb-3">Add New Movie</a>
 
-                @include('pages.movies.partials.movies-table')
+                @include('pages.movies.partials.movies_table')
 
                 @include('pages.partials.pagination', ['collection' => $movies])
 

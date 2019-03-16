@@ -2,18 +2,16 @@
 
 namespace App\Builders;
 
-use Illuminate\Http\Request;
 use App\Contracts\FormInterface;
 
 
 /**
- * Class FormBuilder
+ * Class FormBuilder.
  *
- * Build a form based on the model array attribute.
- * @author Brian Tweed | brtweed@outlook.com
- * @version 1.0
  * @package App\Builders
- * @see config/builder.php
+ * @author briantweed
+ * @version 1.0
+ * @link config/builder.php
  */
 class FormBuilder
 {
@@ -23,15 +21,22 @@ class FormBuilder
     private $view;
 
 
-    public function __construct(FormInterface $formArray, $parameters = null)
+    /**
+     * FormBuilder constructor.
+     *
+     * @param FormInterface $form
+     * @param null $parameters
+     */
+    public function __construct(FormInterface $form, $parameters = null)
     {
-        $this->setForm($formArray);
+        $this->setForm($form);
         $this->parameters = $parameters;
     }
 
 
     /**
-     * Render the different parts of the form, add to the view and return the result
+     * Render the different parts of the form, add to the view and return the result.
+     *
      * @return string|null
      */
     public function build(): ?string
@@ -43,19 +48,23 @@ class FormBuilder
 
 
     /**
-     * Set the filters variable
-     * @param FormInterface $formArray
+     * Set the filters variable.
+     *
+     * @param FormInterface $form
+     * @return void
      */
-    private function setForm(FormInterface $formArray)
+    private function setForm(FormInterface $form): void
     {
-        $this->form = $formArray->data;
+        $this->form = $form->getData();
     }
 
 
     /**
-     * Add any fields to the view
+     * Add any fields to the view.
+     *
+     * @return void
      */
-    private function addFieldsToView()
+    private function addFieldsToView(): void
     {
         if($this->contains(config('builder.field_group')))
         {
@@ -72,9 +81,11 @@ class FormBuilder
 
 
     /**
-     * Add any buttons to the view
+     * Add any buttons to the view.
+     *
+     * @return void
      */
-    private function addButtonsToView()
+    private function addButtonsToView(): void
     {
         if($this->contains(config('builder.button_group')))
         {
@@ -89,7 +100,8 @@ class FormBuilder
 
 
     /**
-     * Check if the relevant section is part of the form
+     * Check if the relevant section is part of the form.
+     *
      * @param string $key
      * @return bool
      */
@@ -99,14 +111,21 @@ class FormBuilder
     }
 
 
-    private function checkForFieldValue($field)
+    /**
+     * If the parameters have been set, return the value if the field exists
+     *
+     * @param array $fields
+     * @return string
+     */
+    private function checkForFieldValue(array $fields): string
     {
         if($this->parameters) {
-            if(array_key_exists($field[config('builder.field_name')], $this->parameters))
+            if(array_key_exists($fields[config('builder.field_name')], $this->parameters))
             {
-                return $this->parameters[$field[config('builder.field_name')]];
+                return $this->parameters[$fields[config('builder.field_name')]];
             }
         }
         return '';
     }
+
 }

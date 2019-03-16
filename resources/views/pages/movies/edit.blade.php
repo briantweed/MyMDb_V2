@@ -24,9 +24,8 @@
                 @include('pages.partials.errors')
 
                 <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->slug]) }}">
-                    @csrf
                     @method('PATCH')
-                    {!! $form !!}
+                    @include('pages.movies.partials.movie_form')
                 </form>
 
             </div>

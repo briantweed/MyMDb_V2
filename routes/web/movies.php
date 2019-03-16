@@ -9,8 +9,6 @@ Route::group(['middleware' => []], function () {
 
         Route::get('/', 'MovieController@index')->name('movies.index');
 
-        Route::get('/filter', 'MovieController@filter')->name('movies.filter');
-
         Route::get('/create', 'MovieController@create')->name('movies.create');
 
         Route::post('/store', 'MovieController@store')->name('movies.store');

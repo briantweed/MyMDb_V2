@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\{RedirectResponse, Request};
 
 use App\Models\Movie;
+use App\Builders\SearchBuilder;
 use App\Http\Requests\MovieRequest;
-use App\Forms\{MovieForm, MovieFilterForm};
-use App\Builders\{FormBuilder, SearchBuilder};
 
 
+/**
+ * Class MovieController.
+ *
+ * RESTful API for dealing with movies.
+ *
+ * @package App\Http\Controllers
+ * @version 1.0.0
+ * @author briantweed
+ *
+ * @see MovieServiceProvider - for anything related to view display
+ * @see MovieRequest - for movie request validation
+ * @see SearchBuilder -
+ *
+ */
 class MovieController extends BaseController
 {
-
-    private $movie;
-
 
     /**
      * MovieController constructor.
@@ -27,47 +37,28 @@ class MovieController extends BaseController
 
 
     /**
-     * Display all movies.
-     * @return \Illuminate\View\View
-     */
-    public function index(): View
-    {
-        $results = Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
-            return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
-        });
-
-        $movies = Movie::bySortName()->paginate();
-        return view('pages.movies.index', [
-            'movies' => $movies,
-            'results' => $results,
-            'form' => (new FormBuilder(new MovieFilterForm()))->build()
-        ]);
-    }
-
-
-    /**
-     * Apply the search filters and return the results.
+     * Apply any search filters and return the results.
+     *
+     * @since version 1.0.0
+     * @uses SearchBuilder::apply()
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return View
      */
-    public function filter(Request $request): View
+    public function index(Request $request): View
     {
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
-        $results = Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
-            return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
-        });
         return view('pages.movies.index', [
             'movies' => $movies,
-            'results' => $results,
-            'form' => (new FormBuilder(new MovieFilterForm(), $request->all()))->build()
         ]);
     }
 
 
     /**
      * Show the selected movie.
+     *
+     * @since version 1.0.0
      * @param Movie $movie
      * @return View
      */
@@ -81,50 +72,72 @@ class MovieController extends BaseController
 
     /**
      * Display the form to create a new movie.
+     *
+     * @since version 1.0.0
      * @return View
      */
-    public function create()
+    public function create(): View
     {
-        return view('pages.movies.create', [
-            'form' => (new FormBuilder(new MovieForm()))->build()
-        ]);
+        return view('pages.movies.create');
     }
 
 
-    public function store(MovieRequest $request)
+    /**
+     * Store the validated data and display the new movie.
+     *
+     * @since version 1.0.0
+     * @param MovieRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(MovieRequest $request): RedirectResponse
     {
-        $movie = new Movie;
-        $movie->fill($request->all());
-        $movie->save();
+        $movie = (new Movie)->fill($request->all())->save();
         return redirect()->route('movies.show', $movie);
     }
 
 
-    public function edit(Movie $movie)
+    /**
+     * Display the form to edit an existing movie.
+     *
+     * @since version 1.0.0
+     * @param Movie $movie
+     * @return View
+     */
+    public function edit(Movie $movie): View
     {
         return view('pages.movies.edit', [
-            'movie' => $movie,
-            'form' => (new FormBuilder(new MovieForm(), $movie->getAttributes()))->build()
+            'movie' => $movie
         ]);
     }
 
 
+    /**
+     * Update the existing movie with any changes to the validated data.
+     *
+     * @since version 1.0.0
+     * @param MovieRequest $request
+     * @param Movie $movie
+     * @return RedirectResponse
+     */
     public function update(MovieRequest $request, Movie $movie)
     {
-        $request;
-        return view('pages.movies.edit', [
-            'movie' => $movie,
-            'form' => (new FormBuilder(new MovieForm(), $movie->getAttributes()))->build()
-        ]);
+        $movie->fill($request->all())->update();
+        return redirect()->route('movies.edit', $movie);
     }
 
 
+    /**
+     * @todo Display the confirmation modal to verify the deletion of the selected movie.
+     */
     public function delete($id)
     {
         //
     }
 
 
+    /**
+     * @todo Delete the selected movie
+     */
     public function destroy($id)
     {
         //
