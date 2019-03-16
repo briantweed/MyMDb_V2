@@ -25,7 +25,7 @@
 
                 <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->slug]) }}">
                     @method('PATCH')
-                    @include('pages.movies.partials.movie_form')
+                    @movieForm
                 </form>
 
             </div>

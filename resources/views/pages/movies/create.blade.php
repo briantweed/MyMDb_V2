@@ -25,7 +25,7 @@
 
                 <form class="mb-3" method="post" action="{{ route('movies.store') }}">
 
-                    @include('pages.movies.partials.movie_form')
+                    @movieForm
 
                 </form>
 
