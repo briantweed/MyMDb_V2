@@ -3,7 +3,8 @@
 namespace App\Contracts;
 
 /**
- * Interface FormInterface
+ * Interface FormInterface.
+ *
  * @package App\Contracts
  * @see config/builder.php
  */

@@ -7,7 +7,7 @@ use App\Contracts\FormInterface;
 
 
 /**
- * Class MovieCastForm
+ * Class MovieCastForm.
  *
  * @package App\Forms
  * @link config/builder.php

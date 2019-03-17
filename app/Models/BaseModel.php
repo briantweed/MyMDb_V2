@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -10,12 +11,13 @@ abstract class BaseModel extends Model
 {
 
     /**
-     * Scope - sort the query by Id
+     * Scope - sort the query by Id.
+     *
      * @param $query
      * @param string $direction
      * @return mixed
      */
-    public function scopeById($query, string $direction = 'asc')
+    public function scopeById(Builder $query, string $direction = 'asc')
     {
         return $query->orderBy('id', $direction);
     }
@@ -24,12 +26,12 @@ abstract class BaseModel extends Model
     /**
      * Cache and return the key:value pair.
      *
-     * @param $key
-     * @param $value
-     * @param $forget
-     * @return mixed
+     * @param string $key
+     * @param string $value
+     * @param bool $forget
+     * @return array
      */
-    public function cacheAndReturn($key, $value, $forget)
+    public function cacheAndReturn(string $key, string$value, bool $forget): array
     {
         if ($forget) {
             Cache::forget($this->getTable());
