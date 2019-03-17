@@ -112,8 +112,6 @@ class FormBuilder
 
 
     /**
-     * If the parameters have been set, return the value if the field exists
-     *
      * @param array $fields
      * @return string
      */
@@ -122,7 +120,7 @@ class FormBuilder
         if($this->parameters) {
             if(array_key_exists($fields[config('builder.field_name')], $this->parameters))
             {
-                return $this->parameters[$fields[config('builder.field_name')]];
+                return (string) $this->parameters[$fields[config('builder.field_name')]];
             }
         }
         return '';

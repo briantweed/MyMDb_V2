@@ -6,14 +6,14 @@ namespace App\Models;
 class Studio extends BaseModel
 {
 
-    protected $fillable =[
+    protected $fillable = [
         'name'
     ];
 
 
     public function movies()
     {
-        return $this->hasMany(Movies::class);
+        return $this->hasMany(Movie::class);
     }
 
 
@@ -23,11 +23,9 @@ class Studio extends BaseModel
     }
 
 
-    public function getStudios()
+    public function getStudios($forget = false)
     {
-        return $this->byName()
-            ->pluck('name', 'id')
-            ->toArray();
+        return $this->cacheAndReturn('id', 'name', $forget);
     }
 
 }

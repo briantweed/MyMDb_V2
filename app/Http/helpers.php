@@ -30,4 +30,5 @@ if (! function_exists('display_string')) {
     {
         return Str::title(str_replace(['_', '-'], ' ', $value));
     }
+
 }

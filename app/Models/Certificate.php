@@ -12,11 +12,9 @@ class Certificate extends BaseModel
     }
 
 
-    public function getCertificates()
+    public function getCertificates($forget = false)
     {
-        return $this->byId()
-            ->pluck('title', 'id')
-            ->toArray();
+        return $this->cacheAndReturn('id', 'title', $forget);
     }
 
 }

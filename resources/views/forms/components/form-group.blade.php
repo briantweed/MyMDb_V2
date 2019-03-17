@@ -1,5 +1,13 @@
 <div class="form-group">
-    @include('forms.partials.label')
+
+    @isset($field[config('builder.field_label')])
+        @include('forms.partials.label')
+    @endisset
+
     {{ $slot }}
-    @include('forms.partials.help')
+
+    @isset($field[config('builder.field_help')])
+        @include('forms.partials.help')
+    @endisset
+
 </div>

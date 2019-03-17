@@ -3,7 +3,7 @@
 namespace App\Forms;
 
 use App\Contracts\FormInterface;
-use App\Models\{Certificate, Format, Movie, Studio};
+use App\Models\{Certificate, Format, Movie, Studio, Tag};
 
 
 /**
@@ -26,8 +26,8 @@ class MovieFilterForm implements FormInterface
             config('builder.field_group') => [
                 [
                     config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "search",
-                    config('builder.field_label')   => "Search",
+                    config('builder.field_name')    => "name",
+                    config('builder.field_label')   => "Title",
                 ],
                 [
                     config('builder.field_type')    => "text",
@@ -57,6 +57,12 @@ class MovieFilterForm implements FormInterface
                     config('builder.field_name')    => "format_id",
                     config('builder.field_label')   => "Format",
                     config('builder.field_options') => (new Format)->getFormats(),
+                ],
+                [
+                    config('builder.field_type')    => "select",
+                    config('builder.field_name')    => "tags__word",
+                    config('builder.field_label')   => "Tag",
+                    config('builder.field_options') => (new Tag)->getTags(),
                 ]
             ],
             config('builder.button_group') => [

@@ -18,11 +18,9 @@ class Format extends BaseModel
     }
 
 
-    public function getFormats()
+    public function getFormats($forget = false)
     {
-        return $this->byType()
-            ->pluck('type', 'id')
-            ->toArray();
+        return $this->cacheAndReturn('id', 'type', $forget);
     }
 
 }

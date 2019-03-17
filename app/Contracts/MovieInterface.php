@@ -30,20 +30,6 @@ interface MovieInterface
 
 
     /**
-     * Relationship - a movie can have many main cast member, where star equals true
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function mainCast();
-
-
-    /**
-     * Relationship - a movie can have many other cast members, where star equals false
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function supportingCast();
-
-
-    /**
      * Relationship - a movie can have many main crew members
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

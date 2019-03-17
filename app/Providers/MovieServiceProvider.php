@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 use App\Models\Movie;
@@ -20,7 +19,7 @@ class MovieServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
 
@@ -48,7 +47,7 @@ class MovieServiceProvider extends ServiceProvider
     {
         view()->composer('pages.movies.partials.movie_filter', function ($view) {
             $view->with([
-                'filters' => (new FormBuilder(new MovieFilterForm()))->build()
+                'filters' => (new FormBuilder(new MovieFilterForm(), request()->request->all()))->build()
             ]);
         });
     }
@@ -64,10 +63,10 @@ class MovieServiceProvider extends ServiceProvider
      */
     private function letterGroups(): void
     {
-        $letters = Movie::groupByFirstLetter();
-        view()->composer('pages.movies.partials.movie_letters', function ($view) use ($letters) {
+        view()->composer('pages.movies.partials.movie_letters', function ($view) {
             $view->with([
-                'letters' => $letters
+                'letters' => Movie::groupByFirstLetter(),
+                'characters' => array_merge(['0-9'], range('A', 'Z'))
             ]);
         });
     }

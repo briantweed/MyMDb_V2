@@ -11,6 +11,7 @@ use App\Http\Requests\MovieRequest;
 
 
 /**
+ *
  * Class MovieController.
  *
  * RESTful API for dealing with movies.
@@ -19,9 +20,9 @@ use App\Http\Requests\MovieRequest;
  * @version 1.0.0
  * @author briantweed
  *
- * @see MovieServiceProvider - for anything related to view display
+ * @see MovieServiceProvider - for view display related data
  * @see MovieRequest - for movie request validation
- * @see SearchBuilder -
+ * @see SearchBuilder - for how the search filters are applied
  *
  */
 class MovieController extends BaseController
@@ -41,16 +42,18 @@ class MovieController extends BaseController
      *
      * @since version 1.0.0
      * @uses SearchBuilder::apply()
+     * @internal Eager load any related columns that are displayed
      * @param Request $request
      * @return View
      */
     public function index(Request $request): View
     {
         $movies = (new SearchBuilder(new Movie, $request))->apply()
+            ->with(['certificate', 'studio', 'format'])
             ->bySortName()
             ->paginate();
         return view('pages.movies.index', [
-            'movies' => $movies,
+            'movies' => $movies
         ]);
     }
 
@@ -87,7 +90,7 @@ class MovieController extends BaseController
      *
      * @since version 1.0.0
      * @param MovieRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(MovieRequest $request): RedirectResponse
     {
@@ -112,7 +115,7 @@ class MovieController extends BaseController
 
 
     /**
-     * Update the existing movie with any changes to the validated data.
+     * Update the existing movie with the validated data.
      *
      * @since version 1.0.0
      * @param MovieRequest $request

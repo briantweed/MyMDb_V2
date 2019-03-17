@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\{DB, URL};
+
+use Illuminate\Support\Facades\{Cache, DB, URL};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+
 use App\Http\Traits\PositionTrait;
 use App\Contracts\{MovieInterface, PositionInterface};
 
@@ -19,7 +22,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Fields that can be mass assigned
+     * Fields that can be mass assigned.
+     *
      * @var array
      */
 	protected $fillable = [
@@ -40,7 +44,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Fields cast to instances of Carbon
+     * Fields cast to instances of Carbon.
+     *
      * @var array
      */
     protected $dates = [
@@ -49,7 +54,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Fields cast to given type
+     * Fields cast to given type.
+     *
      * @var array
      */
     protected $casts = [
@@ -58,7 +64,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Set the route lookup field key
+     * Set the route lookup field key.
+     *
      * @return string
      */
     public function getRouteKeyName()
@@ -68,48 +75,25 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie can have many cast members
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can have many cast members.
+     *
+     * @return BelongsToMany
      */
-    public function cast()
+    public function cast(): BelongsToMany
     {
         return $this->belongsToMany(Person::class, 'cast')
             ->withPivot('id', 'character', 'star')
+            ->orderBy('star','desc')
             ->byForename();
     }
 
 
     /**
-     * Relation - a movie can have many main cast member, where star equals true
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can have many main crew members.
+     *
+     * @return BelongsToMany
      */
-    public function mainCast()
-    {
-        return $this->belongsToMany(Person::class, 'cast')
-            ->withPivot('id', 'character', 'star')
-            ->areStars()
-            ->byForename();
-    }
-
-
-    /**
-     * Relation - a movie can have many other cast members, where star equals false
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function supportingCast()
-    {
-        return $this->belongsToMany(Person::class, 'cast')
-            ->withPivot('id', 'character', 'star')
-            ->areStars(false)
-            ->byForename();
-    }
-
-
-    /**
-     * Relation - a movie can have many main crew members
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function crew()
+    public function crew(): BelongsToMany
     {
         return $this->belongsToMany(Person::class, 'crew')
             ->withPivot('id', 'position')
@@ -120,9 +104,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie belongs to a studio
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-	public function studio()
+	public function studio(): BelongsTo
 	{
 		return $this->belongsTo(Studio::class)->withDefault([
             'name' => 'Unknown'
@@ -132,9 +116,10 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie exists on a certain format e.g. DVD, Blu-ray etc.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @return BelongsTo
      */
-	public function format()
+	public function format(): BelongsTo
 	{
 		return $this->belongsTo(Format::class)->withDefault([
             'type' => 'Unknown'
@@ -144,9 +129,10 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie is given a certificate e.g. U, PG etc.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @return BelongsTo
      */
-	public function certificate()
+	public function certificate(): BelongsTo
 	{
 		return $this->belongsTo(Certificate::class)->withDefault([
             'name' => 'Unknown'
@@ -155,49 +141,43 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie can belong to many types of genres
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can belong to many types of genres.
+     *
+     * @return BelongsToMany
      */
-	public function genres()
+	public function genres(): BelongsToMany
 	{
 		return $this->belongsToMany(Genre::class);
 	}
 
 
     /**
-     * Relation - a movie can have many types of tags
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can have many types of tags.
+     *
+     * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
 	{
 		return $this->belongsToMany(Tag::class);
 	}
 
 
     /**
-     * Accessor - get the model filters
-     * @see $this->filters()
-     * @return array
-     */
-    public function getFiltersAttribute(): array
-    {
-        return $this->filters();
-    }
-
-
-    /**
-     * Accessor - get the movie ratings
-     * @see $this->filters()
+     * Accessor - get the movie ratings.
+     *
      * @return array
      */
     public function getRatingsAttribute(): array
     {
-        return self::RATINGS;
+        return Cache::rememberForever('ratings', function() {
+            return self::RATINGS;
+        });
     }
 
 
     /**
-     * Accessor - display rating as star icons
+     * Accessor - display rating as star icons.
+     *
      * @return string
      */
     public function getStarRatingAttribute(): string
@@ -212,20 +192,22 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Accessor - display running time in minutes
+     * Accessor - display running time in minutes.
+     *
      * @return string
      */
-    public function getRunningTimeInMinutesAttribute()
+    public function getRunningTimeInMinutesAttribute(): string
     {
         return $this->running_time . 'mins';
     }
 
 
     /**
-     * Accessor - display running time in hours and minutes
+     * Accessor - display running time in hours and minutes.
+     *
      * @return string
      */
-    public function getRunningTimeInHoursAttribute()
+    public function getRunningTimeInHoursAttribute(): string
     {
         if($this->running_time < 60)
         {
@@ -239,22 +221,24 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Accessor - return the path of the movie cover image
+     * Accessor - return the path of the movie cover image.
+     *
      * @return string
      */
-    public function getImagePathAttribute()
+    public function getImagePathAttribute(): string
     {
         return URL::asset('/images/covers/' . $this->image);
     }
 
 
     /**
-     * Accessor - display the purchased date in the selected format
+     * Accessor - display the purchased date in the selected format.
+     *
      * @see config/app.php
      * @param $date
      * @return string
      */
-    public function getPurchasedAttribute($date)
+    public function getPurchasedAttribute(Carbon $date): string
     {
         return Carbon::parse($date)->format(config('app.date_display'));
         // return Carbon::createFromFormat(config('app.date_display'), $date)->format('jS F Y');
@@ -262,18 +246,20 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Mutator - format date for database storage
+     * Mutator - format date for database storage.
+     *
      * @param $date
      * @return mixed
      */
-    public function setPurchasedAttribute($date)
+    public function setPurchasedAttribute(Carbon $date)
     {
         return $date->format(config('app.date_store'));
     }
 
 
     /**
-     * Scope - return movies whose title is like the given name
+     * Scope - return movies whose title is like the given name.
+     *
      * @param $query
      * @param string $name
      * @return mixed
@@ -284,8 +270,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     }
 
 
-   /**
-     * Scope - return movies where the search string matches one of the fields listed
+    /**
+     * Scope - return movies where the search string matches one of the fields listed.
+     *
      * @param $query
      * @param string $name
      * @return mixed
@@ -303,7 +290,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies whose title is like the given name
+     * Scope - return movies whose title is like the given name.
+     *
      * @param $query
      * @param string $name
      * @return mixed
@@ -315,7 +303,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies released in the selected year
+     * Scope - return movies released in the selected year.
+     *
      * @param $query
      * @param int $year
      * @return mixed
@@ -327,7 +316,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies that match the selected rating
+     * Scope - return movies that match the selected rating.
+     *
      * @param $query
      * @param int $rating
      * @return mixed
@@ -339,7 +329,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies that match the selected certificate
+     * Scope - return movies that match the selected certificate.
+     *
      * @param $query
      * @param int $certificate
      * @return mixed
@@ -351,7 +342,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies that match the selected studio
+     * Scope - return movies that match the selected studio.
+     *
      * @param $query
      * @param int $studio
      * @return mixed
@@ -363,7 +355,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - return movies that match the selected format
+     * Scope - return movies that match the selected format.
+     *
      * @param $query
      * @param int $format
      * @return mixed
@@ -375,7 +368,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - sort movies by release date
+     * Scope - sort movies by release date.
+     *
      * @param $query
      * @param string $direction
      * @return mixed
@@ -387,7 +381,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - sort movies by sort name
+     * Scope - sort movies by sort name.
+     *
      * @param $query
      * @param string $direction
      * @return mixed
@@ -399,7 +394,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Scope - sort movies by rating
+     * Scope - sort movies by rating.
+     *
      * @param $query
      * @param string $direction
      * @return mixed
@@ -411,20 +407,22 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Group movies by the first letter of their title
+     * Group movies by the first letter of their title.
+     *
      * @return mixed
      */
 	public static function groupByFirstLetter()
     {
-        return Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
+        return array_keys(Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
             return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
-        });
+        })->toArray());
     }
 
 
     /**
-     * Check to see if this movie is Spinal Tap
+     * Check to see if this movie is Spinal Tap.
      * If so, turn it up to eleven!
+     *
      * @return int|mixed
      */
 	private function isThisSpinalTap(): int
