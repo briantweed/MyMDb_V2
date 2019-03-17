@@ -8,7 +8,7 @@ use Illuminate\Http\{RedirectResponse, Request};
 use App\Models\Movie;
 use App\Builders\SearchBuilder;
 use App\Http\Requests\MovieRequest;
-
+use Illuminate\Support\Facades\Redis;
 
 /**
  *
@@ -42,7 +42,7 @@ class MovieController extends BaseController
      *
      * @since version 1.0.0
      * @uses SearchBuilder::apply()
-     * @internal Eager load any related columns that are displayed
+     * @internal Eager load any relationships used for display
      * @param Request $request
      * @return View
      */

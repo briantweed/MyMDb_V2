@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @author briantweed
  * @version 1.0.0
  * @link config/builder.php
+ *
  */
 class SearchBuilder
 {

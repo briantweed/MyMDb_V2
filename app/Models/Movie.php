@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\{Cache, DB, URL};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
@@ -12,8 +13,11 @@ use App\Contracts\{MovieInterface, PositionInterface};
 
 
 /**
- * Class Movie
+ * Class Movie.
+ *
  * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
  */
 class Movie extends BaseModel implements PositionInterface, MovieInterface
 {
@@ -24,6 +28,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Fields that can be mass assigned.
      *
+     * @since version 1.0.0
      * @var array
      */
 	protected $fillable = [
@@ -46,6 +51,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Fields cast to instances of Carbon.
      *
+     * @since version 1.0.0
      * @var array
      */
     protected $dates = [
@@ -56,6 +62,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Fields cast to given type.
      *
+     * @since version 1.0.0
      * @var array
      */
     protected $casts = [
@@ -66,6 +73,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Set the route lookup field key.
      *
+     * @since version 1.0.0
      * @return string
      */
     public function getRouteKeyName()
@@ -77,6 +85,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Relation - a movie can have many cast members.
      *
+     * @since version 1.0.0
      * @return BelongsToMany
      */
     public function cast(): BelongsToMany
@@ -91,6 +100,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Relation - a movie can have many main crew members.
      *
+     * @since version 1.0.0
      * @return BelongsToMany
      */
     public function crew(): BelongsToMany
@@ -103,7 +113,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie belongs to a studio
+     * Relation - a movie belongs to a studio.
+     *
+     * @since version 1.0.0
      * @return BelongsTo
      */
 	public function studio(): BelongsTo
@@ -115,8 +127,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie exists on a certain format e.g. DVD, Blu-ray etc.
+     * Relation - a movie exists on a certain format.
      *
+     * @since version 1.0.0
      * @return BelongsTo
      */
 	public function format(): BelongsTo
@@ -128,8 +141,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie is given a certificate e.g. U, PG etc.
+     * Relation - a movie is given a certificate.
      *
+     * @since version 1.0.0
      * @return BelongsTo
      */
 	public function certificate(): BelongsTo
@@ -143,6 +157,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Relation - a movie can belong to many types of genres.
      *
+     * @since version 1.0.0
      * @return BelongsToMany
      */
 	public function genres(): BelongsToMany
@@ -154,6 +169,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Relation - a movie can have many types of tags.
      *
+     * @since version 1.0.0
      * @return BelongsToMany
      */
     public function tags(): BelongsToMany
@@ -165,6 +181,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - get the movie ratings.
      *
+     * @since version 1.0.0
      * @return array
      */
     public function getRatingsAttribute(): array
@@ -178,6 +195,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display rating as star icons.
      *
+     * @since version 1.0.0
      * @return string
      */
     public function getStarRatingAttribute(): string
@@ -194,6 +212,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display running time in minutes.
      *
+     * @since version 1.0.0
      * @return string
      */
     public function getRunningTimeInMinutesAttribute(): string
@@ -205,6 +224,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display running time in hours and minutes.
      *
+     * @since version 1.0.0
      * @return string
      */
     public function getRunningTimeInHoursAttribute(): string
@@ -223,6 +243,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - return the path of the movie cover image.
      *
+     * @since version 1.0.0
      * @return string
      */
     public function getImagePathAttribute(): string
@@ -234,6 +255,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display the purchased date in the selected format.
      *
+     * @since version 1.0.0
      * @see config/app.php
      * @param $date
      * @return string
@@ -260,11 +282,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies whose title is like the given name.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $name
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereName($query, string $name)
+    public function scopeWhereName(Builder $query, string $name)
     {
         return $query->where('name', 'like', '%'.$name.'%');
     }
@@ -273,11 +296,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies where the search string matches one of the fields listed.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $name
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereSearch($query, string $name)
+    public function scopeWhereSearch(Builder $query, string $name)
     {
         return $query->where('name', 'like', '%'.$name.'%')
             ->orWhereHas('cast', function($q) use ($name) {
@@ -292,11 +316,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies whose title is like the given name.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $name
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereStarts($query, string $name)
+    public function scopeWhereStarts(Builder $query, string $name)
     {
         return $query->where('name', 'regexp', '^[' . $name .']+');
     }
@@ -305,11 +330,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies released in the selected year.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param int $year
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereReleased($query, int $year)
+    public function scopeWhereReleased(Builder $query, int $year)
     {
         return $query->where('released', $year);
     }
@@ -318,11 +344,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies that match the selected rating.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param int $rating
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereRating($query, int $rating)
+    public function scopeWhereRating(Builder $query, int $rating)
     {
         return $query->where('rating', $rating);
     }
@@ -331,11 +358,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies that match the selected certificate.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param int $certificate
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereCertificateId($query, int $certificate)
+    public function scopeWhereCertificateId(Builder $query, int $certificate)
     {
         return $query->where('certificate_id', $certificate);
     }
@@ -344,11 +372,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies that match the selected studio.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param int $studio
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereStudioId($query, int $studio)
+    public function scopeWhereStudioId(Builder $query, int $studio)
     {
         return $query->where('studio_id', $studio);
     }
@@ -357,11 +386,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies that match the selected format.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param int $format
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereFormatId($query, int $format)
+    public function scopeWhereFormatId(Builder $query, int $format)
     {
         return $query->where('format_id', $format);
     }
@@ -370,11 +400,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - sort movies by release date.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-	public function scopeByReleaseDate($query, string $direction = 'desc')
+	public function scopeByReleaseDate(Builder $query, string $direction = 'desc')
 	{
 		return $query->orderBy('released', $direction);
 	}
@@ -383,11 +414,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - sort movies by sort name.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-	public function scopeBySortName($query, string $direction = 'asc')
+	public function scopeBySortName(Builder $query, string $direction = 'asc')
 	{
 		return $query->orderBy('sort_name', $direction);
 	}
@@ -396,11 +428,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - sort movies by rating.
      *
-     * @param $query
+     * @since version 1.0.0
+     * @param Builder $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-	public function scopeByRating($query, string $direction = 'desc')
+	public function scopeByRating(Builder $query, string $direction = 'desc')
 	{
 		return $query->orderBy('rating', $direction);
 	}
@@ -409,9 +442,9 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Group movies by the first letter of their title.
      *
-     * @return mixed
+     * @return array
      */
-	public static function groupByFirstLetter()
+	public static function groupByFirstLetter(): array
     {
         return array_keys(Movie::all()->sortBy('name')->groupBy(function ($item, $key) {
             return !is_numeric(substr($item['name'], 0, 1)) ? substr($item['name'], 0, 1) : '0-9';
@@ -423,7 +456,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Check to see if this movie is Spinal Tap.
      * If so, turn it up to eleven!
      *
-     * @return int|mixed
+     * @return int
      */
 	private function isThisSpinalTap(): int
     {
