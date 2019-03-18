@@ -13,7 +13,7 @@ use App\Http\Requests\MovieRequest;
 /**
  * Class MovieController.
  *
- * RESTful API for dealing with movies.
+ * REST API for handling movie data requests.
  *
  * @package App\Http\Controllers
  * @version 1.0.1
@@ -120,7 +120,7 @@ class MovieController extends BaseController
      * @param Movie $movie
      * @return RedirectResponse
      */
-    public function update(MovieRequest $request, Movie $movie)
+    public function update(MovieRequest $request, Movie $movie): RedirectResponse
     {
         $movie->fill($request->all())->update();
         return redirect()->route('movies.edit', $movie);

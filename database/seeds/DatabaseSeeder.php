@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder {
 
         Artisan::call('slug:movies');
         Artisan::call('slug:people');
-	}
+	    $this->call(MoviesTableSeeder::class);
+    }
 
 }

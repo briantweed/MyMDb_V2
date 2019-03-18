@@ -9,19 +9,25 @@ use App\Builders\{FormBuilder};
 use App\Forms\{MovieFilterForm, MovieForm};
 
 
+/**
+ * Class MovieViewController.
+ *
+ * As this extends ServiceProvider you must register it at config/app.php
+ *
+ * @package App\ViewControllers
+ * @author briantweed
+ * @version 1.0.0
+ */
 class MovieViewController extends ServiceProvider
 {
-
 
     /**
      * MovieViewController constructor.
      *
      * @param $app
      */
-    public function __construct($app)
+    public function boot()
     {
-        parent::__construct($app);
-
         $this->movieFilters();
         $this->letterGroups();
         $this->movieForm();
@@ -31,6 +37,7 @@ class MovieViewController extends ServiceProvider
     /**
      * Build and display the movie filter form either when the partial is included.
      *
+     * @since 1.0.0
      * @see resources/pages/movies/partials/movie_filter
      * @uses FormBuilder::build(), MovieFilterForm
      * @return void
@@ -49,6 +56,7 @@ class MovieViewController extends ServiceProvider
      * Group by the first letter of their title; all numeric titles are grouped under 0-9.
      * Display the letter groups either when the partial is included.
      *
+     * @since 1.0.0
      * @see resources/pages/movies/partials/movie_letters
      * @uses Movie::groupByFirstLetter()
      * @return void
@@ -67,6 +75,7 @@ class MovieViewController extends ServiceProvider
     /**
      * Build and display the movie form either when the partial is included.
      *
+     * @since 1.0.0
      * @see resources/pages/movies/partials/movie_form
      * @uses FormBuilder::build(), MovieForm
      * @return void

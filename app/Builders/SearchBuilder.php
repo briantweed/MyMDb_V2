@@ -78,7 +78,7 @@ class SearchBuilder
      */
     private function setOrderBy(): void
     {
-        $this->orderBy = array_key_exists(config('builder.field_order'), $this->fields) ? $this->fields[config('builder.field_order')] : false;
+        $this->orderBy = array_key_exists(config('builder.order'), $this->fields) ? $this->fields[config('builder.order')] : false;
     }
 
 
@@ -90,7 +90,7 @@ class SearchBuilder
      */
     private function setSort(): void
     {
-        $this->sort = array_key_exists(config('builder.field_sort'), $this->fields) ? $this->fields[config('builder.field_sort')] : '';
+        $this->sort = array_key_exists(config('builder.sort'), $this->fields) ? $this->fields[config('builder.sort')] : '';
     }
 
 
