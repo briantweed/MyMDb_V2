@@ -1,6 +1,6 @@
 <small
-    id="{{ $field[config('builder.field_name')] .'_'. config('builder.field_help') }}"
+    id="{{ $field[config('builder.name')] .'_'. config('builder.help') }}"
     class="form-text text-muted"
 >
-    {{ $field[config('builder.field_help')] }}
+    {{ $field[config('builder.help')] }}
 </small>

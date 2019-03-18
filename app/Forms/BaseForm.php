@@ -8,7 +8,7 @@ namespace App\Forms;
  *
  * @package App\Forms
  * @author brian tweed
- * @version 1.0.0
+ * @version 1.0.1
  */
 abstract class BaseForm
 {
@@ -58,10 +58,10 @@ abstract class BaseForm
     protected function field(string $type, string $name, string $label, array $options = []): array
     {
         return [
-            config('builder.field_type') => $type,
-            config('builder.field_name') => $name,
-            config('builder.field_label') => $label,
-            config('builder.field_options') => $options,
+            config('builder.type') => $type,
+            config('builder.name') => $name,
+            config('builder.label') => $label,
+            config('builder.options') => $options,
         ];
     }
 
@@ -79,10 +79,10 @@ abstract class BaseForm
     protected function button(string $type, string $text, string $class = '', string $route = ''): array
     {
         return [
-            config('builder.button_type') => $type,
-            config('builder.button_text') => $text,
-            config('builder.button_class') => $class,
-            config('builder.button_route') => $route,
+            config('builder.type') => $type,
+            config('builder.text') => $text,
+            config('builder.class') => $class,
+            config('builder.route') => $route,
         ];
     }
 

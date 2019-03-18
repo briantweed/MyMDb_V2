@@ -1,3 +1,3 @@
-<{{ $field[config('builder.type')] }} class="{{ $field[config('builder.class')] ?: '' }}" >
-    {{ $field[config('builder.text')] }}
-</{{ $field[config('builder.type')] }}>
+<{{ $field[config('builder.name')] }}>
+    {{ $field[config('builder.label')] }}
+</{{ $field[config('builder.name')] }}>

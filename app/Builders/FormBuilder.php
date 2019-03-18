@@ -88,7 +88,7 @@ class FormBuilder
             {
 
                 $field['value'] = $this->checkForFieldValue($field);
-                $this->view .= view('forms.fields.'.$field[config('builder.field_type')], [
+                $this->view .= view('forms.fields.'.$field[config('builder.type')], [
                     'field' => $field,
                 ]);
             }
@@ -108,7 +108,7 @@ class FormBuilder
         {
             foreach($this->form[config('builder.button_group')] as $field)
             {
-                $this->view .= view('forms.buttons.' . ($field[config('builder.button_type')] ?: 'submit'), [
+                $this->view .= view('forms.buttons.' . ($field[config('builder.type')] ?: 'submit'), [
                     'field' => $field
                 ]);
             }
@@ -140,9 +140,9 @@ class FormBuilder
     private function checkForFieldValue(array $fields): string
     {
         if($this->parameters) {
-            if(array_key_exists($fields[config('builder.field_name')], $this->parameters))
+            if(array_key_exists($fields[config('builder.name')], $this->parameters))
             {
-                return (string) $this->parameters[$fields[config('builder.field_name')]];
+                return (string) $this->parameters[$fields[config('builder.name')]];
             }
         }
         return '';

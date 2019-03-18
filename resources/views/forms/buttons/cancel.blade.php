@@ -1,6 +1,6 @@
 <a
     href="{{ URL::previous() }}"
-    class="btn {{ $field[config('builder.button_class')] ?: 'btn-primary' }}"
+    class="btn {{ $field[config('builder.class')] ?: 'btn-primary' }}"
 >
-    {{ $field[config('builder.button_text')] ?: 'cancel' }}
+    {{ $field[config('builder.text')] ?: 'cancel' }}
 </a>

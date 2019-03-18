@@ -1,15 +1,15 @@
 @formgroup(['field' => $field])
 <select
     class="form-control"
-    name="{{ $field[config('builder.field_name')] }}"
-    id="{{ $field[config('builder.field_name')] }}"
+    name="{{ $field[config('builder.name')] }}"
+    id="{{ $field[config('builder.name')] }}"
 >
     <option value="">- select -</option>
-    @foreach($field[config('builder.field_options')] as $key => $option)
+    @foreach($field[config('builder.options')] as $key => $option)
         <option value="{{ $key }}"
-            @if(old($field[config('builder.field_name')]) == $key)
+            @if(old($field[config('builder.name')]) == $key)
                 selected
-            @elseif($field[config('builder.field_value')] == $key)
+            @elseif($field[config('builder.value')] == $key)
                 selected
             @endif
         >
