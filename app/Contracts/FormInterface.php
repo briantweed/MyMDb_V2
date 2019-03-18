@@ -6,7 +6,9 @@ namespace App\Contracts;
  * Interface FormInterface.
  *
  * @package App\Contracts
- * @see config/builder.php
+ * @author briantweed
+ * @version 1.0.0
+ * @link config/builder.php
  */
 interface FormInterface
 {
@@ -14,6 +16,7 @@ interface FormInterface
     /**
      * Return the data array used to build the form.
      *
+     * @since 1.0.0
      * @return array
      */
     public function getData();

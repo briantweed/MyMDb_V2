@@ -10,74 +10,44 @@ use App\Models\{Certificate, Format, Movie, Studio, Tag};
  * Class MovieFilterForm
  *
  * @package App\Forms
+ * @author briantweed
+ * @version 1.1.0
  * @link config/builder.php
  */
-class MovieFilterForm implements FormInterface
+class MovieFilterForm extends BaseForm implements FormInterface
 {
 
     /**
-     * Return the data array used to build the form.
+     * Return an array of form fields.
      *
+     * @since 1.1.0
      * @return array
      */
-    public function getData()
+    public function fields(): array
     {
         return [
-            config('builder.field_group') => [
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "name",
-                    config('builder.field_label')   => "Title",
-                ],
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "released",
-                    config('builder.field_label')   => "Release Date",
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "rating",
-                    config('builder.field_label')   => "Rating",
-                    config('builder.field_options') => (new Movie)->ratings
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "certificate_id",
-                    config('builder.field_label')   => "Certificate",
-                    config('builder.field_options') => (new Certificate)->getCertificates(),
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "studio_id",
-                    config('builder.field_label')   => "Studio",
-                    config('builder.field_options') => (new Studio)->getStudios(),
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "format_id",
-                    config('builder.field_label')   => "Format",
-                    config('builder.field_options') => (new Format)->getFormats(),
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "tags__word",
-                    config('builder.field_label')   => "Tag",
-                    config('builder.field_options') => (new Tag)->getTags(),
-                ]
-            ],
-            config('builder.button_group') => [
-                [
-                    config('builder.button_type')   => "clear",
-                    config('builder.button_text')   => "clear",
-                    config('builder.button_class')  => "btn-secondary mr-2",
-                    config('builder.button_route')  => "movies.index"
-                ],
-                [
-                    config('builder.button_type')   => "submit",
-                    config('builder.button_text')   => "submit",
-                    config('builder.button_class')  => "btn-success",
-                ]
-            ]
+            $this->field('text', 'name', 'Title'),
+            $this->field('text', 'released', 'Release Date'),
+            $this->field('select', 'rating', 'Rating', (new Movie)->ratings),
+            $this->field('select', 'certificate_id', 'Certificate', (new Certificate)->getCertificates()),
+            $this->field('select', 'studio_id', 'Studio', (new Studio)->getStudios()),
+            $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
+            $this->field('select', 'tags__word', 'Tag', (new Tag)->getTags())
+        ];
+    }
+
+
+    /**
+     * Return an array of form buttons.
+     *
+     * @since 1.1.0
+     * @return array
+     */
+    public function buttons(): array
+    {
+        return [
+            $this->button('clear', 'clear', 'btn-secondary mr-2', 'movies.index'),
+            $this->button('submit', 'submit', 'btn-success')
         ];
     }
 

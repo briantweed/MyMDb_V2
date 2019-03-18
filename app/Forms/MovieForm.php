@@ -7,92 +7,50 @@ use App\Models\{Certificate, Format, Movie, Studio};
 
 
 /**
- * Class MovieFilterForm
+ * Class MovieForm.
  *
- * @package App/Forms
- * @link config/builder.php
+ * @package App\Forms
+ * @author briantweed
+ * @Version 1.1.0
  */
-class MovieForm implements FormInterface
+class MovieForm extends BaseForm implements FormInterface
 {
 
     /**
-     * Return the data array used to build the form.
+     * Return an array of form fields.
      *
+     * @since 1.1.0
      * @return array
      */
-    public function getData()
+    protected function fields(): array
     {
         return [
-            config('builder.field_group') => [
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "name",
-                    config('builder.field_label')   => "Title",
-                ],
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "sort_name",
-                    config('builder.field_label')   => "Sort By",
-                ],
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "running_time",
-                    config('builder.field_label')   => "Running Time",
-                ],
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "imdb_id",
-                    config('builder.field_label')   => "IMDb Code",
-                ],
-                [
-                    config('builder.field_type')    => "text",
-                    config('builder.field_name')    => "released",
-                    config('builder.field_label')   => "Release Date",
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "rating",
-                    config('builder.field_label')   => "Rating",
-                    config('builder.field_options') => (new Movie)->ratings
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "certificate_id",
-                    config('builder.field_label')   => "Certificate",
-                    config('builder.field_options') => (new Certificate)->getCertificates(),
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "studio_id",
-                    config('builder.field_label')   => "Studio",
-                    config('builder.field_options') => (new Studio)->getStudios(),
-                ],
-                [
-                    config('builder.field_type')    => "select",
-                    config('builder.field_name')    => "format_id",
-                    config('builder.field_label')   => "Format",
-                    config('builder.field_options') => (new Format)->getFormats(),
-                ],
-                [
-                    config('builder.field_type')    => "textarea",
-                    config('builder.field_name')    => "bio",
-                    config('builder.field_label')   => "Description",
-                    config('builder.field_options') => (new Format)->getFormats(),
-                ]
-            ],
-            config('builder.button_group') => [
-                [
-                    config('builder.button_type')   => "cancel",
-                    config('builder.button_text')   => "cancel",
-                    config('builder.button_class')  => "btn-secondary mr-2",
-                    config('builder.button_route')  => "movies.index"
-                ],
-                [
-                    config('builder.button_type')   => "submit",
-                    config('builder.button_text')   => "submit",
-                    config('builder.button_class')  => "btn-success",
-                ]
-            ]
+            $this->field('text', 'name', 'Title'),
+            $this->field('text', 'sort_name', 'Sort By'),
+            $this->field('text', 'running_time', 'Running Time'),
+            $this->field('text', 'imdb_id', 'IMDb Code'),
+            $this->field('text', 'released', 'Release Date'),
+            $this->field('select', 'rating', 'Rating', (new Movie)->ratings),
+            $this->field('select', 'certificate_id', 'Certificate', (new Certificate)->getCertificates()),
+            $this->field('select', 'studio_id', 'Studio', (new Studio)->getStudios()),
+            $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
+            $this->field('select', 'bio', 'Description', (new Format)->getFormats()),
+
+        ];
+    }
+
+
+    /**
+     * Return an array of form buttons.
+     *
+     * @since 1.1.0
+     * @return array
+     */
+    protected function buttons(): array
+    {
+        return [
+            $this->button('cancel', 'cancel', 'btn-secondary mr-2', 'movies.index'),
+            $this->button('submit', 'submit', 'btn-success')
         ];
     }
 
