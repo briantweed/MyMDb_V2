@@ -32,9 +32,6 @@ class DatabaseSeeder extends Seeder {
 
 		Model::reguard();
 
-        Artisan::call('slug:movies');
-        Artisan::call('slug:people');
-	    $this->call(MoviesTableSeeder::class);
     }
 
 }
