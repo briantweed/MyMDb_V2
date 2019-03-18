@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 use Illuminate\Http\{RedirectResponse, Request};
 
@@ -92,8 +94,9 @@ class MovieController extends BaseController
      */
     public function store(MovieRequest $request): RedirectResponse
     {
-        $movie = (new Movie)->fill($request->all())->save();
-        return redirect()->route('movies.show', $movie);
+        $movie = new Movie;
+        $movie->fill($request->all())->save();
+            return redirect()->route('movies.show', $movie);
     }
 
 

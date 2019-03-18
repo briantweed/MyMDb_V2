@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 
 abstract class BaseModel extends Model
@@ -29,17 +29,18 @@ abstract class BaseModel extends Model
      * @param string $key
      * @param string $value
      * @param bool $forget
+     * @param string $sort
      * @return array
      */
-    public function cacheAndReturn(string $key, string$value, bool $forget): array
+    public function cacheAndReturn(string $key, string $value, bool $forget , string $sort = 'id'): array
     {
         if ($forget) {
             Cache::forget($this->getTable());
         }
 
-        return Cache::rememberForever($this->getTable(), function() use($key, $value) {
-            $sortKey = 'by' . ucwords($key);
-            return $this->$sortKey()
+        return Cache::rememberForever($this->getTable(), function() use($key, $value, $sort) {
+            $sortScope = 'by' . ucwords($sort);
+            return $this->$sortScope()
                 ->pluck($value, $key)
                 ->toArray();
         });

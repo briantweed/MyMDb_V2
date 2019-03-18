@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\{DB, URL};
+use Illuminate\Support\Facades\{DB, File, URL};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 use App\Http\Traits\PositionTrait;
@@ -135,7 +135,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 	{
 		return $this->belongsTo(Studio::class)->withDefault([
             'name' => 'Unknown'
-        ]);
+        ])->byName();
 	}
 
 
@@ -252,14 +252,19 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Accessor - return the path of the movie cover image.
+     * Accessor - return the path of the movie poster image.
      *
      * @since version 1.0.1
      * @return string
      */
     public function getImagePathAttribute(): string
     {
-        return URL::asset('/images/covers/' . $this->image);
+        $imagePath = self::DEFAULT_POSTER;
+        if(!empty($this->image) && File::exists(public_path() . Movie::POSTER_PATH . $this->image))
+        {
+            $imagePath =  URL::asset(self::POSTER_PATH . $this->image);
+        }
+        return $imagePath;
     }
 
 

@@ -40,7 +40,7 @@ class MovieRequest extends BaseRequest
         return [
             'name' => 'required|string',
             'sort_name' => 'string',
-            'imdb_id' => 'string',
+            'imdb_id' => 'nullable|string',
             'released' => 'required|digits:4',
             'rating' => 'required|min:1|max:10',
             'running_time' => 'required|numeric',

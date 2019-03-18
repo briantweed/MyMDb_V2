@@ -34,7 +34,7 @@ class MovieForm extends BaseForm implements FormInterface
             $this->field('select', 'certificate_id', 'Certificate', (new Certificate)->getCertificates()),
             $this->field('select', 'studio_id', 'Studio', (new Studio)->getStudios()),
             $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
-            $this->field('select', 'bio', 'Description', (new Format)->getFormats()),
+            $this->field('textarea', 'bio', 'Description'),
 
         ];
     }

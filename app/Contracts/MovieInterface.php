@@ -30,6 +30,10 @@ interface MovieInterface
     ];
 
 
+    public const POSTER_PATH = '/images/covers/';
+
+    public const DEFAULT_POSTER = '/images/mymdb.jpg';
+
     public const STAR_ICON = '<i class="fas fa-star"></i>';
 
 

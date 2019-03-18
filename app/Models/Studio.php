@@ -25,7 +25,7 @@ class Studio extends BaseModel
 
     public function getStudios($forget = false)
     {
-        return $this->cacheAndReturn('id', 'name', $forget);
+        return $this->cacheAndReturn('id', 'name', $forget, 'name');
     }
 
 }

@@ -57,44 +57,44 @@
 
     </section>
 
+    @if($movie->cast->count())
+        <section id="cast-details" class="pt-3 pb-3">
 
-    <section id="cast-details" class="pt-3 pb-3">
+            @h2 Cast @endh2
 
-        @h2 Cast @endh2
+            <div class="row">
+                @foreach($movie->cast as $cast)
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                        <a href="{{ route('people.show', [$cast->slug]) }}">
+                            {{ $cast->star }}<img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
+                        </a>
+                    </div>
+                @endforeach
+            </div>
 
-        <div class="row">
-
-            @foreach($movie->cast as $cast)
-                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
-                    <a href="{{ route('people.show', [$cast->slug]) }}">
-                        {{ $cast->star }}<img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
-                    </a>
-                </div>
-            @endforeach
+        </section>
+    @endif
 
 
-        </div>
+    @if($movie->crew->count())
+        <section id="crew-details" class="pt-3 pb-5">
 
-    </section>
+            @h2 Crew @endh2
 
-@empty($movie->crew)
-    <section id="crew-details" class="pt-3 pb-5">
+            <div class="row">
+                @foreach($movie->crew as $crew)
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
+                        <a href="{{ route('people.show', [$crew->slug]) }}">
+                            <img class="img-fluid pb-3" src="{{ $crew->imagePath }}" alt="{{ $crew->fullname }}" title="{{ $crew->fullname }} - {{ $crew->pivot->position }}">
+                        </a>
+                    </div>
+                @endforeach
 
-        @h2 Crew @endh2
+            </div>
 
-        <div class="row">
-            @foreach($movie->crew as $crew)
-                <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
-                    <a href="{{ route('people.show', [$crew->slug]) }}">
-                        <img class="img-fluid pb-3" src="{{ $crew->imagePath }}" alt="{{ $crew->fullname }}" title="{{ $crew->fullname }} - {{ $crew->pivot->position }}">
-                    </a>
-                </div>
-            @endforeach
+        </section>
+    @endif
 
-        </div>
-
-    </section>
-@endempty
 @endsection
 
 
