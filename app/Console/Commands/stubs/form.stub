@@ -7,56 +7,37 @@ use App\Contracts\FormInterface;
 
 /**
  * Class DummyClass
- * @see config/builder.php
+ *
  * @package App\Forms
+ * @author briantweed
+ * @version 1.1.0
  */
-class DummyClass implements FormInterface
+class DummyClass extends BaseForm implements FormInterface
 {
-
-    public $data;
-
-
-    /**
-     * DummyClass constructor.
+   /**
+     * Return an array of form fields.
+     *
+     * @since 1.1.0
+     * @return array
      */
-    public function __construct()
+    public function fields(): array
     {
-        $this->data = $this->getArray();
+        return [
+            // example: $this->field(string $type, string $name, string $label, array $options),
+        ];
     }
 
 
     /**
-     * Return the data array used to build the form.
+     * Return an array of form buttons.
+     *
+     * @since 1.1.0
      * @return array
      */
-    public function getArray()
+    public function buttons(): array
     {
         return [
-            // config('builder.field_group') => [
-                //
-                // Input field example
-                // [
-                //    config('builder.field_type')    => "",
-                //    config('builder.field_name')    => "",
-                //    config('builder.field_label')   => "",
-                // ],
-                //
-                // Select field example
-                // [
-                //    config('builder.field_type')    => "",
-                //    config('builder.field_name')    => "",
-                //    config('builder.field_label')   => "",
-                //    config('builder.field_options') => (new Model)->getResults()
-                // ]
-            // ],
-            // config('builder.button_group') => [
-                // [
-                //    config('builder.button_type')   => "",
-                //    config('builder.button_text')   => "",
-                //    config('builder.button_class')  => "",
-                //    config('builder.button_route')  => ""
-                // ]
-            ]
+            // example: $this->button(string $type, string $text, string $class = '', string $route = ''),
         ];
     }
 

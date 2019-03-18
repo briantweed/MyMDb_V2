@@ -11,7 +11,7 @@ use App\Models\{Certificate, Format, Movie, Studio};
  *
  * @package App\Forms
  * @author briantweed
- * @Version 1.1.0
+ * @version 1.1.0
  */
 class MovieForm extends BaseForm implements FormInterface
 {
