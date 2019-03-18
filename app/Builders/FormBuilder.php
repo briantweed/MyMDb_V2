@@ -10,7 +10,7 @@ use App\Contracts\FormInterface;
  *
  * @package App\Builders
  * @author briantweed
- * @version 1.0
+ * @version 1.0.1
  * @link config/builder.php
  */
 class FormBuilder
@@ -30,6 +30,19 @@ class FormBuilder
     public function __construct(FormInterface $form, $parameters = null)
     {
         $this->setForm($form);
+        $this->setParameters($parameters);
+    }
+
+
+    /**
+     * Set the parameters.
+     *
+     * @since 1.0.1
+     * @param $parameters
+     * @return void
+     */
+    public function setParameters($parameters): void
+    {
         $this->parameters = $parameters;
     }
 
@@ -37,6 +50,7 @@ class FormBuilder
     /**
      * Render the different parts of the form, add to the view and return the result.
      *
+     * @since 1.0.0
      * @return string|null
      */
     public function build(): ?string
@@ -48,8 +62,9 @@ class FormBuilder
 
 
     /**
-     * Set the filters variable.
+     * Set the form data.
      *
+     * @since 1.0.0
      * @param FormInterface $form
      * @return void
      */
@@ -62,6 +77,7 @@ class FormBuilder
     /**
      * Add any fields to the view.
      *
+     * @since 1.0.0
      * @return void
      */
     private function addFieldsToView(): void
@@ -83,6 +99,7 @@ class FormBuilder
     /**
      * Add any buttons to the view.
      *
+     * @since 1.0.0
      * @return void
      */
     private function addButtonsToView(): void
@@ -102,6 +119,7 @@ class FormBuilder
     /**
      * Check if the relevant section is part of the form.
      *
+     * @since 1.0.0
      * @param string $key
      * @return bool
      */
@@ -112,6 +130,10 @@ class FormBuilder
 
 
     /**
+     * Check if the field has an existing value.
+     *
+     * @since 1.0.0
+     * @since 1.0.1 - will only return a string
      * @param array $fields
      * @return string
      */

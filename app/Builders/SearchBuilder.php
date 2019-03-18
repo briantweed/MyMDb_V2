@@ -10,13 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Class SearchBuilder.
  *
- * Take the submitted request fields and check each one to see
- * if it relates to a query scope defined within the model.
- * If a scope if found it is added the the query builder.
- *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.0
+ * @version 1.0.1
  * @link config/builder.php
  *
  */
@@ -48,7 +44,7 @@ class SearchBuilder
 
 
     /**
-     * Apply fields, order by and sort direction to the query.
+     * Add fields, orderBy and sort direction.
      *
      * @since 1.0.0
      * @return mixed
@@ -75,7 +71,7 @@ class SearchBuilder
 
 
     /**
-     * Set the order by field.
+     * Set the orderBy field.
      *
      * @since 1.0.0
      * @return void
@@ -99,10 +95,10 @@ class SearchBuilder
 
 
     /**
-     * Check if each field has a corresponding scope in the model.
-     * If so, add the Scope to the query.
+     * Check if each field has a corresponding scope method.
      *
      * @since 1.0.0
+     * @since 1.0.1 - check field name for double underscore (related table field)
      * @return void
      */
     private function addFieldsToQuery(): void
@@ -125,9 +121,7 @@ class SearchBuilder
 
 
     /**
-     * Check if the orderBy has a corresponding Scope in the Model.
-     * Pass the sort direction if it has been set.
-     * Add the Scope to the query.
+     * Check if the orderBy has a corresponding scope method.
      *
      * @since 1.0.0
      * @return void
@@ -147,8 +141,9 @@ class SearchBuilder
 
 
     /**
-     * Add scope from a related model to the query.
+     * Add scope from a related model.
      *
+     * @since 1.0.1
      * @param string $field
      * @param string $value
      * @return void
@@ -164,8 +159,9 @@ class SearchBuilder
 
 
     /**
-     * Add scope from this model to the query.
+     * Add scope from this model.
      *
+     * @since 1.0.1
      * @param $field
      * @param $value
      * @return void

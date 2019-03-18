@@ -2,7 +2,17 @@
 
 namespace App\Contracts;
 
+use Illuminate\Database\Eloquent\Relations\{BelongsTo,BelongsToMany};
 
+
+/**
+ * Interface MovieInterface.
+ * Constants and relationship method should be listed here.
+ *
+ * @package App\Contracts
+ * @autor briantweed
+ * @version 1.0.0
+ */
 interface MovieInterface
 {
 
@@ -19,55 +29,72 @@ interface MovieInterface
         10 => 10,
     ];
 
+
     public const STAR_ICON = '<i class="fas fa-star"></i>';
 
 
     /**
-     * Relationship - a movie can have many cast members
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can have many cast members.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
     public function cast();
 
 
     /**
-     * Relationship - a movie can have many main crew members
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Relation - a movie can have many main crew members.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
-    public function crew();
+    public function crew(): BelongsToMany;
 
 
     /**
-     * Relationship - a movie belongs to a studio
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Relation - a movie belongs to a studio.
+     *
+     * @since version 1.0.0
+     * @return BelongsTo
      */
-    public function studio();
+    public function studio(): BelongsTo;
+
+    
+    /**
+     * Relation - a movie exists on a certain format.
+     *
+     * @since version 1.0.0
+     * @return BelongsTo
+     */
+    public function format(): BelongsTo;
+    
+
+    /**
+     * Relation - a movie is given a certificate.
+     *
+     * @since version 1.0.0
+     * @return BelongsTo
+     */
+    public function certificate(): BelongsTo;
+
 
 
     /**
-     * Relationship - a movie exists on a certain format e.g. DVD, Blu-ray etc.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Relation - a movie can belong to many types of genres.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
-    public function format();
+    public function genres(): BelongsToMany;
+
 
 
     /**
-     * Relationship - a movie is given a certificate e.g. U, PG etc.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Relation - a movie can have many types of tags.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
-    public function certificate();
-
-
-    /**
-     * Relationship - a movie can belong to many types of genres
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function genres();
-
-
-    /**
-     * Relationship - a movie can have many types of tags
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function tags();
+    public function tags(): BelongsToMany;
 
 }

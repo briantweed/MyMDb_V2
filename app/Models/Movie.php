@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\{Cache, DB, URL};
+use Illuminate\Support\Facades\{DB, URL};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 use App\Http\Traits\PositionTrait;
@@ -16,13 +16,26 @@ use App\Contracts\{MovieInterface, PositionInterface};
  * Class Movie.
  *
  * @package App\Models
- * @version 1.0.0
+ * @version 1.0.5
  * @author briantweed
  */
 class Movie extends BaseModel implements PositionInterface, MovieInterface
 {
 
 	use PositionTrait;
+
+
+    /**
+     * Relationships that should always be eager loaded
+     *
+     * @since version 1.0.5
+     * @var array
+     */
+	protected $with = [
+	    'certificate',
+        'format',
+        'studio'
+    ];
 
 
     /**
@@ -186,16 +199,14 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      */
     public function getRatingsAttribute(): array
     {
-        return Cache::rememberForever('ratings', function() {
-            return self::RATINGS;
-        });
+        return self::RATINGS;
     }
 
 
     /**
      * Accessor - display rating as star icons.
      *
-     * @since version 1.0.0
+     * @since version 1.0.2
      * @return string
      */
     public function getStarRatingAttribute(): string
@@ -212,7 +223,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display running time in minutes.
      *
-     * @since version 1.0.0
+     * @since version 1.0.1
      * @return string
      */
     public function getRunningTimeInMinutesAttribute(): string
@@ -224,7 +235,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display running time in hours and minutes.
      *
-     * @since version 1.0.0
+     * @since version 1.0.1
      * @return string
      */
     public function getRunningTimeInHoursAttribute(): string
@@ -243,7 +254,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - return the path of the movie cover image.
      *
-     * @since version 1.0.0
+     * @since version 1.0.1
      * @return string
      */
     public function getImagePathAttribute(): string
@@ -255,7 +266,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Accessor - display the purchased date in the selected format.
      *
-     * @since version 1.0.0
+     * @since version 1.0.1
      * @see config/app.php
      * @param $date
      * @return string
@@ -270,6 +281,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Mutator - format date for database storage.
      *
+     * @since version 1.0.1
      * @param $date
      * @return mixed
      */
@@ -296,7 +308,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies where the search string matches one of the fields listed.
      *
-     * @since version 1.0.0
+     * @since version 1.0.4
      * @param Builder $query
      * @param string $name
      * @return Builder
@@ -316,7 +328,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Scope - return movies whose title is like the given name.
      *
-     * @since version 1.0.0
+     * @since version 1.0.4
      * @param Builder $query
      * @param string $name
      * @return Builder
@@ -442,6 +454,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Group movies by the first letter of their title.
      *
+     * @since version 1.0.4
      * @return array
      */
 	public static function groupByFirstLetter(): array
@@ -456,6 +469,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Check to see if this movie is Spinal Tap.
      * If so, turn it up to eleven!
      *
+     * @since version 1.0.2
      * @return int
      */
 	private function isThisSpinalTap(): int

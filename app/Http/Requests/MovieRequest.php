@@ -8,6 +8,7 @@ class MovieRequest extends BaseRequest
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -21,12 +22,17 @@ class MovieRequest extends BaseRequest
      */
     public function prepareForValidation()
     {
-        //
+        // $input = $this->all();
+
+        // $input['field'] = filter_var(trim($input['field']), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+        // $this->replace($input);
     }
 
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules(): array
@@ -48,7 +54,8 @@ class MovieRequest extends BaseRequest
 
 
     /**
-     * Get the messages that apply to the rules
+     * Get the messages that apply to the rules.
+     *
      * @return array
      */
     public function messages(): array

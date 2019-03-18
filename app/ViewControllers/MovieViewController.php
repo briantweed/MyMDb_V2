@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\ViewControllers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -9,27 +9,19 @@ use App\Builders\{FormBuilder};
 use App\Forms\{MovieFilterForm, MovieForm};
 
 
-class MovieServiceProvider extends ServiceProvider
+class MovieViewController extends ServiceProvider
 {
 
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-    }
-
 
     /**
-     * Bootstrap services.
+     * MovieViewController constructor.
      *
-     * @return void
+     * @param $app
      */
-    public function boot()
+    public function __construct($app)
     {
+        parent::__construct($app);
+
         $this->movieFilters();
         $this->letterGroups();
         $this->movieForm();

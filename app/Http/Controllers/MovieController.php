@@ -8,19 +8,18 @@ use Illuminate\Http\{RedirectResponse, Request};
 use App\Models\Movie;
 use App\Builders\SearchBuilder;
 use App\Http\Requests\MovieRequest;
-use Illuminate\Support\Facades\Redis;
+
 
 /**
- *
  * Class MovieController.
  *
  * RESTful API for dealing with movies.
  *
  * @package App\Http\Controllers
- * @version 1.0.0
+ * @version 1.0.1
  * @author briantweed
  *
- * @see MovieServiceProvider - for view display related data
+ * @see MovieViewController - for view display related data
  * @see MovieRequest - for movie request validation
  * @see SearchBuilder - for how the search filters are applied
  *
@@ -41,15 +40,14 @@ class MovieController extends BaseController
      * Apply any search filters and return the results.
      *
      * @since version 1.0.0
+     * @since version 1.0.1 - SearchBuilder added
      * @uses SearchBuilder::apply()
-     * @internal Eager load any relationships used for display
      * @param Request $request
      * @return View
      */
     public function index(Request $request): View
     {
         $movies = (new SearchBuilder(new Movie, $request))->apply()
-            ->with(['certificate', 'studio', 'format'])
             ->bySortName()
             ->paginate();
         return view('pages.movies.index', [
