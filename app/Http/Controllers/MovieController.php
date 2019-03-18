@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 use Illuminate\Http\{RedirectResponse, Request};
 
