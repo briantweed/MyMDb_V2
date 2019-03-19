@@ -36,7 +36,13 @@
             <div class="col-12 col-sm-8 col-md-9 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
                 <p class="text-warning  d-none d-md-block" title="{{ $movie->rating }}">{!! $movie->starRating !!}</p>
-                <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}
+                <p>
+                    {{ $movie->released }} |
+                    {{ $movie->runningTimeInHours }}  |
+                    {{ $movie->format()[$movie->format_id] }} |
+                    {{ $movie->certificate()[$movie->certificate_id] }} |
+
+                    {{ $movie->studio()[$movie->studio_id] }}
                     @if( $movie->genres->count() )
                         <br>
                         @foreach( $movie->genres as $genre )
@@ -60,7 +66,7 @@
     @if($movie->cast->count())
         <section id="cast-details" class="pt-3 pb-3">
 
-            @h2 Cast @endh2
+            <h2 class="pb-2">Cast</h2>
 
             <div class="row">
                 @foreach($movie->cast as $cast)
@@ -79,7 +85,7 @@
     @if($movie->crew->count())
         <section id="crew-details" class="pt-3 pb-5">
 
-            @h2 Crew @endh2
+            <h2 class="pb-2">Crew</h2>
 
             <div class="row">
                 @foreach($movie->crew as $crew)
