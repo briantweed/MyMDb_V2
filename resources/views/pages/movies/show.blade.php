@@ -60,7 +60,7 @@
     @if($movie->cast->count())
         <section id="cast-details" class="pt-3 pb-3">
 
-            @h2 Cast @endh2
+            <h2 class="pb-2">Cast</h2>
 
             <div class="row">
                 @foreach($movie->cast as $cast)
@@ -79,7 +79,7 @@
     @if($movie->crew->count())
         <section id="crew-details" class="pt-3 pb-5">
 
-            @h2 Crew @endh2
+            <h2 class="pb-2">Crew</h2>
 
             <div class="row">
                 @foreach($movie->crew as $crew)
