@@ -86,7 +86,6 @@ class FormBuilder
         {
             foreach($this->form[config('builder.field_group')] as $field)
             {
-
                 $field['value'] = $this->checkForFieldValue($field);
                 $this->view .= view('forms.fields.'.$field[config('builder.type')], [
                     'field' => $field,

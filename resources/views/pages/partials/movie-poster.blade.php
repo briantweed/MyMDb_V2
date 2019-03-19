@@ -1,6 +1,6 @@
 <section class="pt-3 pb-3">
 
-    @h2 {{ $heading }} @endh2
+    <h2 class="pb-2">{{ $heading }}</h2>
 
     <div class="row">
 

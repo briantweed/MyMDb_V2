@@ -52,7 +52,7 @@
     @if($person->roles->count())
         <section id="person-cast" class="pt-3 pb-3">
 
-            @h2 Roles @endh2
+            <h2 class="pb-2">Roles</h2>
 
             <div class="row">
 
