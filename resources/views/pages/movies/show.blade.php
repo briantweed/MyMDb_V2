@@ -72,7 +72,7 @@
                 @foreach($movie->cast as $cast)
                     <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
                         <a href="{{ route('people.show', [$cast->slug]) }}">
-                            {{ $cast->star }}<img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
+                            <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
                         </a>
                     </div>
                 @endforeach

@@ -451,6 +451,20 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * Scope - sort movies by relase year.
+     *
+     * @since version 1.0.0
+     * @param Builder $query
+     * @param string $direction
+     * @return Builder
+     */
+	public function scopeByReleased(Builder $query, string $direction = 'asc')
+	{
+		return $query->orderBy('released', $direction);
+	}
+
+
+    /**
      * Group movies by the first letter of their title.
      *
      * @since version 1.0.4
