@@ -62,6 +62,7 @@
         </div>
 
     </section>
+    
 
     @if($movie->cast->count())
         <section id="cast-details" class="pt-3 pb-3">
@@ -69,12 +70,10 @@
             <h2 class="pb-2">Cast</h2>
 
             <div class="row">
-                @foreach($movie->cast as $cast)
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
-                        <a href="{{ route('people.show', [$cast->slug]) }}">
-                            <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
-                        </a>
-                    </div>
+                @foreach($movie->cast as $person)
+
+                    @include('pages.movies.partials.movie_person')
+
                 @endforeach
             </div>
 
@@ -88,12 +87,10 @@
             <h2 class="pb-2">Crew</h2>
 
             <div class="row">
-                @foreach($movie->crew as $crew)
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
-                        <a href="{{ route('people.show', [$crew->slug]) }}">
-                            <img class="img-fluid pb-3" src="{{ $crew->imagePath }}" alt="{{ $crew->fullname }}" title="{{ $crew->fullname }} - {{ $crew->pivot->position }}">
-                        </a>
-                    </div>
+                @foreach($movie->crew as $person)
+
+                    @include('pages.movies.partials.movie_person')
+
                 @endforeach
 
             </div>

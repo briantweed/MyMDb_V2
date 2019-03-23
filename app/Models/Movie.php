@@ -270,7 +270,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param $date
      * @return string
      */
-    public function getPurchasedAttribute(Carbon $date): string
+    public function getPurchasedAttribute(string $date): string
     {
         return Carbon::parse($date)->format(config('app.date_display'));
         // return Carbon::createFromFormat(config('app.date_display'), $date)->format('jS F Y');

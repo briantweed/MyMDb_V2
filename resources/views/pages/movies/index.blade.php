@@ -23,7 +23,7 @@
 
             <div class="col-12 col-sm-9">
 
-                {{--@include('pages.movies.partials.movie_letters')--}}
+                @include('pages.movies.partials.movie_letters')
 
                 <a href="{{ route('movies.create') }}" class="btn btn-primary mb-3">Add New Movie</a>
 
