@@ -62,7 +62,7 @@
         </div>
 
     </section>
-    
+
 
     @if($movie->cast->count())
         <section id="cast-details" class="pt-3 pb-3">

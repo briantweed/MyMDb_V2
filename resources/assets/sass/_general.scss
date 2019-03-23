@@ -30,7 +30,19 @@ h1, h2, h3 {
     }
 }
 
-option {
-    background: #1d1f22 !important;
+#movie_filters {
+    .form-group {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        label {
+            margin-bottom: 3px;
+        }
+        .form-control {
+            height: auto;
+        }
+        option {
+            background: #1d1f22 !important;
+        }
+    }
 }
 
