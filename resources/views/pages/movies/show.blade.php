@@ -36,7 +36,13 @@
             <div class="col-12 col-sm-8 col-md-9 offset-lg-1">
                 <h1 class="font-weight-bold d-none d-md-block">{{ $movie->name }}</h1>
                 <p class="text-warning  d-none d-md-block" title="{{ $movie->rating }}">{!! $movie->starRating !!}</p>
-                <p>{{ $movie->released }} | {{ $movie->runningTimeInHours }}  | {{ $movie->format->type }} | {{ $movie->certificate->title }}
+                <p>
+                    {{ $movie->released }} |
+                    {{ $movie->runningTimeInHours }}  |
+                    {{ $movie->format()[$movie->format_id] }} |
+                    {{ $movie->certificate()[$movie->certificate_id] }} |
+
+                    {{ $movie->studio()[$movie->studio_id] }}
                     @if( $movie->genres->count() )
                         <br>
                         @foreach( $movie->genres as $genre )
@@ -66,7 +72,7 @@
                 @foreach($movie->cast as $cast)
                     <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
                         <a href="{{ route('people.show', [$cast->slug]) }}">
-                            {{ $cast->star }}<img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
+                            <img class="img-fluid pb-3" src="{{ $cast->imagePath }}" alt="{{ $cast->fullname }}" title="{{ $cast->fullname }} - {{ $cast->pivot->character }}">
                         </a>
                     </div>
                 @endforeach

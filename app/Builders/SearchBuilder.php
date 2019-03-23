@@ -78,7 +78,7 @@ class SearchBuilder
      */
     private function setOrderBy(): void
     {
-        $this->orderBy = array_key_exists(config('builder.order'), $this->fields) ? $this->fields[config('builder.order')] : false;
+        $this->orderBy = array_key_exists(config('builder.order'), $this->fields) ? $this->fields[config('builder.order')] : null;
     }
 
 
@@ -90,7 +90,7 @@ class SearchBuilder
      */
     private function setSort(): void
     {
-        $this->sort = array_key_exists(config('builder.sort'), $this->fields) ? $this->fields[config('builder.sort')] : '';
+        $this->sort = array_key_exists(config('builder.sort'), $this->fields) ? $this->fields[config('builder.sort')] : null;
     }
 
 
@@ -128,13 +128,20 @@ class SearchBuilder
      */
     private function addOrderByToQuery(): void
     {
-        if($this->orderBy)
+        if($this->sort)
         {
-            $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . $this->orderBy;
+            $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . ucwords($this->sort);
             if(method_exists($this->model, $scopeMethod))
             {
-                $scopeName = config('builder.sort_scope') . $this->orderBy;
-                $this->query->$scopeName($this->sort);
+                $scopeName = config('builder.sort_scope') . $this->sort;
+                if($this->orderBy)
+                {
+                    $this->query->$scopeName($this->orderBy);
+                }
+                else
+                {
+                    $this->query->$scopeName();
+                }
             }
         }
     }

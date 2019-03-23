@@ -59,27 +59,27 @@ interface MovieInterface
      * Relation - a movie belongs to a studio.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-    public function studio(): BelongsTo;
+    public function studio(): array;
 
     
     /**
      * Relation - a movie exists on a certain format.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-    public function format(): BelongsTo;
+    public function format(): array;
     
 
     /**
      * Relation - a movie is given a certificate.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-    public function certificate(): BelongsTo;
+    public function certificate(): array;
 
 
 

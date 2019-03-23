@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\{DB, File, URL};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
@@ -23,19 +24,6 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 {
 
 	use PositionTrait;
-
-
-    /**
-     * Relationships that should always be eager loaded
-     *
-     * @since version 1.0.5
-     * @var array
-     */
-	protected $with = [
-	    'certificate',
-        'format',
-        'studio'
-    ];
 
 
     /**
@@ -129,13 +117,15 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Relation - a movie belongs to a studio.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-	public function studio(): BelongsTo
+	public function studio(): array
 	{
-		return $this->belongsTo(Studio::class)->withDefault([
-            'name' => 'Unknown'
-        ])->byName();
+        return Cache::rememberForever('studios', function() {
+            return $this->belongsTo(Studio::class)->withDefault([
+                'name' => 'Unknown'
+            ])->byName();
+        });
 	}
 
 
@@ -143,13 +133,15 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Relation - a movie exists on a certain format.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-	public function format(): BelongsTo
+	public function format(): array
 	{
-		return $this->belongsTo(Format::class)->withDefault([
-            'type' => 'Unknown'
-        ]);
+        return Cache::rememberForever('formats', function() {
+            return $this->belongsTo(Format::class)->withDefault([
+                'type' => 'Unknown'
+            ]);
+        });
     }
 
 
@@ -157,13 +149,15 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Relation - a movie is given a certificate.
      *
      * @since version 1.0.0
-     * @return BelongsTo
+     * @return array
      */
-	public function certificate(): BelongsTo
+	public function certificate(): array
 	{
-		return $this->belongsTo(Certificate::class)->withDefault([
-            'name' => 'Unknown'
-        ]);
+        return Cache::rememberForever('certificates', function() {
+            return $this->belongsTo(Certificate::class)->withDefault([
+                'name' => 'Unknown'
+            ]);
+        });
     }
 
 
@@ -453,6 +447,20 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 	public function scopeByRating(Builder $query, string $direction = 'desc')
 	{
 		return $query->orderBy('rating', $direction);
+	}
+
+
+    /**
+     * Scope - sort movies by relase year.
+     *
+     * @since version 1.0.0
+     * @param Builder $query
+     * @param string $direction
+     * @return Builder
+     */
+	public function scopeByReleased(Builder $query, string $direction = 'asc')
+	{
+		return $query->orderBy('released', $direction);
 	}
 
 
