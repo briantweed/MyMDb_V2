@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 $factory->define(Person::class, function (Faker $faker) {
 
     $firstName = $faker->firstName;
-    $lastName =$faker->lastName;
+    $lastName = $faker->lastName;
 
     return [
         'forename' => $firstName,

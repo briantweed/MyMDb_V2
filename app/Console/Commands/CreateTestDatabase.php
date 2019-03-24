@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Cast;
 use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\Console\Command;
@@ -15,7 +16,7 @@ class CreateTestDatabase extends Command
 
     protected $description = 'Create a test database';
 
-    protected $generateNewData = false;
+    protected $generateNewData = true;
 
 
     public function __construct()
@@ -40,6 +41,8 @@ class CreateTestDatabase extends Command
 
         $this->applySeed('StudiosTableSeeder');
 
+
+
         if($this->generateNewData)
         {
             factory(Movie::class, 10)->create();
@@ -47,12 +50,22 @@ class CreateTestDatabase extends Command
 
             factory(Person::class, 10)->create();
             Artisan::call('iseed people --database=mysql_tests --classnameprefix=Fake --force');
+
+            $movies = Movie::all();
+            foreach($movies as $movie)
+            {
+                factory(Cast::class,  random_int(3, 10))->create([
+                    'movie_id' => $movie->id
+                ]);
+            }
         }
         else
         {
             $this->applySeed('FakeMoviesTableSeeder');
             $this->applySeed('FakePeopleTableSeeder');
         }
+
+
 
         $this->info('Test database migration and seeding complete.');
     }

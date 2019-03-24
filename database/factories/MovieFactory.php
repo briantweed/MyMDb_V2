@@ -8,10 +8,10 @@ use Illuminate\Support\Str;
 $factory->define(Movie::class, function (Faker $faker) {
 
     $movie = new Movie;
-    $name = $faker->name;
+    $name = $faker->words($faker->numberBetween(1,5), true);
 
     return [
-        'name' => $name,
+        'name' => ucwords($name),
         'slug' => Str::slug($name),
         'sort_name' => $name,
         'imdb_id' => 'tt' . $faker->numberBetween(100000,999999),
