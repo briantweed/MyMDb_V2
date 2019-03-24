@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Cast;
-use App\Models\Movie;
-use App\Models\Person;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+
+use App\Models\{Cast, Crew, Movie, Person};
 
 
 class CreateTestDatabase extends Command
@@ -55,15 +54,21 @@ class CreateTestDatabase extends Command
                 factory(Cast::class, random_int(3, 10))->create([
                     'movie_id' => $movie->id
                 ]);
+
+                factory(Crew::class, random_int(1, 3))->create([
+                    'movie_id' => $movie->id
+                ]);
             }
+            Artisan::call('iseed cast --database=mysql_tests --classnameprefix=Fake --force');
+            Artisan::call('iseed crew --database=mysql_tests --classnameprefix=Fake --force');
         }
         else
         {
             $this->applySeed('FakeMoviesTableSeeder');
             $this->applySeed('FakePeopleTableSeeder');
+            $this->applySeed('FakeCastTableSeeder');
+            $this->applySeed('FakeCrewTableSeeder');
         }
-
-
 
         $this->info('Test database migration and seeding complete.');
     }

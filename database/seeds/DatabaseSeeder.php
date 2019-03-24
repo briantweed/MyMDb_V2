@@ -39,7 +39,9 @@ class DatabaseSeeder extends Seeder {
             #iseed_start
             $this->call(FakeMoviesTableSeeder::class);
             $this->call(FakePeopleTableSeeder::class);
-            #iseed_end
+            $this->call(FakeCastTableSeeder::class);
+        $this->call(FakeCrewTableSeeder::class);
+        #iseed_end
         }
 
     }
