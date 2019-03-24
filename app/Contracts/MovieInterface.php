@@ -43,7 +43,7 @@ interface MovieInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function cast();
+    public function cast(): BelongsToMany;
 
 
     /**
@@ -57,29 +57,32 @@ interface MovieInterface
 
     /**
      * Relation - a movie belongs to a studio.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-    public function studio(): array;
+    public function studio();
 
     
     /**
      * Relation - a movie exists on a certain format.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-    public function format(): array;
+    public function format();
     
 
     /**
      * Relation - a movie is given a certificate.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-    public function certificate(): array;
+    public function certificate();
 
 
 

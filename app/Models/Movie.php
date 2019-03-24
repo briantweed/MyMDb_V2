@@ -77,7 +77,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @since version 1.0.0
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -99,7 +99,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie can have many main crew members.
+     * Relation - a movie can have many z crew members.
      *
      * @since version 1.0.0
      * @return BelongsToMany
@@ -115,11 +115,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie belongs to a studio.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-	public function studio(): array
+	public function studio()
 	{
         return Cache::rememberForever('studios', function() {
             return $this->belongsTo(Studio::class)->withDefault([
@@ -131,11 +132,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie exists on a certain format.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-	public function format(): array
+	public function format()
 	{
         return Cache::rememberForever('formats', function() {
             return $this->belongsTo(Format::class)->withDefault([
@@ -147,11 +149,12 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie is given a certificate.
+     * The cache will return an array but phpunit testing will return the object.
      *
      * @since version 1.0.0
      * @return array
      */
-	public function certificate(): array
+	public function certificate()
 	{
         return Cache::rememberForever('certificates', function() {
             return $this->belongsTo(Certificate::class)->withDefault([
