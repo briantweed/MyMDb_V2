@@ -32,6 +32,16 @@ class DatabaseSeeder extends Seeder {
 
 		Model::reguard();
 
+		// All new iseed seeds will be places in here for safety.
+        // Move out of their enforced prison if needed.
+		if(1==2)
+        {
+            #iseed_start
+            $this->call(FakeMoviesTableSeeder::class);
+            $this->call(FakePeopleTableSeeder::class);
+            #iseed_end
+        }
+
     }
 
 }

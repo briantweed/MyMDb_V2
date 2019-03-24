@@ -281,19 +281,6 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Mutator - format date for database storage.
-     *
-     * @since version 1.0.1
-     * @param $date
-     * @return mixed
-     */
-    public function setPurchasedAttribute(Carbon $date)
-    {
-        return $date->format(config('app.date_store'));
-    }
-
-
-    /**
      * Scope - return movies whose title is like the given name.
      *
      * @since version 1.0.0

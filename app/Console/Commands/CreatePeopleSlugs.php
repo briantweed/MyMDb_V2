@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Movie;
+use App\Models\Person;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class createMovieSlugs extends Command
+class CreatePeopleSlugs extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'slug:movies';
+    protected $signature = 'slug:people';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a URL slug for each movie from its title';
+    protected $description = 'Create a URL slug for each person from their full name';
 
     /**
      * Create a new command instance.
@@ -39,11 +39,11 @@ class createMovieSlugs extends Command
      */
     public function handle()
     {
-        $this->info('Creating: movie slugs');
-        $movies = Movie::all();
-        foreach($movies as $movie) {
-            $movie->slug = Str::slug($movie->name);
-            $movie->update();
+        $this->info('Creating: people slugs');
+        $people = Person::all();
+        foreach($people as $person) {
+            $person->slug = Str::slug($person->fullname);
+            $person->update();
         }
         $this->info('Created: movie slugs');
     }

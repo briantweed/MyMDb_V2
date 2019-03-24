@@ -1,28 +1,30 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\{Certificate, Format, Studio, Movie};
 use Illuminate\Support\Str;
 
-$factory->define(Model::class, function (Faker $faker) {
 
+$factory->define(Movie::class, function (Faker $faker) {
+
+    $movie = new Movie;
     $name = $faker->name;
 
     return [
         'name' => $name,
         'slug' => Str::slug($name),
-        'sort_name' => '',
-        'imdb_id' => '',
-        'released' => '',
-        'rating' => '',
-        'running_time' => '',
-        'image' => '',
-        'certificate' => '',
-        'format_id' => '',
-        'studio_id' => '',
-        'duplicate' => '',
-        'bio' => '',
-        'purchased' => '',
-        'created_at' => now(),
-        'updated_at' => now(),
+        'sort_name' => $name,
+        'imdb_id' => 'tt' . $faker->numberBetween(100000,999999),
+        'released' => $faker->year($max = 'now'),
+        'rating' => $movie::RATINGS[array_rand($movie::RATINGS)],
+        'running_time' => $faker->numberBetween(90,150),
+        'image' => 'poster.jpg',
+        'certificate_id' => Certificate::inRandomOrder()->first()->id,
+        'format_id' => Format::inRandomOrder()->first()->id,
+        'studio_id' => Studio::inRandomOrder()->first()->id,
+        'duplicate' => 0,
+        'bio' => $faker->paragraph(),
+        'purchased' => $faker->dateTimeBetween('-20 years', 'now')->format('Y-m-d H:i:s')
     ];
+
 });
