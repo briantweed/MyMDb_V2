@@ -41,8 +41,6 @@ class CreateTestDatabase extends Command
 
         $this->applySeed('StudiosTableSeeder');
 
-
-
         if($this->generateNewData)
         {
             factory(Movie::class, 10)->create();
@@ -54,7 +52,7 @@ class CreateTestDatabase extends Command
             $movies = Movie::all();
             foreach($movies as $movie)
             {
-                factory(Cast::class,  random_int(3, 10))->create([
+                factory(Cast::class, random_int(3, 10))->create([
                     'movie_id' => $movie->id
                 ]);
             }
