@@ -17,11 +17,13 @@ class CreateTestDatabase extends Command
     protected $signature = 'setup:testing {{--new : Generate new test data}}';
     protected $description = 'Create and seed a test database';
     protected $generateNewData = false;
+    protected $movies;
 
 
     public function __construct()
     {
         parent::__construct();
+        $this->movies = Movie::all();
     }
 
 
@@ -107,8 +109,7 @@ class CreateTestDatabase extends Command
     private function generateFakeCast($override = false)
     {
         if($this->generateNewData || $override) {
-            $movies = Movie::all();
-            foreach($movies as $movie) {
+            foreach($this->movies as $movie) {
                 factory(Cast::class, random_int(3, 10))->create([
                     'movie_id' => $movie->id
                 ]);
@@ -123,8 +124,7 @@ class CreateTestDatabase extends Command
     private function generateFakeCrew($override = false)
     {
         if($this->generateNewData || $override) {
-            $movies = Movie::all();
-            foreach($movies as $movie) {
+            foreach($this->movies as $movie) {
                 factory(Crew::class, random_int(3, 10))->create([
                     'movie_id' => $movie->id
                 ]);
@@ -138,8 +138,7 @@ class CreateTestDatabase extends Command
     private function generateFakeMovieTags($override = false)
     {
         if($this->generateNewData || $override) {
-            $movies = Movie::all();
-            foreach($movies as $movie) {
+            foreach($this->movies as $movie) {
                 factory(MovieTag::class, random_int(0, 1))->create([
                     'movie_id' => $movie->id
                 ]);
@@ -154,8 +153,7 @@ class CreateTestDatabase extends Command
     private function generateFakeGenreMovies($override = false)
     {
         if($this->generateNewData || $override) {
-            $movies = Movie::all();
-            foreach($movies as $movie) {
+            foreach($this->movies as $movie) {
                 factory(GenreMovie::class, random_int(1, 3))->create([
                     'movie_id' => $movie->id
                 ]);
