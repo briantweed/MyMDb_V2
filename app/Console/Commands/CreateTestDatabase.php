@@ -86,7 +86,7 @@ class CreateTestDatabase extends Command
     {
         if($this->generateNewData || $override) {
             factory(Movie::class, 10)->create();
-            Artisan::call('iseed movies --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('movies');
         } else {
             $this->applySeed('FakeMoviesTableSeeder');
         }
@@ -97,7 +97,7 @@ class CreateTestDatabase extends Command
     {
         if($this->generateNewData || $override) {
             factory(Person::class, 10)->create();
-            Artisan::call('iseed people --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('people');
         } else {
             $this->applySeed('FakePeopleTableSeeder');
         }
@@ -113,7 +113,7 @@ class CreateTestDatabase extends Command
                     'movie_id' => $movie->id
                 ]);
             }
-            Artisan::call('iseed cast --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('cast');
         } else {
             $this->applySeed('FakeCastTableSeeder');
         }
@@ -129,7 +129,7 @@ class CreateTestDatabase extends Command
                     'movie_id' => $movie->id
                 ]);
             }
-            Artisan::call('iseed crew --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('crew');
         } else {
             $this->applySeed('FakeCrewTableSeeder');
         }
@@ -144,7 +144,7 @@ class CreateTestDatabase extends Command
                     'movie_id' => $movie->id
                 ]);
             }
-            Artisan::call('iseed movie_tag --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('movie_tag');
         } else {
             $this->applySeed('FakeMovieTagTableSeeder');
         }
@@ -160,10 +160,16 @@ class CreateTestDatabase extends Command
                     'movie_id' => $movie->id
                 ]);
             }
-            Artisan::call('iseed genre_movie --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
+            $this->generateSeed('genre_movie');
         } else {
             $this->applySeed('FakeGenreMovieTableSeeder');
         }
+    }
+
+
+    private function generateSeed($table)
+    {
+        Artisan::call('iseed ' . $table . ' --database=mysql_tests --classnameprefix=' . self::TABLE_PREFIX . ' --force');
     }
 
 }
