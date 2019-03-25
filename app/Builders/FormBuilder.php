@@ -84,6 +84,7 @@ class FormBuilder
     {
         if($this->contains(config('builder.field_group')))
         {
+            $this->view .= "<div class='mb-4'>";
             foreach($this->form[config('builder.field_group')] as $field)
             {
                 $field['value'] = $this->checkForFieldValue($field);
@@ -91,6 +92,7 @@ class FormBuilder
                     'field' => $field,
                 ]);
             }
+            $this->view .= "</div>";
         }
     }
 

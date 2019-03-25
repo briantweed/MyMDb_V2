@@ -36,11 +36,8 @@ class DatabaseSeeder extends Seeder {
         // Move out of their enforced prison if needed.
 		if(1==2)
         {
-            #iseed_start
-            $this->call(FakeMoviesTableSeeder::class);
-            $this->call(FakePeopleTableSeeder::class);
-            $this->call(FakeCastTableSeeder::class);
-        $this->call(FakeCrewTableSeeder::class);
+        #iseed_start
+        
         #iseed_end
         }
 

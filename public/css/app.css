@@ -16222,7 +16222,20 @@ h3 {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #202028);
 }
 
-option {
+#movie_filters .form-group {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+#movie_filters .form-group label {
+  margin-bottom: 3px;
+}
+
+#movie_filters .form-group .form-control {
+  height: auto;
+}
+
+#movie_filters .form-group option {
   background: #1d1f22 !important;
 }
 
