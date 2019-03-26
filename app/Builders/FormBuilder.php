@@ -19,6 +19,8 @@ class FormBuilder
     private $form;
     private $parameters;
     private $view;
+    private $fields;
+    private $buttons;
 
 
     /**
@@ -55,8 +57,8 @@ class FormBuilder
      */
     public function build(): ?string
     {
-        $this->addFieldsToView();
-        $this->addButtonsToView();
+        $this->view .= $this->getFields();
+        $this->view .= $this->getButtons();
         return $this->view;
     }
 
@@ -78,22 +80,23 @@ class FormBuilder
      * Add any fields to the view.
      *
      * @since 1.0.0
-     * @return void
+     * @return string
      */
-    private function addFieldsToView(): void
+    public function getFields(): string
     {
         if($this->contains(config('builder.field_group')))
         {
-            $this->view .= "<div class='mb-4'>";
+            $this->fields .= "<div class='mb-4'>";
             foreach($this->form[config('builder.field_group')] as $field)
             {
                 $field['value'] = $this->checkForFieldValue($field);
-                $this->view .= view('forms.fields.'.$field[config('builder.type')], [
+                $this->fields .= view('forms.fields.'.$field[config('builder.type')], [
                     'field' => $field,
                 ]);
             }
-            $this->view .= "</div>";
+            $this->fields .= "</div>";
         }
+        return $this->fields;
     }
 
 
@@ -101,19 +104,20 @@ class FormBuilder
      * Add any buttons to the view.
      *
      * @since 1.0.0
-     * @return void
+     * @return string
      */
-    private function addButtonsToView(): void
+    public function getButtons(): string
     {
         if($this->contains(config('builder.button_group')))
         {
             foreach($this->form[config('builder.button_group')] as $field)
             {
-                $this->view .= view('forms.buttons.' . ($field[config('builder.type')] ?: 'submit'), [
+                $this->buttons .= view('forms.buttons.' . ($field[config('builder.type')] ?: 'submit'), [
                     'field' => $field
                 ]);
             }
         }
+        return $this->buttons;
     }
 
 
@@ -138,12 +142,12 @@ class FormBuilder
      * @param array $fields
      * @return string
      */
-    private function checkForFieldValue(array $fields): string
+    private function checkForFieldValue(array $fields)
     {
         if($this->parameters) {
             if(array_key_exists($fields[config('builder.name')], $this->parameters))
             {
-                return (string) $this->parameters[$fields[config('builder.name')]];
+                return $this->parameters[$fields[config('builder.name')]];
             }
         }
         return '';

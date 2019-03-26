@@ -3,7 +3,7 @@
 namespace App\Forms;
 
 use App\Contracts\FormInterface;
-use App\Models\{Certificate, Format, Movie, Studio, Tag};
+use App\Models\{Certificate, Format, Genre, Movie, Studio, Tag};
 
 
 /**
@@ -34,10 +34,8 @@ class MovieForm extends BaseForm implements FormInterface
             $this->field('select', 'certificate_id', 'Certificate', (new Certificate)->getCertificates()),
             $this->field('select', 'studio_id', 'Studio', (new Studio)->getStudios()),
             $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
-            $this->field('checkbox', 'duplicate', 'Duplicate'),
             $this->field('textarea', 'bio', 'Description'),
-            $this->field('checkbox', 'id', 'Tags', (new Tag())->getTags()),
-
+            $this->field('checkbox', 'duplicate', 'Duplicate'),
         ];
     }
 

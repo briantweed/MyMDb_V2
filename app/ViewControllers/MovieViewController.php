@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Models\Movie;
 use App\Builders\{FormBuilder};
-use App\Forms\{MovieFilterForm, MovieForm};
+use App\Forms\{MovieFilterForm, MovieForm, MovieGenres};
 
 
 /**
@@ -83,10 +83,19 @@ class MovieViewController extends ServiceProvider
     private function movieForm()
     {
         view()->composer('pages.movies.partials.movie_form', function ($view) {
+
             $attributes = $view->movie ? $view->movie->getAttributes() : null;
+            $movieGenres = $view->movie->genres->pluck('type', 'id')->toArray();
+
+            $movieForm = new FormBuilder(new MovieForm(), $attributes);
+            $movieGenreForm = new FormBuilder(new MovieGenres(), ['genres' => $movieGenres]);
+
+            $form = $movieForm->getFields() . $movieGenreForm->getFields() . $movieForm->getButtons();
+
             $view->with([
-                'form' => (new FormBuilder(new MovieForm(), $attributes))->build()
+                'form' => $form
             ]);
+
         });
     }
 

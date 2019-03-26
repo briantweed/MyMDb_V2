@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-
-class Genre extends Model 
+class Genre extends BaseModel
 {
     
     protected $fillable = [
@@ -16,6 +14,11 @@ class Genre extends Model
     public function movies()
     {
         return $this->belongsToMany(Movie::class);
+    }
+
+    public function getGenres($forget = false): array
+    {
+        return $this->cacheAndReturn('id', 'type', $forget);
     }
 
 }
