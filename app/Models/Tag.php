@@ -11,9 +11,9 @@ class Tag extends BaseModel
      * @param $tag
      * @return mixed
      */
-    public function scopeWhereWord($query, $tag)
+    public function scopeWhereId($query, $tag)
     {
-        return $query->where('word', '=', $tag);
+        return $query->where('tags.id', '=', $tag);
     }
 
 
@@ -34,7 +34,7 @@ class Tag extends BaseModel
      */
     public function getTags($forget = false): array
     {
-        return $this->cacheAndReturn('word', 'word', $forget);
+        return $this->cacheAndReturn('id', 'word', $forget);
     }
 
 }

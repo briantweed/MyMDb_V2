@@ -99,7 +99,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
-     * Relation - a movie can have many z crew members.
+     * Relation - a movie can have many crew members.
      *
      * @since version 1.0.0
      * @return BelongsToMany
