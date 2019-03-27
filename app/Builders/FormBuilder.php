@@ -18,7 +18,6 @@ class FormBuilder
 
     private $form;
     private $parameters;
-    private $view;
     private $fields;
     private $buttons;
 
@@ -57,9 +56,7 @@ class FormBuilder
      */
     public function build(): ?string
     {
-        $this->view .= $this->getFields();
-        $this->view .= $this->getButtons();
-        return $this->view;
+        return $this->getFields() . $this->getButtons();
     }
 
 

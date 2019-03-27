@@ -1,5 +1,5 @@
 @empty($field[config('builder.options')])
-    <div class="form-check mb-3">
+    <div class="form-check py-3">
         <input
             class="form-check-input"
             type="checkbox"
@@ -18,10 +18,10 @@
         </label>
     </div>
 @else
-    <h5 class="mb-3">{{ $field[config('builder.label')]  }}</h5>
+    <h5 class="pt-4 pb-3">{{ $field[config('builder.label')]  }}</h5>
     <div class="form-row">
     @foreach($field[config('builder.options')] as $key => $value)
-        <div class="form-group col-4">
+        <div class="form-group col-sm-6 col-md-4">
             <div class="form-check">
                 <input
                     class="form-check-input"
@@ -30,10 +30,14 @@
                     name="{{ $field[config('builder.name')] }}[]"
                     aria-describedby="{{ $field[config('builder.name')] .'_'. config('builder.help') }}"
                     value="{{ $key }}"
-                    @if(old($field[config('builder.name')]) == $key)
-                        checked="checked"
-                    @elseif(array_key_exists($key, $field[config('builder.value')]))
-                        checked="checked"
+                    @if(is_array(old($field[config('builder.name')])))
+                        @if(in_array($key, old($field[config('builder.name')])))
+                            checked="checked"
+                        @endif
+                    @elseif(is_array($field[config('builder.value')]))
+                        @if(array_key_exists($key, $field[config('builder.value')]))
+                            checked="checked"
+                        @endif
                     @endif
                 >
                 <label class="form-check-label" for="{{ $field[config('builder.name')] }}_{{ $key }}">

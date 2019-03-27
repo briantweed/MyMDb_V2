@@ -36,6 +36,8 @@ class MovieForm extends BaseForm implements FormInterface
             $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
             $this->field('textarea', 'bio', 'Description'),
             $this->field('checkbox', 'duplicate', 'Duplicate'),
+            $this->field('checkbox', 'genres', 'Genres', (new Genre())->getGenres()),
+            $this->field('checkbox', 'tags', 'Tags', (new Tag())->getTags()),
         ];
     }
 

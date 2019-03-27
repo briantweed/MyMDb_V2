@@ -84,13 +84,13 @@ class MovieViewController extends ServiceProvider
     {
         view()->composer('pages.movies.partials.movie_form', function ($view) {
 
-            $attributes = $view->movie ? $view->movie->getAttributes() : null;
-            $movieGenres = $view->movie->genres->pluck('type', 'id')->toArray();
-
-            $movieForm = new FormBuilder(new MovieForm(), $attributes);
-            $movieGenreForm = new FormBuilder(new MovieGenres(), ['genres' => $movieGenres]);
-
-            $form = $movieForm->getFields() . $movieGenreForm->getFields() . $movieForm->getButtons();
+            $attributes = null;
+            if($view->movie) {
+                $attributes = $view->movie->getAttributes();
+                $attributes['genres'] = $view->movie->genres->pluck('type', 'id')->toArray();
+                $attributes['tags'] = $view->movie->tags->pluck('word', 'id')->toArray();
+            }
+            $form = (new FormBuilder(new MovieForm(), $attributes))->build();
 
             $view->with([
                 'form' => $form
