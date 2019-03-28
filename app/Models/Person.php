@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\{DB, URL};
 
 use App\Http\Traits\PositionTrait;
@@ -48,6 +49,9 @@ class Person  extends BaseModel implements PositionInterface
     }
 
 
+    /**
+     * @return mixed
+     */
     public function roles()
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
@@ -56,6 +60,9 @@ class Person  extends BaseModel implements PositionInterface
 	}
 
 
+    /**
+     * @return mixed
+     */
 	public function positions()
 	{
 		return $this->belongsToMany(Movie::class, 'crew', 'person_id', 'movie_id')
@@ -66,36 +73,54 @@ class Person  extends BaseModel implements PositionInterface
 	}
 
 
+    /**
+     * @return mixed
+     */
 	public function directed()
 	{
 		return $this->getPosition(self::DIRECTOR);
 	}
 
 
+    /**
+     * @return mixed
+     */
 	public function produced()
 	{
 		return $this->getPosition(self::PRODUCER);
 	}
 
 
+    /**
+     * @return mixed
+     */
 	public function wrote()
 	{
 		return $this->getPosition(self::WRITER);
 	}
 
 
+    /**
+     * @return mixed
+     */
 	public function scored()
 	{
 		return $this->getPosition(self::COMPOSER);
 	}
 
 
+    /**
+     * @return string
+     */
 	public function getFullnameAttribute()
 	{
 		return $this->forename . ' ' . $this->surname;
 	}
 
 
+    /**
+     * @return int|string
+     */
 	public function getAgeAttribute()
 	{
 	    if($this->birthday !== NULL)
@@ -107,6 +132,9 @@ class Person  extends BaseModel implements PositionInterface
 	}
 
 
+    /**
+     * @return string|null
+     */
 	public function getBornAttribute()
 	{
 	    if($this->birthday !== NULL)
@@ -117,6 +145,9 @@ class Person  extends BaseModel implements PositionInterface
 	}
 
 
+    /**
+     * @return string|null
+     */
 	public function getDiedAttribute()
 	{
 	    if($this->deceased !== NULL)
@@ -127,13 +158,18 @@ class Person  extends BaseModel implements PositionInterface
 	}
 
 
+    /**
+     * @return string
+     */
     public function getImagePathAttribute()
     {
         return URL::asset('/images/people/' . $this->image);
     }
 
 
-
+    /**
+     * @return string
+     */
     public function getBannerImagePathAttribute()
     {
         $movie = count($this->roles) ? $this->roles->random() : $this->positions->random();
@@ -141,6 +177,13 @@ class Person  extends BaseModel implements PositionInterface
     }
 
 
+    /**
+     * Find movies in the person's bio that have been wrapped
+     * in double curly brackets. Turn into a link if
+     * the movie exists in the database.
+     *
+     * @return string
+     */
     public function getBioWithLinksAttribute()
     {
         return nl2br( preg_replace_callback('/\{{(.*?)}}/', function($m)
@@ -150,60 +193,86 @@ class Person  extends BaseModel implements PositionInterface
 
             $query = Movie::whereName($movieName);
 
-            if (isset($crumbs[1]))
-            {
+            if (isset($crumbs[1])) {
                 $releaseYear = rtrim($crumbs[1], ")");
-                if (is_integer($releaseYear))
-                {
+                if (is_integer($releaseYear)) {
                     $query->whereReleased($releaseYear);
                 }
             }
 
             $movie = $query->first();
 
-            if ($movie)
-            {
+            if ($movie) {
                 return "<a href='/movies/".$movie->slug."'><b>".$movie->name." (".$movie->released.")</b></a>";
             }
-            else
-            {
+            else {
                 return $m[1];
             }
         }, $this->bio));
     }
 
 
-	public function scopeWhereFullname($query, $name)
+    /**
+     * @param $query
+     * @param $name
+     * @return mixed
+     */
+	public function scopeWhereFullname($query, $name): Builder
     {
         return $query->where(DB::raw("CONCAT(`forename`, ' ', `surname`)"), 'LIKE', '%' . $name . '%');
     }
 
 
-	public function scopeAreStars($query, bool $bool = true)
+    /**
+     * @param $query
+     * @param bool $bool
+     * @return mixed
+     */
+	public function scopeAreStars($query, bool $bool = true): Builder
     {
         return $query->where('star', $bool);
     }
 
 
-    public function scopeByStar($query, $direction = 'desc')
+    /**
+     * @param $query
+     * @param string $direction
+     * @return Builder
+     */
+    public function scopeByStar($query, $direction = 'desc'): Builder
     {
-        return $query->orderBy('star', 'desc');
+        return $query->orderBy('star', $direction);
     }
 
 
-    public function scopeByForename($query, $direction = 'asc')
+    /**
+     * @param $query
+     * @param string $direction
+     * @return Builder
+     */
+    public function scopeByForename($query, $direction = 'asc'): Builder
 	{
-		return $query->orderBy('forename', 'asc');
+		return $query->orderBy('forename', $direction);
 	}
 
 
-    public function scopeBySurname($query, $direction = 'asc')
+    /**
+     * @param $query
+     * @param string $direction
+     * @return Builder
+     */
+    public function scopeBySurname($query, $direction = 'asc'): Builder
 	{
-		return $query->orderBy('surname', 'asc');
+		return $query->orderBy('surname', $direction);
 	}
 
 
-    public function getPeople()
+    /**
+     * Return an array of all the people.
+     *
+     * @return array
+     */
+    public function getPeople(): array
     {
         return $this->byId()
             ->pluck('forename', 'id')
