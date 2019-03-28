@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 
+/**
+ * Class BaseModel.
+ *
+ * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
+ */
 abstract class BaseModel extends Model
 {
 
     /**
-     * Scope - sort the query by Id.
+     * Scope - sort the query by id.
      *
+     * @since version 1.0.0
      * @param $query
      * @param string $direction
      * @return mixed
@@ -26,6 +34,7 @@ abstract class BaseModel extends Model
     /**
      * Cache and return the key:value pair.
      *
+     * @since version 1.0.0
      * @param string $key
      * @param string $value
      * @param bool $forget

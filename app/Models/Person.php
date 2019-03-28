@@ -9,6 +9,13 @@ use App\Http\Traits\PositionTrait;
 use App\Contracts\PositionInterface;
 
 
+/**
+ * Class Person.
+ *
+ * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
+ */
 class Person  extends BaseModel implements PositionInterface
 {
 
@@ -31,7 +38,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * Set the route lookup field key
+     * Set the route lookup field key.
+     *
      * @return string
      */
     public function getRouteKeyName()

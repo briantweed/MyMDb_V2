@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
+/**
+ * Class Studio.
+ *
+ * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
+ */
 class Studio extends BaseModel
 {
 
@@ -27,12 +34,14 @@ class Studio extends BaseModel
 
 
     /**
+     * Scope - return the studios that match the selected name.
+     *
      * @since version 1.0.0
      * @param $query
      * @param string $direction
      * @return mixed
      */
-    public function scopeByName($query, $direction = 'asc')
+    public function scopeByName($query, $direction = 'asc'): Builder
     {
         return $query->orderBy('name', $direction);
     }
@@ -43,7 +52,7 @@ class Studio extends BaseModel
      * @param bool $forget
      * @return array
      */
-    public function getStudios($forget = false)
+    public function getStudios($forget = false): array
     {
         return $this->cacheAndReturn('id', 'name', $forget, 'name');
     }

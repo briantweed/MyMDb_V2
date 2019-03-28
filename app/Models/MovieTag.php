@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * Class MovieTag.
+ *
+ * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
+ */
 class MovieTag extends Model
 {
 

@@ -40,7 +40,6 @@
                     {{ $movie->released }} |
                     {{ $movie->runningTimeInHours }}  |
                     {{ $movie->format()[$movie->format_id] }} |
-                    {{ $movie->certificate()[$movie->certificate_id] }} |
 
                     {{ $movie->studio()[$movie->studio_id] }}
                     @if( $movie->genres->count() )

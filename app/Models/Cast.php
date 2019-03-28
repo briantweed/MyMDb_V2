@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * Class Cast.
+ *
+ * @package App\Models
+ * @version 1.0.0
+ * @author briantweed
+ */
 class Cast extends Model 
 {
 

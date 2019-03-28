@@ -288,7 +288,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $name
      * @return Builder
      */
-    public function scopeWhereName(Builder $query, string $name)
+    public function scopeWhereName(Builder $query, string $name): Builder
     {
         return $query->where('name', 'like', '%'.$name.'%');
     }
@@ -302,7 +302,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $name
      * @return Builder
      */
-    public function scopeWhereSearch(Builder $query, string $name)
+    public function scopeWhereSearch(Builder $query, string $name): Builder
     {
         return $query->where('name', 'like', '%'.$name.'%')
             ->orWhereHas('cast', function($q) use ($name) {
@@ -322,7 +322,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $name
      * @return Builder
      */
-    public function scopeWhereStarts(Builder $query, string $name)
+    public function scopeWhereStarts(Builder $query, string $name): Builder
     {
         return $query->where('name', 'regexp', '^[' . $name .']+');
     }
@@ -336,7 +336,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $year
      * @return Builder
      */
-    public function scopeWhereReleased(Builder $query, int $year)
+    public function scopeWhereReleased(Builder $query, int $year): Builder
     {
         return $query->where('released', $year);
     }
@@ -350,7 +350,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $rating
      * @return Builder
      */
-    public function scopeWhereRating(Builder $query, int $rating)
+    public function scopeWhereRating(Builder $query, int $rating): Builder
     {
         return $query->where('rating', $rating);
     }
@@ -364,7 +364,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $certificate
      * @return Builder
      */
-    public function scopeWhereCertificateId(Builder $query, int $certificate)
+    public function scopeWhereCertificateId(Builder $query, int $certificate): Builder
     {
         return $query->where('certificate_id', $certificate);
     }
@@ -378,7 +378,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $studio
      * @return Builder
      */
-    public function scopeWhereStudioId(Builder $query, int $studio)
+    public function scopeWhereStudioId(Builder $query, int $studio): Builder
     {
         return $query->where('studio_id', $studio);
     }
@@ -392,7 +392,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param int $format
      * @return Builder
      */
-    public function scopeWhereFormatId(Builder $query, int $format)
+    public function scopeWhereFormatId(Builder $query, int $format): Builder
     {
         return $query->where('format_id', $format);
     }
@@ -406,7 +406,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $direction
      * @return Builder
      */
-	public function scopeByReleaseDate(Builder $query, string $direction = 'desc')
+	public function scopeByReleaseDate(Builder $query, string $direction = 'desc'): Builder
 	{
 		return $query->orderBy('released', $direction);
 	}
@@ -420,7 +420,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $direction
      * @return Builder
      */
-	public function scopeBySortName(Builder $query, string $direction = 'asc')
+	public function scopeBySortName(Builder $query, string $direction = 'asc'): Builder
 	{
 		return $query->orderBy('sort_name', $direction);
 	}
@@ -434,21 +434,21 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @param string $direction
      * @return Builder
      */
-	public function scopeByRating(Builder $query, string $direction = 'desc')
+	public function scopeByRating(Builder $query, string $direction = 'desc'): Builder
 	{
 		return $query->orderBy('rating', $direction);
 	}
 
 
     /**
-     * Scope - sort movies by relase year.
+     * Scope - sort movies by release year.
      *
      * @since version 1.0.0
      * @param Builder $query
      * @param string $direction
      * @return Builder
      */
-	public function scopeByReleased(Builder $query, string $direction = 'asc')
+	public function scopeByReleased(Builder $query, string $direction = 'asc'): Builder
 	{
 		return $query->orderBy('released', $direction);
 	}
