@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use Illuminate\Database\Eloquent\Relations\{BelongsTo,BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 /**
@@ -28,7 +28,6 @@ interface MovieInterface
         9 => 9,
         10 => 10,
     ];
-
 
     public const POSTER_PATH = '/images/covers/';
 
@@ -57,8 +56,8 @@ interface MovieInterface
 
     /**
      * Relation - a movie belongs to a studio.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */
@@ -67,8 +66,8 @@ interface MovieInterface
     
     /**
      * Relation - a movie exists on a certain format.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */
@@ -77,8 +76,8 @@ interface MovieInterface
 
     /**
      * Relation - a movie is given a certificate.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */

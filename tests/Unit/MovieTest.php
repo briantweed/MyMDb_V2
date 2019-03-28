@@ -35,7 +35,7 @@ class MovieTest extends TestCase
 
     /**
      * @test
-     * @group Properties
+     * @group Attributes
      */
     public function the_model_attributes()
     {

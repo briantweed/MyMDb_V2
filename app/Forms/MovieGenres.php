@@ -15,6 +15,7 @@ use App\Models\Genre;
  */
 class MovieGenres extends BaseForm implements FormInterface
 {
+
    /**
      * Return an array of form fields.
      *
@@ -25,20 +26,6 @@ class MovieGenres extends BaseForm implements FormInterface
     {
         return [
             $this->field('checkbox', 'genres', 'Genres', (new Genre())->getGenres()),
-        ];
-    }
-
-
-    /**
-     * Return an array of form buttons.
-     *
-     * @since 1.1.0
-     * @return array
-     */
-    public function buttons(): array
-    {
-        return [
-            // example: $this->button(string $type, string $text, string $class = '', string $route = ''),
         ];
     }
 

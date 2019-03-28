@@ -5,8 +5,8 @@ namespace App\ViewControllers;
 use Illuminate\Support\ServiceProvider;
 
 use App\Models\Movie;
-use App\Builders\{FormBuilder};
-use App\Forms\{MovieFilterForm, MovieForm, MovieGenres};
+use App\Builders\FormBuilder;
+use App\Forms\{MovieFilterForm, MovieForm};
 
 
 /**

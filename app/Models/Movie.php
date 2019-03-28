@@ -115,8 +115,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie belongs to a studio.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */
@@ -132,8 +132,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie exists on a certain format.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */
@@ -149,8 +149,8 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
     /**
      * Relation - a movie is given a certificate.
-     * The cache will return an array but phpunit testing will return the object.
      *
+     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
      * @return array
      */

@@ -23,15 +23,6 @@ abstract class BaseForm
 
 
     /**
-     * Return an array of form buttons.
-     *
-     * @since 1.0.0
-     * @return array
-     */
-    abstract protected function buttons(): array;
-
-
-    /**
      * Return the data array used to build the form.
      *
      * @since 1.0.0

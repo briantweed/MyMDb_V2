@@ -10,7 +10,7 @@ use App\Contracts\FormInterface;
  *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.1
+ * @version 1.0.2
  * @link config/builder.php
  */
 class FormBuilder
@@ -32,19 +32,6 @@ class FormBuilder
     {
         $this->setForm($form);
         $this->setParameters($parameters);
-    }
-
-
-    /**
-     * Set the parameters.
-     *
-     * @since 1.0.1
-     * @param $parameters
-     * @return void
-     */
-    public function setParameters($parameters): void
-    {
-        $this->parameters = $parameters;
     }
 
 
@@ -74,9 +61,23 @@ class FormBuilder
 
 
     /**
+     * Set the parameters.
+     *
+     * @since 1.0.1
+     * @param $parameters
+     * @return void
+     */
+    public function setParameters($parameters): void
+    {
+        $this->parameters = $parameters;
+    }
+
+
+    /**
      * Add any fields to the view.
      *
      * @since 1.0.0
+     * @since 1.0.2 - method was made public
      * @return string
      */
     public function getFields(): string
@@ -101,6 +102,7 @@ class FormBuilder
      * Add any buttons to the view.
      *
      * @since 1.0.0
+     * @since 1.0.2 - method was made public
      * @return string
      */
     public function getButtons(): string
@@ -135,9 +137,8 @@ class FormBuilder
      * Check if the field has an existing value.
      *
      * @since 1.0.0
-     * @since 1.0.1 - will only return a string
      * @param array $fields
-     * @return string
+     * @return mixed
      */
     private function checkForFieldValue(array $fields)
     {
