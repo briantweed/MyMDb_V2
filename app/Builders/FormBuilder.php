@@ -26,7 +26,7 @@ class FormBuilder
      * FormBuilder constructor.
      *
      * @param FormInterface $form
-     * @param null $parameters
+     * @param $parameters
      */
     public function __construct(FormInterface $form, $parameters = null)
     {
