@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\{DB, URL};
 
 use App\Http\Traits\PositionTrait;
@@ -22,6 +23,13 @@ class Person  extends BaseModel implements PositionInterface
 
 	use PositionTrait;
 
+
+    /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
 	protected $fillable = array(
 		'forename',
 		'surname',
@@ -32,6 +40,13 @@ class Person  extends BaseModel implements PositionInterface
 		'imdb_id'
 	);
 
+
+    /**
+     * Fields cast to instances of Carbon.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
 	protected $dates = [
 		'birthday',
 		'deceased'
@@ -50,9 +65,12 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * @return mixed
+     * Relation - a person can have many roles.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
 			->withPivot('id', 'character')
@@ -61,7 +79,10 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * @return mixed
+     * Relation - a person can have many positions.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
 	public function positions()
 	{
@@ -74,16 +95,22 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * @return mixed
+     * Relation - a person can have directed many movies.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
-	public function directed()
+	public function directed(): BelongsToMany
 	{
 		return $this->getPosition(self::DIRECTOR);
 	}
 
 
     /**
-     * @return mixed
+     * Relation - a person can have produced many movies.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
 	public function produced()
 	{
@@ -92,7 +119,10 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * @return mixed
+     * Relation - a person can have wrote many movies.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
 	public function wrote()
 	{
@@ -101,7 +131,10 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * @return mixed
+     * Relation - a person can have scored many movies.
+     *
+     * @since version 1.0.0
+     * @return BelongsToMany
      */
 	public function scored()
 	{
@@ -110,21 +143,26 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Accessor - get the full name of the person.
+     *
+     * @since version 1.0.0
      * @return string
      */
-	public function getFullnameAttribute()
+	public function getFullnameAttribute(): string
 	{
 		return $this->forename . ' ' . $this->surname;
 	}
 
 
     /**
-     * @return int|string
+     * Accessor - get the age of the person.
+     *
+     * @since version 1.0.0
+     * @return string
      */
-	public function getAgeAttribute()
+	public function getAgeAttribute(): string
 	{
-	    if($this->birthday !== NULL)
-        {
+	    if($this->birthday !== NULL) {
 		    $date = $this->deceased ?? Carbon::now();
 		    return $date->diffInYears($this->birthday);
         }
@@ -133,6 +171,9 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Accessor - get the formatted birthday of the person.
+     *
+     * @since version 1.0.0
      * @return string|null
      */
 	public function getBornAttribute()
@@ -146,6 +187,9 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Accessor - get the date the person died on.
+     *
+     * @since version 1.0.0
      * @return string|null
      */
 	public function getDiedAttribute()
@@ -159,18 +203,24 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Accessor - get the image of the person.
+     *
+     * @since version 1.0.0
      * @return string
      */
-    public function getImagePathAttribute()
+    public function getImagePathAttribute(): string
     {
         return URL::asset('/images/people/' . $this->image);
     }
 
 
     /**
+     * Accessor - get the image of a movie the person worked on.
+     *
+     * @since version 1.0.0
      * @return string
      */
-    public function getBannerImagePathAttribute()
+    public function getBannerImagePathAttribute(): string
     {
         $movie = count($this->roles) ? $this->roles->random() : $this->positions->random();
         return URL::asset('/images/covers/' . $movie->image);
@@ -178,13 +228,14 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
-     * Find movies in the person's bio that have been wrapped
-     * in double curly brackets. Turn into a link if
-     * the movie exists in the database.
+     * Accessor - find any movies in the person's bio that have been
+     * wrapped in double curly brackets. Replace it with a
+     * link if the movie exists in the database.
      *
+     * @since version 1.0.0
      * @return string
      */
-    public function getBioWithLinksAttribute()
+    public function getBioWithLinksAttribute(): string
     {
         return nl2br( preg_replace_callback('/\{{(.*?)}}/', function($m)
         {
@@ -213,6 +264,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Scope - return people whose full name is like the given name.
+     *
      * @param $query
      * @param $name
      * @return mixed
@@ -224,6 +277,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Scope - return people who are listed as stars of the movie.
+     *
      * @param $query
      * @param bool $bool
      * @return mixed
@@ -235,6 +290,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Scope - sort people by those listed as stars.
+     *
      * @param $query
      * @param string $direction
      * @return Builder
@@ -246,6 +303,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Scope - sort people by forename.
+     *
      * @param $query
      * @param string $direction
      * @return Builder
@@ -257,6 +316,8 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Scope - sort people by surname.
+     *
      * @param $query
      * @param string $direction
      * @return Builder

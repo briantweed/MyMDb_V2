@@ -14,12 +14,25 @@ use Illuminate\Database\Eloquent\Model;
 class Crew extends Model 
 {
 
-   protected $table = 'crew';
-   
-   protected $fillable = array(
-      'movie_id',
-      'person_id',
-      'position'
-   );
+    /**
+     * Name of the database table.
+     *
+     * @since version 1.0.0
+     * @var string
+     */
+    protected $table = 'crew';
+
+
+    /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
+    protected $fillable = array(
+        'movie_id',
+        'person_id',
+        'position'
+    );
 
 }

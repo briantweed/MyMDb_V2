@@ -16,6 +16,17 @@ class Tag extends BaseModel
 {
 
     /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
+    protected $fillable = [
+        'word'
+    ];
+
+
+    /**
      * Scope - return tags that match the selected id.
      *
      * @since 1.0.0

@@ -17,6 +17,17 @@ class Format extends BaseModel
 {
 
     /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
+    protected $fillable = array(
+        'type'
+    );
+
+
+    /**
      * Relation - a format can belong to many movies.
      *
      * @since version 1.0.0

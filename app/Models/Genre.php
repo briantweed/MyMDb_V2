@@ -14,7 +14,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Genre extends BaseModel
 {
-    
+
+    /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
     protected $fillable = [
         'type'
     ];

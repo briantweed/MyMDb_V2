@@ -15,8 +15,21 @@ use Illuminate\Database\Eloquent\Model;
 class MovieTag extends Model
 {
 
+    /**
+     * Name of the database table.
+     *
+     * @since version 1.0.0
+     * @var string
+     */
     protected $table = 'movie_tag';
 
+
+    /**
+     * Fields that can be mass assigned.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
     protected $fillable = [
         'movie_id',
         'tag_id'
