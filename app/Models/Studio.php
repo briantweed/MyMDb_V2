@@ -45,9 +45,9 @@ class Studio extends BaseModel
      * @since version 1.0.0
      * @param $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByName($query, $direction = 'asc'): Builder
+    public function scopeByName(Builder $query, string $direction = 'asc'): Builder
     {
         return $query->orderBy('name', $direction);
     }

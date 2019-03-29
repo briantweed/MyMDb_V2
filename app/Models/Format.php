@@ -44,9 +44,9 @@ class Format extends BaseModel
      *
      * @param $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByType($query, $direction = 'asc'): Builder
+    public function scopeByType(Buider $query, string $direction = 'asc'): Builder
     {
         return $query->orderBy('type', $direction);
     }
@@ -59,7 +59,7 @@ class Format extends BaseModel
      * @param bool $forget
      * @return array
      */
-    public function getFormats($forget = false): array
+    public function getFormats(bool $forget = false): array
     {
         return $this->cacheAndReturn('id', 'type', $forget);
     }

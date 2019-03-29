@@ -32,9 +32,9 @@ class Tag extends BaseModel
      * @since 1.0.0
      * @param $query
      * @param $tag
-     * @return mixed
+     * @return Builder
      */
-    public function scopeWhereId($query, $tag)
+    public function scopeWhereId(Builder $query, int $tag): Builder
     {
         return $query->where('tags.id', '=', $tag);
     }
@@ -46,9 +46,9 @@ class Tag extends BaseModel
      * @since 1.0.0
      * @param $query
      * @param string $direction
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByWord($query, $direction = 'asc'): Builder
+    public function scopeByWord(Builder $query, string $direction = 'asc'): Builder
     {
         return $query->orderBy('word', $direction);
     }

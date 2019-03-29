@@ -25,7 +25,7 @@ abstract class BaseModel extends Model
      * @param string $direction
      * @return mixed
      */
-    public function scopeById(Builder $query, string $direction = 'asc')
+    public function scopeById(Builder $query, string $direction = 'asc'): Builder
     {
         return $query->orderBy('id', $direction);
     }

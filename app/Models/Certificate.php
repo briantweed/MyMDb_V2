@@ -45,7 +45,7 @@ class Certificate extends BaseModel
      * @param bool $forget
      * @return array
      */
-    public function getCertificates($forget = false)
+    public function getCertificates($forget = false): array
     {
         return $this->cacheAndReturn('id', 'title', $forget);
     }

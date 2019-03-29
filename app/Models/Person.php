@@ -84,7 +84,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function positions()
+	public function positions(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'crew', 'person_id', 'movie_id')
 			->withPivot('id', 'position')
@@ -112,7 +112,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function produced()
+	public function produced(): BelongsToMany
 	{
 		return $this->getPosition(self::PRODUCER);
 	}
@@ -124,7 +124,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function wrote()
+	public function wrote(): BelongsToMany
 	{
 		return $this->getPosition(self::WRITER);
 	}
@@ -136,7 +136,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function scored()
+	public function scored(): BelongsToMany
 	{
 		return $this->getPosition(self::COMPOSER);
 	}
@@ -281,9 +281,9 @@ class Person  extends BaseModel implements PositionInterface
      *
      * @param $query
      * @param bool $bool
-     * @return mixed
+     * @return Builder
      */
-	public function scopeAreStars($query, bool $bool = true): Builder
+	public function scopeAreStars(Builder $query, bool $bool = true): Builder
     {
         return $query->where('star', $bool);
     }
@@ -296,7 +296,7 @@ class Person  extends BaseModel implements PositionInterface
      * @param string $direction
      * @return Builder
      */
-    public function scopeByStar($query, $direction = 'desc'): Builder
+    public function scopeByStar(Builder $query, string $direction = 'desc'): Builder
     {
         return $query->orderBy('star', $direction);
     }
@@ -309,7 +309,7 @@ class Person  extends BaseModel implements PositionInterface
      * @param string $direction
      * @return Builder
      */
-    public function scopeByForename($query, $direction = 'asc'): Builder
+    public function scopeByForename(Builder $query, string $direction = 'asc'): Builder
 	{
 		return $query->orderBy('forename', $direction);
 	}
@@ -322,7 +322,7 @@ class Person  extends BaseModel implements PositionInterface
      * @param string $direction
      * @return Builder
      */
-    public function scopeBySurname($query, $direction = 'asc'): Builder
+    public function scopeBySurname(Builder$query, string $direction = 'asc'): Builder
 	{
 		return $query->orderBy('surname', $direction);
 	}

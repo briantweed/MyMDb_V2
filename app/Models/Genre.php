@@ -46,7 +46,7 @@ class Genre extends BaseModel
      * @param bool $forget
      * @return array
      */
-    public function getGenres($forget = false): array
+    public function getGenres(bool $forget = false): array
     {
         return $this->cacheAndReturn('id', 'type', $forget);
     }
