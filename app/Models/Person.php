@@ -176,7 +176,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return string|null
      */
-	public function getBornAttribute()
+	public function getBornAttribute(): ?string
 	{
 	    if($this->birthday !== NULL)
         {
@@ -192,7 +192,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return string|null
      */
-	public function getDiedAttribute()
+	public function getDiedAttribute(): ?string
 	{
 	    if($this->deceased !== NULL)
         {
@@ -268,7 +268,7 @@ class Person  extends BaseModel implements PositionInterface
      *
      * @param $query
      * @param $name
-     * @return mixed
+     * @return Builder
      */
 	public function scopeWhereFullname($query, $name): Builder
     {
