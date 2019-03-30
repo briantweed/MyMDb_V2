@@ -16,9 +16,9 @@
                 <td><a href="{{ route('movies.show', [$movie->slug]) }}">{{ $movie->name }}</a></td>
                 <td class="text-center">{{ $movie->released }}</td>
                 <td class="text-center">{{ $movie->rating }}</td>
-                <td>{{ $movie->format()[$movie->format_id] }}</td>
-                <td>{{ $movie->studio()[$movie->studio_id] }}</td>
-                <td class="text-center">{{ $movie->certificate()[$movie->certificate_id] }}</td>
+                <td>{{ $movie->format->type }}</td>
+                <td>{{ $movie->studio->name }}</td>
+                <td class="text-center">{{ $movie->certificate->title }}</td>
             </tr>
         @endforeach
         </tbody>
