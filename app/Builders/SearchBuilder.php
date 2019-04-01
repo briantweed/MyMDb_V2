@@ -4,15 +4,19 @@ namespace App\Builders;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\{Builder, Model};
 
 
 /**
  * Class SearchBuilder.
  *
+ * This package will build a new model query from existing model scope methods.
+ * e.g. field name 'title' will relate to a 'scopeWhereTitle' method.
+ * The 'Where' keyword can be changed in config/builder.php file.
+ *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.1
+ * @version 1.0.2
  * @link config/builder.php
  *
  */
@@ -21,18 +25,18 @@ class SearchBuilder
 
     private $model;
     private $query;
-    private $orderBy;
-    private $sort;
     private $fields;
+    private $sort;
+    private $orderBy;
 
 
     /**
      * SearchBuilder constructor.
      *
-     * @param $model
+     * @param Model $model
      * @param Request $request
      */
-    public function __construct($model, Request $request)
+    public function __construct(Model $model, Request $request)
     {
         $this->model = $model;
         $this->query = $this->model->newQuery();
@@ -47,7 +51,7 @@ class SearchBuilder
      * Add fields, orderBy and sort direction.
      *
      * @since 1.0.0
-     * @return mixed
+     * @return Builder
      */
     public function apply(): Builder
     {
@@ -99,20 +103,19 @@ class SearchBuilder
      *
      * @since 1.0.0
      * @since 1.0.1 - check field name for double underscore (related table field)
+     * @since 1.0.2 - related table separator added
      * @return void
      */
     private function addFieldsToQuery(): void
     {
         foreach($this->fields as $field => $value)
         {
-            if(isset($value))
+            if (isset($value))
             {
-                if(strpos($field, '__') !== false)
-                {
+                if (strpos($field, config('builder.related_table_separator')) !== false) {
                     $this->addRelatedScope($field, $value);
                 }
-                else
-                {
+                else {
                     $this->addModelScope($field, $value);
                 }
             }
@@ -128,18 +131,16 @@ class SearchBuilder
      */
     private function addOrderByToQuery(): void
     {
-        if($this->sort)
+        if ($this->sort)
         {
             $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . ucwords($this->sort);
-            if(method_exists($this->model, $scopeMethod))
+            if (method_exists($this->model, $scopeMethod))
             {
                 $scopeName = config('builder.sort_scope') . $this->sort;
-                if($this->orderBy)
-                {
+                if ($this->orderBy) {
                     $this->query->$scopeName($this->orderBy);
                 }
-                else
-                {
+                else {
                     $this->query->$scopeName();
                 }
             }
@@ -151,13 +152,14 @@ class SearchBuilder
      * Add scope from a related model.
      *
      * @since 1.0.1
+     * @since 1.0.2 - related table separator added
      * @param string $field
      * @param string $value
      * @return void
      */
     private function addRelatedScope(string $field, string $value): void
     {
-        list($model, $scope) = explode('__', $field);
+        list($model, $scope) = explode(config('builder.related_table_separator'), $field);
         $this->query->whereHas($model, function ($query) use($scope, $value) {
             $scopeName = ucwords(config('builder.where_scope')) . ucwords(Str::camel($scope));
             $query->$scopeName($value);
@@ -176,8 +178,7 @@ class SearchBuilder
     private function addModelScope(string $field, string $value): void
     {
         $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . ucwords(Str::camel($field));
-        if(method_exists($this->model, $scopeMethod))
-        {
+        if (method_exists($this->model, $scopeMethod)) {
             $scopeName = config('builder.where_scope') . $field;
             $this->query->$scopeName($value);
         }

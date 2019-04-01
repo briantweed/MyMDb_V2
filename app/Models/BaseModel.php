@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 abstract class BaseModel extends Model
 {
 
+    public const REMEMBER_FOR = 86400;
+
+
     /**
      * Scope - sort the query by id.
      *
@@ -47,7 +50,7 @@ abstract class BaseModel extends Model
             Cache::forget($this->getTable());
         }
 
-        return Cache::rememberForever($this->getTable(), function() use($key, $value, $sort) {
+        return Cache::remember($this->getTable(), self::REMEMBER_FOR, function() use($key, $value, $sort) {
             $sortScope = 'by' . ucwords($sort);
             return $this->$sortScope()
                 ->pluck($value, $key)

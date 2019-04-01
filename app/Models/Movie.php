@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\{DB, File, URL};
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 use App\Http\Traits\PositionTrait;
 use App\Contracts\{MovieInterface, PositionInterface};
@@ -116,51 +116,42 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     /**
      * Relation - a movie belongs to a studio.
      *
-     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
-     * @return array
+     * @return BelongsTo
      */
-	public function studio()
+	public function studio(): BelongsTo
 	{
-        return Cache::rememberForever('studios', function() {
-            return $this->belongsTo(Studio::class)->withDefault([
-                'name' => 'Unknown'
-            ])->byName();
-        });
+        return $this->belongsTo(Studio::class)->withDefault([
+            'name' => 'Unknown'
+        ])->byName();
 	}
 
 
     /**
      * Relation - a movie exists on a certain format.
      *
-     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
-     * @return array
+     * @return BelongsTo
      */
-	public function format()
+	public function format(): BelongsTo
 	{
-        return Cache::rememberForever('formats', function() {
-            return $this->belongsTo(Format::class)->withDefault([
-                'type' => 'Unknown'
-            ]);
-        });
+        return $this->belongsTo(Format::class)->withDefault([
+            'type' => 'Unknown'
+        ]);
     }
 
 
     /**
      * Relation - a movie is given a certificate.
      *
-     * @internal The cache will return an array but phpunit testing will return the object.
      * @since version 1.0.0
-     * @return array
+     * @return BelongsTo
      */
-	public function certificate()
+	public function certificate(): BelongsTo
 	{
-        return Cache::rememberForever('certificates', function() {
-            return $this->belongsTo(Certificate::class)->withDefault([
-                'name' => 'Unknown'
-            ]);
-        });
+        return $this->belongsTo(Certificate::class)->withDefault([
+            'name' => 'Unknown'
+        ]);
     }
 
 
