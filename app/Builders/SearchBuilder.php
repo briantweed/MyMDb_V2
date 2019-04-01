@@ -10,10 +10,6 @@ use Illuminate\Database\Eloquent\{Builder, Model};
 /**
  * Class SearchBuilder.
  *
- * This package will build a new model query from existing model scope methods.
- * e.g. field name 'title' will relate to a 'scopeWhereTitle' method.
- * The 'Where' keyword can be changed in config/builder.php file.
- *
  * @package App\Builders
  * @author briantweed
  * @version 1.0.2
@@ -82,7 +78,7 @@ class SearchBuilder
      */
     private function setOrderBy(): void
     {
-        $this->orderBy = array_key_exists(config('builder.order'), $this->fields) ? $this->fields[config('builder.order')] : null;
+        $this->orderBy = array_key_exists(config('builder.order_field'), $this->fields) ? $this->fields[config('builder.order_field')] : null;
     }
 
 
@@ -94,7 +90,7 @@ class SearchBuilder
      */
     private function setSort(): void
     {
-        $this->sort = array_key_exists(config('builder.sort'), $this->fields) ? $this->fields[config('builder.sort')] : null;
+        $this->sort = array_key_exists(config('builder.sort_field'), $this->fields) ? $this->fields[config('builder.sort_field')] : null;
     }
 
 

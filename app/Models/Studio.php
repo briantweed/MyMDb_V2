@@ -40,7 +40,7 @@ class Studio extends BaseModel
 
 
     /**
-     * Scope - return the studios that match the selected name.
+     * Scope - sort by the studio name.
      *
      * @since version 1.0.0
      * @param $query
@@ -54,6 +54,8 @@ class Studio extends BaseModel
 
 
     /**
+     * Return an array of all studios names
+     *
      * @since version 1.0.0
      * @param bool $forget
      * @return array
