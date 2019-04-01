@@ -124,6 +124,8 @@ class MovieController extends BaseController
     public function update(MovieRequest $request, Movie $movie): RedirectResponse
     {
         $movie->fill($request->all())->update();
+        $movie->genres()->sync($request->genres);
+        $movie->tags()->sync($request->tags);
         return redirect()->route('movies.edit', $movie);
     }
 

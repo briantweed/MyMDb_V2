@@ -43,12 +43,14 @@ class MovieRequest extends BaseRequest
             'imdb_id' => 'nullable|string',
             'released' => 'required|digits:4',
             'rating' => 'required|min:1|max:10',
-            'running_time' => 'required|numeric',
+            'running_time' => 'required|integer',
             'image' => 'mimes:jpeg,png',
             'certificate_id' => 'required|digits:1',
             'format_id' => 'required|digits:1',
-            'studio_id' => 'required|numeric',
+            'studio_id' => 'required|integer',
             'bio' => 'string',
+            'genres.*' => 'integer',
+            'tags.*' => 'integer'
         ];
     }
 
@@ -70,15 +72,17 @@ class MovieRequest extends BaseRequest
             'rating.required' => 'Rating is required',
             'rating.min' => 'Rating must be greater than or equal to 1',
             'rating.max' => 'Rating must be less than or equal to 10',
-            'running_time.numeric' => 'Running Time must be numeric',
+            'running_time.integer' => 'Running Time must a number',
             'image.mimes' => ' Invalid image type',
             'certificate_id.required' => 'Certificate is required',
             'certificate_id.digits' => 'Incorrect Certificate value selected',
             'format_id.required' => 'Format is required',
             'format_id.digits' => 'Incorrect Format value selected',
             'studio_id.required' => 'Format is required',
-            'studio_id.numeric' => 'Incorrect Studio value selected',
-            'bio.string' => 'Description value must be a string'
+            'studio_id.integer' => 'Incorrect Studio value selected',
+            'bio.string' => 'Description value must be a string',
+            'genres.*.integer' => 'Stop changing the values',
+            'tags.*.integer' => 'Stop changing the values'
         ];
     }
 
