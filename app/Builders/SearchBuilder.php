@@ -240,10 +240,14 @@ class SearchBuilder
         list($model, $scope) = explode(config('builder.related_table_separator'), $this->sort);
 
         $scopeMethod = $this->createScopeMethod('sort', $scope);
-        $this->query = $this->model->$model->$scopeMethod($this->query, $this->orderBy);
+        if ($this->orderBy) {
+            $this->query = $this->model->$model->$scopeMethod($this->query, $this->orderBy);
+        }
+        else {
+            $this->query = $this->model->$model->$scopeMethod($this->query);
+        }
 
         $reflectionClass = new ReflectionClass($this->model);
-
         $relations = array_values(array_filter($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC), function($relation) {
             return preg_match('/' . self::RELATIONS_PATH . '/', $relation->getReturnType());
         }));
