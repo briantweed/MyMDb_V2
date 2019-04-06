@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use ReflectionException;
+
 use Illuminate\View\View;
 use Illuminate\Http\{RedirectResponse, Request};
 
@@ -44,12 +46,14 @@ class MovieController extends BaseController
      * @uses SearchBuilder::apply()
      * @param Request $request
      * @return View
+     * @throws ReflectionException
      */
     public function index(Request $request): View
     {
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
+//            ->toSql();dd($movies);
         return view('pages.movies.index', [
             'movies' => $movies
         ]);

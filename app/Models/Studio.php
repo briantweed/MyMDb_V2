@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Class Studio.
  *
  * @package App\Models
- * @version 1.0.0
+ * @version 1.0.1
  * @author briantweed
  */
 class Studio extends BaseModel
@@ -40,6 +40,20 @@ class Studio extends BaseModel
 
 
     /**
+     * Scope - return studios that match the search string.
+     *
+     * @since version 1.0.1
+     * @param Builder $query
+     * @param string $name
+     * @return Builder
+     */
+    public function scopeWhereName(Builder $query, string $name): Builder
+    {
+        return $query->where('name', 'like', $name . '%');
+    }
+
+
+    /**
      * Scope - sort by the studio name.
      *
      * @since version 1.0.0
@@ -49,7 +63,7 @@ class Studio extends BaseModel
      */
     public function scopeByName(Builder $query, string $direction = 'asc'): Builder
     {
-        return $query->orderBy('name', $direction);
+        return $query->orderBy('studios.name', $direction);
     }
 
 

@@ -32,7 +32,13 @@ class MovieFilterForm extends BaseForm implements FormInterface
             $this->field('select', 'certificate_id', 'Certificate', (new Certificate)->getCertificates()),
             $this->field('select', 'studio_id', 'Studio', (new Studio)->getStudios()),
             $this->field('select', 'format_id', 'Format', (new Format)->getFormats()),
-            $this->field('select', 'tags_id', 'Tag', (new Tag)->getTags())
+            $this->field('select', 'tags_id', 'Tag', (new Tag)->getTags()),
+            $this->field('select', 'sort', 'Sort By', [
+                'studio__name' => 'Studio Name',
+                'name' => 'Title',
+                'rating' => 'Rating',
+
+            ])
         ];
     }
 

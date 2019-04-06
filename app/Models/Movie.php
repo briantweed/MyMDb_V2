@@ -47,6 +47,24 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 		'duplicate',
 	];
 
+	protected $displayable = [
+		'name',
+		'sort_name',
+		'released',
+		'image',
+		'rating',
+		'running_time',
+		'certificate_id',
+		'format_id',
+		'studio_id',
+		'bio',
+	];
+
+
+	public function getDisplayable()
+    {
+        return $this->displayable;
+    }
 
     /**
      * Fields cast to instances of Carbon.

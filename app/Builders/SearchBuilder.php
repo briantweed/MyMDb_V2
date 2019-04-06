@@ -2,9 +2,12 @@
 
 namespace App\Builders;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\{Builder, Model};
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 
 /**
@@ -12,7 +15,7 @@ use Illuminate\Database\Eloquent\{Builder, Model};
  *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.2
+ * @version 1.0.4
  * @link config/builder.php
  *
  */
@@ -24,6 +27,8 @@ class SearchBuilder
     private $fields;
     private $sort;
     private $orderBy;
+
+    private const RELATIONS_PATH = "Eloquent\\\\Relations";
 
 
     /**
@@ -37,6 +42,7 @@ class SearchBuilder
         $this->model = $model;
         $this->query = $this->model->newQuery();
 
+        $this->setSelectFields();
         $this->setFields($request->all());
         $this->setOrderBy();
         $this->setSort();
@@ -48,6 +54,7 @@ class SearchBuilder
      *
      * @since 1.0.0
      * @return Builder
+     * @throws ReflectionException
      */
     public function apply(): Builder
     {
@@ -94,12 +101,26 @@ class SearchBuilder
     }
 
 
+
+    private function setSelectFields()
+    {
+        $table = $this->model->getTable();
+        $schemaBuilder = $this->model->getConnection()->getSchemaBuilder();
+        $fields = $schemaBuilder->getColumnListing($table);
+        $fields = array_map(function($field) use($table) {
+            return $table . '.' . $field;
+        }, $fields);
+
+        $this->query->select($fields);
+    }
+
+
+
     /**
      * Check if each field has a corresponding scope method.
      *
      * @since 1.0.0
-     * @since 1.0.1 - check field name for double underscore (related table field)
-     * @since 1.0.2 - related table separator added
+     * @since 1.0.2 - check if field belongs to related model
      * @return void
      */
     private function addFieldsToQuery(): void
@@ -108,7 +129,7 @@ class SearchBuilder
         {
             if (isset($value))
             {
-                if (strpos($field, config('builder.related_table_separator')) !== false) {
+                if ($this->isRelatedScope($field)) {
                     $this->addRelatedScope($field, $value);
                 }
                 else {
@@ -123,24 +144,48 @@ class SearchBuilder
      * Check if the orderBy has a corresponding scope method.
      *
      * @since 1.0.0
+     * @since 1.0.3 - check if field belongs to related model
      * @return void
+     * @throws ReflectionException
      */
     private function addOrderByToQuery(): void
     {
         if ($this->sort)
         {
-            $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . ucwords($this->sort);
-            if (method_exists($this->model, $scopeMethod))
-            {
-                $scopeName = config('builder.sort_scope') . $this->sort;
-                if ($this->orderBy) {
-                    $this->query->$scopeName($this->orderBy);
-                }
-                else {
-                    $this->query->$scopeName();
-                }
+            if ($this->isRelatedScope($this->sort)) {
+                $this->addRelatedOrderBy();
+            }
+            else {
+                $this->addModelOrderBy();
             }
         }
+    }
+
+
+    /**
+     * Should we check a related model for the scope.
+     *
+     * @since 1.0.3
+     * @param string $field
+     * @return bool
+     */
+    private function isRelatedScope(string $field): bool
+    {
+        return strpos($field, config('builder.related_table_separator')) !== false;
+    }
+
+
+    /**
+     * Create and return the scope method name.
+     *
+     * @since 1.0.4
+     * @param string $keyword
+     * @param string $field
+     * @return string
+     */
+    private function createScopeMethod(string $keyword, string $field): string
+    {
+        return 'scope' . ucwords(config('builder.' . $keyword . '_scope')) . ucwords(Str::camel($field));
     }
 
 
@@ -173,12 +218,64 @@ class SearchBuilder
      */
     private function addModelScope(string $field, string $value): void
     {
-        $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . ucwords(Str::camel($field));
-        if (method_exists($this->model, $scopeMethod)) {
+        $scopeMethod = $this->createScopeMethod('where', $field);
+        if (method_exists($this->model, $scopeMethod))
+        {
             $scopeName = config('builder.where_scope') . $field;
             $this->query->$scopeName($value);
         }
     }
 
+
+    /**
+     * Add orderBy scope from a related model.
+     *
+     * @TODO - refactor
+     * @since 1.0.4
+     * @return void
+     * @throws ReflectionException
+     */
+    private function addRelatedOrderBy(): void
+    {
+        list($model, $scope) = explode(config('builder.related_table_separator'), $this->sort);
+
+        $scopeMethod = $this->createScopeMethod('sort', $scope);
+        $this->query = $this->model->$model->$scopeMethod($this->query, $this->orderBy);
+
+        $reflectionClass = new ReflectionClass($this->model);
+
+        $relations = array_values(array_filter($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC), function($relation) {
+            return preg_match('/' . self::RELATIONS_PATH . '/', $relation->getReturnType());
+        }));
+
+        $key = array_search($model, array_column($relations, 'name'));
+        if ( $key !== false )
+        {
+            $relatedModel = $relations[$key]->invoke($this->model);
+            $this->query->join($relatedModel->getRelated()->getTable(), $this->model->getTable().'.'.$relatedModel->getForeignKeyName(), '=', $relatedModel->getRelated()->getTable().'.'.$relatedModel->getOwnerKeyName());
+        }
+    }
+
+
+    /**
+     * Add orderBy from this model.
+     *
+     * @since 1.0.4
+     * @return void
+     */
+    private function addModelOrderBy(): void
+    {
+        $scopeMethod = $this->createScopeMethod('sort', $this->sort);
+        if (method_exists($this->model, $scopeMethod))
+        {
+            $scopeName = config('builder.sort_scope') . $this->sort;
+            if ($this->orderBy) {
+                $this->query->$scopeName($this->orderBy);
+            }
+            else {
+                $this->query->$scopeName();
+            }
+        }
+    }
 
 }

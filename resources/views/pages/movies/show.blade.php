@@ -39,9 +39,9 @@
                 <p>
                     {{ $movie->released }} |
                     {{ $movie->runningTimeInHours }}  |
-                    {{ $movie->format()[$movie->format_id] }} |
+                    {{ $movie->format->type }} |
 
-                    {{ $movie->studio()[$movie->studio_id] }}
+                    {{ $movie->studio->name }}
                     @if( $movie->genres->count() )
                         <br>
                         @foreach( $movie->genres as $genre )
