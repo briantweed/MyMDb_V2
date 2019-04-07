@@ -3,7 +3,6 @@
 
 @section('css')
 
-    {{-- <link href="" rel="stylesheet" /> --}}
     <style>
         p.code {
             font-size: 5rem;
@@ -35,6 +34,7 @@
             text-align: right;
         }
     </style>
+
 @endsection
 
 
@@ -44,12 +44,9 @@
     <main>
 
         <div class="row justify-content-center">
-
             <div class="col-10">
-
                 <div class="d-flex justify-content-sm-center align-items-center" style="min-height: 50vh;">
-
-                    <div class="pr-5" >
+                    <div class="pr-5">
                         <p class="code">404</p>
                     </div>
                     <div class="pl-5" style="border-left: 2px solid #f90">
@@ -59,17 +56,13 @@
                                     {{ $quote->text }}
                                     <cite>
                                         <a href="{{ route('movies.show', [$quote->movie->slug]) }}">{{ $quote->movie->name }} ({{ $quote->movie->released }})</a>
-
                                     </cite>
                                 </div>
                             </blockquote>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
     </main>
