@@ -69,7 +69,7 @@ class MovieTest extends TestCase
      */
     public function the_model_relationships()
     {
-        $belongsToMany = ['cast', 'crew', 'genres', 'tags'];
+        $belongsToMany = ['cast', 'crew', 'genre', 'tag'];
         foreach($belongsToMany as $relationship)
         {
             $this->assertTrue(method_exists($this->movie, $relationship));

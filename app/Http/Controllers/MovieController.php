@@ -53,7 +53,6 @@ class MovieController extends BaseController
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
-//            ->toSql();dd($movies);
         return view('pages.movies.index', [
             'movies' => $movies
         ]);
@@ -128,8 +127,8 @@ class MovieController extends BaseController
     public function update(MovieRequest $request, Movie $movie): RedirectResponse
     {
         $movie->fill($request->all())->update();
-        $movie->genres()->sync($request->genres);
-        $movie->tags()->sync($request->tags);
+        $movie->genre()->sync($request->genres);
+        $movie->tag()->sync($request->tags);
         return redirect()->route('movies.edit', $movie);
     }
 

@@ -91,7 +91,7 @@ interface MovieInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function genres(): BelongsToMany;
+    public function genre(): BelongsToMany;
 
 
 
@@ -101,6 +101,6 @@ interface MovieInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function tags(): BelongsToMany;
+    public function tag(): BelongsToMany;
 
 }

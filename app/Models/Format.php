@@ -33,7 +33,7 @@ class Format extends BaseModel
      * @since version 1.0.0
      * @return HasMany
      */
-    public function movies(): HasMany
+    public function movie(): HasMany
     {
         return $this->hasMany(Movie::class);
     }

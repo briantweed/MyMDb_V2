@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\{DB, File, URL};
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasMany};
 
 use App\Http\Traits\PositionTrait;
 use App\Contracts\{MovieInterface, PositionInterface};
@@ -16,7 +16,7 @@ use App\Contracts\{MovieInterface, PositionInterface};
  * Class Movie.
  *
  * @package App\Models
- * @version 1.0.5
+ * @version 1.0.6
  * @author briantweed
  */
 class Movie extends BaseModel implements PositionInterface, MovieInterface
@@ -178,7 +178,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function genres(): BelongsToMany
+	public function genre(): BelongsToMany
 	{
 		return $this->belongsToMany(Genre::class);
 	}
@@ -190,10 +190,22 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function tags(): BelongsToMany
+    public function tag(): BelongsToMany
 	{
 		return $this->belongsToMany(Tag::class);
 	}
+
+
+    /**
+     * Relation - a movie can have many quotes.
+     *
+     * @since version 1.0.6
+     * @return HasMany
+     */
+	public function quote(): HasMany
+    {
+        return $this->hasMany(Quote::class);
+    }
 
 
     /**

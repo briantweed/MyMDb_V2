@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ViewControllers;
+namespace App\ViewComposers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +14,7 @@ use App\Forms\{MovieFilterForm, MovieForm};
  *
  * As this extends ServiceProvider you must register it at config/app.php
  *
- * @package App\ViewControllers
+ * @package App\ViewComposers
  * @author briantweed
  * @version 1.0.0
  */
@@ -87,8 +87,8 @@ class MovieViewController extends ServiceProvider
             $attributes = null;
             if($view->movie) {
                 $attributes = $view->movie->getAttributes();
-                $attributes['genres'] = $view->movie->genres->pluck('type', 'id')->toArray();
-                $attributes['tags'] = $view->movie->tags->pluck('word', 'id')->toArray();
+                $attributes['genres'] = $view->movie->genre->pluck('type', 'id')->toArray();
+                $attributes['tags'] = $view->movie->tag->pluck('word', 'id')->toArray();
             }
             $form = (new FormBuilder(new MovieForm(), $attributes))->build();
 

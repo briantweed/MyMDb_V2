@@ -194,9 +194,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * View Controllers...
+         * View Composers...
          */
-        App\ViewControllers\MovieViewController::class,
+        App\ViewComposers\ErrorViewController::class,
+        App\ViewComposers\MovieViewController::class,
     ],
 
     /*

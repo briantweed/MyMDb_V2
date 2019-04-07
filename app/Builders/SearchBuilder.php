@@ -2,12 +2,13 @@
 
 namespace App\Builders;
 
-use Illuminate\Database\Eloquent\{Builder, Model};
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use ReflectionClass;
-use ReflectionException;
 use ReflectionMethod;
+use ReflectionException;
+
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\{Builder, Model};
 
 
 /**
@@ -15,7 +16,7 @@ use ReflectionMethod;
  *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.4
+ * @version 1.0.5
  * @link config/builder.php
  *
  */
@@ -101,8 +102,13 @@ class SearchBuilder
     }
 
 
-
-    private function setSelectFields()
+    /**
+     * Add table name to each field to prevent fields being overwritten when joining tables.
+     *
+     * @since 1.0.5
+     * @return void
+     */
+    private function setSelectFields():void
     {
         $table = $this->model->getTable();
         $schemaBuilder = $this->model->getConnection()->getSchemaBuilder();

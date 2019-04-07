@@ -42,15 +42,15 @@
                     {{ $movie->format->type }} |
 
                     {{ $movie->studio->name }}
-                    @if( $movie->genres->count() )
+                    @if( $movie->genre->count() )
                         <br>
-                        @foreach( $movie->genres as $genre )
+                        @foreach( $movie->genre as $genre )
                             {{ $genre->type }}@if(!$loop->last),@endif
                         @endforeach
                     @endif
-                    @if( $movie->tags->count() )
+                    @if( $movie->tag->count() )
                         <br>
-                        @foreach( $movie->tags as $tag )
+                        @foreach( $movie->tag as $tag )
                             {{ $tag->word }}@if(!$loop->last),@endif
                         @endforeach
                     @endif

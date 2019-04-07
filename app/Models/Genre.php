@@ -32,7 +32,7 @@ class Genre extends BaseModel
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function movies(): BelongsToMany
+    public function movie(): BelongsToMany
     {
         return $this->belongsToMany(Movie::class);
     }

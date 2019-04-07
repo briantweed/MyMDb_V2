@@ -70,7 +70,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-    public function roles(): BelongsToMany
+    public function role(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'cast', 'person_id', 'movie_id')
 			->withPivot('id', 'character')
@@ -84,7 +84,7 @@ class Person  extends BaseModel implements PositionInterface
      * @since version 1.0.0
      * @return BelongsToMany
      */
-	public function positions(): BelongsToMany
+	public function position(): BelongsToMany
 	{
 		return $this->belongsToMany(Movie::class, 'crew', 'person_id', 'movie_id')
 			->withPivot('id', 'position')
@@ -222,7 +222,7 @@ class Person  extends BaseModel implements PositionInterface
      */
     public function getBannerImagePathAttribute(): string
     {
-        $movie = count($this->roles) ? $this->roles->random() : $this->positions->random();
+        $movie = count($this->role) ? $this->role->random() : $this->position->random();
         return URL::asset('/images/covers/' . $movie->image);
     }
 

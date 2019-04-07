@@ -49,14 +49,14 @@
 
     </section>
 
-    @if($person->roles->count())
+    @if($person->role->count())
         <section id="person-cast" class="pt-3 pb-3">
 
             <h2 class="pb-2">Roles</h2>
 
             <div class="row">
 
-                @foreach($person->roles as $movie)
+                @foreach($person->role as $movie)
                     <div class="col-lg-1 col-md-2 col-sm-3 col-4 pb-2 text-center">
                         <a href="{{ route('movies.show', [$movie->slug]) }}">
                             <img class="img-fluid pb-3" src="{{ $movie->imagePath }}" alt="{{ $movie->name }}" title="{{ $movie->name }} - {{ $movie->pivot->character }}">
