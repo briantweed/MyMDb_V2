@@ -45,13 +45,13 @@
                     @if( $movie->genres->count() )
                         <br>
                         @foreach( $movie->genres as $genre )
-                            {{ $genre->type }}@if(!$loop->last),@endif
+                            {{ $genre->type }}@if(!$loop->last){{','}}@endif
                         @endforeach
                     @endif
                     @if( $movie->tags->count() )
                         <br>
                         @foreach( $movie->tags as $tag )
-                            {{ $tag->word }}@if(!$loop->last),@endif
+                            {{ $tag->word }}@if(!$loop->last){{','}}@endif
                         @endforeach
                     @endif
                 </p>
