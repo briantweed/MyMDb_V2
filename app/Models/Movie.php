@@ -26,6 +26,22 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
 
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'cast',
+        'crew',
+        'studio',
+        'format',
+        'certificate',
+        'genres',
+        'tags'
+    ];
+
+
+    /**
      * Fields that can be mass assigned.
      *
      * @since version 1.0.0
@@ -68,6 +84,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
     protected $casts = [
         'duplicate' => 'boolean'
     ];
+    private $details;
 
 
     /**

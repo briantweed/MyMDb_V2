@@ -63,7 +63,7 @@ interface MovieInterface
      */
     public function studio();
 
-    
+
     /**
      * Relation - a movie exists on a certain format.
      *
@@ -72,7 +72,7 @@ interface MovieInterface
      * @return array
      */
     public function format();
-    
+
 
     /**
      * Relation - a movie is given a certificate.
@@ -84,7 +84,6 @@ interface MovieInterface
     public function certificate();
 
 
-
     /**
      * Relation - a movie can belong to many types of genres.
      *
@@ -92,7 +91,6 @@ interface MovieInterface
      * @return BelongsToMany
      */
     public function genres(): BelongsToMany;
-
 
 
     /**

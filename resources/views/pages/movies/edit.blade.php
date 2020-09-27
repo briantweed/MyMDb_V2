@@ -23,7 +23,7 @@
 
                 @include('pages.partials.errors')
 
-                <form class="mb-3" method="post" action="{{ route('movies.update', ['id' => $movie->slug]) }}">
+                <form class="mb-3" method="post" action="{{ route('movies.update', ['movie' => $movie->slug]) }}">
 
                     @method('PATCH')
                     @include('pages.movies.partials.movie_form')

@@ -33,7 +33,7 @@
                 <img class="img-fluid pb-3" src="{{ $person->imagePath }}" alt="{{ $person->fullname }} poster">
             </div>
             <div class="col-12 col-sm-8 col-md-9 col-lg-8 offset-lg-1">
-                <h1 class="font-weight-bold d-none d-md-block">{{ $person->fullname }}</h1>
+                <h1 class="font-weightww-bold d-none d-md-block">{{ $person->fullname }}</h1>
                 <p>
                     @if($person->birthday)
                         {{ $person->born }}

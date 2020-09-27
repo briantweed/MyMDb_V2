@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Illuminate\Http\{RedirectResponse, Request};
+use Illuminate\Http\{JsonResponse, RedirectResponse, Request};
 
 use App\Models\Movie;
 use App\Builders\SearchBuilder;
@@ -39,18 +39,18 @@ class MovieController extends BaseController
     /**
      * Apply any search filters and return the results.
      *
+     * @param Request $request
+     * @uses SearchBuilder::apply()
      * @since version 1.0.0
      * @since version 1.0.1 - SearchBuilder added
-     * @uses SearchBuilder::apply()
-     * @param Request $request
-     * @return View
+     * @return JsonResponse|View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $movies = (new SearchBuilder(new Movie, $request))->apply()
             ->bySortName()
             ->paginate();
-        return view('pages.movies.index', [
+        return $this->baseResponse('pages.movies.index', [
             'movies' => $movies
         ]);
     }
@@ -61,11 +61,11 @@ class MovieController extends BaseController
      *
      * @since version 1.0.0
      * @param Movie $movie
-     * @return View
+     * @return JsonResponse|View
      */
-    public function show(Movie $movie): View
+    public function show(Movie $movie)
     {
-        return view('pages.movies.show', [
+        return $this->baseResponse('pages.movies.show', [
             'movie' => $movie
         ]);
     }
@@ -75,11 +75,11 @@ class MovieController extends BaseController
      * Display the form to create a new movie.
      *
      * @since version 1.0.0
-     * @return View
+     * @return JsonResponse|View
      */
-    public function create(): View
+    public function create()
     {
-        return view('pages.movies.create');
+        return $this->baseResponse('pages.movies.create');
     }
 
 
@@ -94,7 +94,7 @@ class MovieController extends BaseController
     {
         $movie = new Movie;
         $movie->fill($request->all())->save();
-            return redirect()->route('movies.show', $movie);
+        return redirect()->route('movies.show', $movie);
     }
 
 
@@ -103,11 +103,11 @@ class MovieController extends BaseController
      *
      * @since version 1.0.0
      * @param Movie $movie
-     * @return View
+     * @return JsonResponse|View
      */
-    public function edit(Movie $movie): View
+    public function edit(Movie $movie)
     {
-        return view('pages.movies.edit', [
+        return $this->baseResponse('pages.movies.edit', [
             'movie' => $movie
         ]);
     }
