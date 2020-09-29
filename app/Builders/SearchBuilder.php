@@ -12,9 +12,7 @@ use Illuminate\Database\Eloquent\{Builder, Model};
  *
  * @package App\Builders
  * @author briantweed
- * @version 1.0.2
- * @link config/builder.php
- *
+ * @version 1.0.3
  */
 class SearchBuilder
 {
@@ -24,6 +22,26 @@ class SearchBuilder
     private $fields;
     private $sort;
     private $orderBy;
+
+    // Order by key for GET request
+    // e.g. ?name=test&order=asc
+    private const ORDER_BY_KEY = 'order';
+
+    // Sort by field key for GET requests
+    // e.g. ?name=test&sort=rating
+    private const SORT_BY_KEY = 'sort';
+
+    // Keyword used when building model scope names
+    // e.g. scopeWhereRating()
+    private const WHERE_SCOPE = 'where';
+
+    // Keyword used when building model scope names for ordering
+    // e.g. scopeByRating()
+    private const SCOPE_BY = 'by';
+
+    // Separator between related model and scope
+    // e.g. Person__Fullname => Person::scopeWhereFullname()
+    private const TABLE_SEPARATOR = '__';
 
 
     /**
@@ -74,11 +92,12 @@ class SearchBuilder
      * Set the orderBy field.
      *
      * @since 1.0.0
+     * @since 1.0.3 - private const instead of config/builder
      * @return void
      */
     private function setOrderBy(): void
     {
-        $this->orderBy = array_key_exists(config('builder.order_field'), $this->fields) ? $this->fields[config('builder.order_field')] : null;
+        $this->orderBy = array_key_exists(self::ORDER_BY_KEY, $this->fields) ? $this->fields[self::ORDER_BY_KEY] : null;
     }
 
 
@@ -86,11 +105,12 @@ class SearchBuilder
      * Set the sort direction.
      *
      * @since 1.0.0
+     * @since 1.0.3 - private const instead of config/builder
      * @return void
      */
     private function setSort(): void
     {
-        $this->sort = array_key_exists(config('builder.sort_field'), $this->fields) ? $this->fields[config('builder.sort_field')] : null;
+        $this->sort = array_key_exists(self::SORT_BY_KEY, $this->fields) ? $this->fields[self::SORT_BY_KEY] : null;
     }
 
 
@@ -100,6 +120,7 @@ class SearchBuilder
      * @since 1.0.0
      * @since 1.0.1 - check field name for double underscore (related table field)
      * @since 1.0.2 - related table separator added
+     * @since 1.0.3 - private const instead of config/builder
      * @return void
      */
     private function addFieldsToQuery(): void
@@ -108,7 +129,7 @@ class SearchBuilder
         {
             if (isset($value))
             {
-                if (strpos($field, config('builder.related_table_separator')) !== false) {
+                if (strpos($field, self::TABLE_SEPARATOR) !== false) {
                     $this->addRelatedScope($field, $value);
                 }
                 else {
@@ -123,16 +144,17 @@ class SearchBuilder
      * Check if the orderBy has a corresponding scope method.
      *
      * @since 1.0.0
+     * @since 1.0.3 - private const instead of config/builder
      * @return void
      */
     private function addOrderByToQuery(): void
     {
         if ($this->sort)
         {
-            $scopeMethod = 'scope' . ucwords(config('builder.sort_scope')) . ucwords($this->sort);
+            $scopeMethod = 'scope' . ucwords(self::SCOPE_BY) . ucwords($this->sort);
             if (method_exists($this->model, $scopeMethod))
             {
-                $scopeName = config('builder.sort_scope') . $this->sort;
+                $scopeName = self::SCOPE_BY . $this->sort;
                 if ($this->orderBy) {
                     $this->query->$scopeName($this->orderBy);
                 }
@@ -149,15 +171,16 @@ class SearchBuilder
      *
      * @since 1.0.1
      * @since 1.0.2 - related table separator added
+     * @since 1.0.3 - private const instead of config/builder
      * @param string $field
      * @param string $value
      * @return void
      */
     private function addRelatedScope(string $field, string $value): void
     {
-        list($model, $scope) = explode(config('builder.related_table_separator'), $field);
+        list($model, $scope) = explode(self::TABLE_SEPARATOR, $field);
         $this->query->whereHas($model, function ($query) use($scope, $value) {
-            $scopeName = ucwords(config('builder.where_scope')) . ucwords(Str::camel($scope));
+            $scopeName = ucwords(self::WHERE_SCOPE) . ucwords(Str::camel($scope));
             $query->$scopeName($value);
         });
     }
@@ -167,18 +190,18 @@ class SearchBuilder
      * Add scope from this model.
      *
      * @since 1.0.1
+     * @since 1.0.3 - private const instead of config/builder
      * @param $field
      * @param $value
      * @return void
      */
     private function addModelScope(string $field, string $value): void
     {
-        $scopeMethod = 'scope' . ucwords(config('builder.where_scope')) . ucwords(Str::camel($field));
+        $scopeMethod = 'scope' . ucwords(self::WHERE_SCOPE) . ucwords(Str::camel($field));
         if (method_exists($this->model, $scopeMethod)) {
-            $scopeName = config('builder.where_scope') . $field;
+            $scopeName = self::WHERE_SCOPE . $field;
             $this->query->$scopeName($value);
         }
     }
-
 
 }
