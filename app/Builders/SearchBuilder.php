@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\{Builder, Model};
 /**
  * Class SearchBuilder.
  *
+ * Create a Eloquent query by combining model scopes.
+ * Scope is added to the query if the URL param name matches a model scope.
+ * e.g.`?name=test` will check the model for the scope method called `scopeWhereName()`
+ *
+ * To Use: create a new SearchBuilder class including the model and the request.
+ * e.g. `$results = (new SearchBuilder(new Model, $request))->apply();`
+ *
  * @package App\Builders
  * @author briantweed
  * @version 1.0.3
@@ -37,7 +44,7 @@ class SearchBuilder
 
     // Keyword used when building model scope names for ordering
     // e.g. scopeByRating()
-    private const SCOPE_BY = 'by';
+    private const BY_SCOPE = 'by';
 
     // Separator between related model and scope
     // e.g. Person__Fullname => Person::scopeWhereFullname()
@@ -151,10 +158,10 @@ class SearchBuilder
     {
         if ($this->sort)
         {
-            $scopeMethod = 'scope' . ucwords(self::SCOPE_BY) . ucwords($this->sort);
+            $scopeMethod = 'scope' . ucwords(self::BY_SCOPE) . ucwords($this->sort);
             if (method_exists($this->model, $scopeMethod))
             {
-                $scopeName = self::SCOPE_BY . $this->sort;
+                $scopeName = self::BY_SCOPE . $this->sort;
                 if ($this->orderBy) {
                     $this->query->$scopeName($this->orderBy);
                 }
