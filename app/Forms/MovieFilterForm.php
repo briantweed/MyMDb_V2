@@ -11,8 +11,7 @@ use App\Models\{Certificate, Format, Movie, Studio, Tag};
  *
  * @package App\Forms
  * @author briantweed
- * @version 1.1.0
- * @link config/builder.php
+ * @version 1.0.0
  */
 class MovieFilterForm extends BaseForm implements FormInterface
 {
@@ -20,7 +19,7 @@ class MovieFilterForm extends BaseForm implements FormInterface
     /**
      * Return an array of form fields.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      * @return array
      */
     public function fields(): array
@@ -40,7 +39,7 @@ class MovieFilterForm extends BaseForm implements FormInterface
     /**
      * Return an array of form buttons.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      * @return array
      */
     public function buttons(): array

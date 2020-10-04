@@ -11,7 +11,7 @@ use App\Models\{Certificate, Format, Genre, Movie, Studio, Tag};
  *
  * @package App\Forms
  * @author briantweed
- * @version 1.1.0
+ * @version 1.0.0
  */
 class MovieForm extends BaseForm implements FormInterface
 {
@@ -19,7 +19,7 @@ class MovieForm extends BaseForm implements FormInterface
     /**
      * Return an array of form fields.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      * @return array
      */
     protected function fields(): array
@@ -45,7 +45,7 @@ class MovieForm extends BaseForm implements FormInterface
     /**
      * Return an array of form buttons.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      * @return array
      */
     protected function buttons(): array

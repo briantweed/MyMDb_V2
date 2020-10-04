@@ -25,7 +25,7 @@
                 <tbody>
                 @foreach($people as $person)
                     <tr>
-                        <td><a href="{{ route('people.show', [$person->slug]) }}">{{ $person->fullname }}</a></td>
+                        <td><a href="{{ route('people.show', [$person->imdb_id]) }}">{{ $person->fullname }}</a></td>
                         <td>{{ optional($person->birthday)->format('jS F Y') ?? '---' }}</td>
                         <td>{{ $person->age }}</td>
                     </tr>

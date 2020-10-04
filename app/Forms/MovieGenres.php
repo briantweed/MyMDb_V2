@@ -11,7 +11,7 @@ use App\Models\Genre;
  *
  * @package App\Forms
  * @author briantweed
- * @version 1.1.0
+ * @version 1.0.0
  */
 class MovieGenres extends BaseForm implements FormInterface
 {
@@ -19,7 +19,7 @@ class MovieGenres extends BaseForm implements FormInterface
    /**
      * Return an array of form fields.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      * @return array
      */
     public function fields(): array

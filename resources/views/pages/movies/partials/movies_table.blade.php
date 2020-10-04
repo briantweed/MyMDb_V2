@@ -13,7 +13,7 @@
         <tbody>
         @foreach($movies as $movie)
             <tr>
-                <td><a href="{{ route('movies.show', [$movie->slug]) }}">{{ $movie->name }}</a></td>
+                <td><a href="{{ route('movies.show', [$movie->imdb_id]) }}">{{ $movie->name }}</a></td>
                 <td class="text-center">{{ $movie->released }}</td>
                 <td class="text-center">{{ $movie->rating }}</td>
                 <td>{{ $movie->format->type }}</td>

@@ -42,6 +42,17 @@ class Person  extends BaseModel implements PositionInterface
 
 
     /**
+     * Accessors to append to the model array.
+     *
+     * @since version 1.0.0
+     * @var array
+     */
+    protected $appends = [
+        'fullname'
+    ];
+
+
+    /**
      * Fields cast to instances of Carbon.
      *
      * @since version 1.0.0
@@ -60,7 +71,7 @@ class Person  extends BaseModel implements PositionInterface
      */
     public function getRouteKeyName()
     {
-        return 'slug';
+        return 'imdb_id';
     }
 
 

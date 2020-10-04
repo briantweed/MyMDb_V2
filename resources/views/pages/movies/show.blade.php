@@ -56,7 +56,7 @@
                     @endif
                 </p>
                 <p class="pt-3">{{ nl2br($movie->bio) }}</p>
-                <a class="btn btn-info" href="{{ route('movies.edit', ['movie' => $movie->slug]) }}">edit movie</a>
+                <a class="btn btn-info" href="{{ route('movies.edit', ['movie' => $movie->imdb_id]) }}">edit movie</a>
             </div>
         </div>
 

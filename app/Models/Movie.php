@@ -95,7 +95,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      */
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'imdb_id';
     }
 
 
@@ -118,6 +118,7 @@ class Movie extends BaseModel implements PositionInterface, MovieInterface
      * Relation - a movie can have many crew members.
      *
      * @since version 1.0.0
+     * @see PositionTrait::scopeByPosition()
      * @return BelongsToMany
      */
     public function crew(): BelongsToMany
